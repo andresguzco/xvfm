@@ -13,12 +13,11 @@ def train_Variational_model():
 
     sigma = 0.1
     dim = 2
-    batch_size = 1024
+    batch_size = 256
     model = MLP(dim=dim, time_varying=True)
     optimizer = torch.optim.Adam(model.parameters())
-    FM = VFM(sigma=sigma)
-    criterion1 = torch.nn.MSELoss()
-    # criterion2 = torch.nn.GaussianNLLLoss()
+    FM = CFM(sigma=sigma)
+    criterion = torch.nn.GaussianNLLLoss()
 
 
     start = time.time()
@@ -32,11 +31,10 @@ def train_Variational_model():
 
         vt = model(torch.cat([xt, t[:, None]], dim=-1))
 
-        # var = torch.full_like(x1, sigma**2)
-        # var.requires_grad = False
+        var = torch.full_like(x1, sigma**2)
+        var.requires_grad = False
 
-        loss = criterion1(vt, ut) 
-        # loss = criterion2(vt, ut, var)
+        loss = criterion(vt, ut, var)
 
         loss.backward()
         optimizer.step()

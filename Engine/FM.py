@@ -91,4 +91,4 @@ class VFM(CFM):
     def compute_conditional_flow(self, x0, x1, t, xt):
         # del x0
         t = pad_t_like_x(t, x1)
-        return (x1 - xt) #/ (1 - t)
+        return x1 - xt
