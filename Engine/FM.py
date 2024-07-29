@@ -84,11 +84,6 @@ class LOT_CFM(CFM):
         return (1 - (1 - self.sigma) * t) * xt + t * x1
     
 
-class VFM(CFM):
+class SVFM(CFM):
     def __init__(self, sigma: Union[float, int] = 0.0):
         super().__init__(sigma=sigma)
-
-    def compute_conditional_flow(self, x0, x1, t, xt):
-        # del x0
-        t = pad_t_like_x(t, x1)
-        return x1 - xt

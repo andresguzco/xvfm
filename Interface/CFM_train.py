@@ -1,3 +1,4 @@
+import os
 import time
 import torch
 import matplotlib.pyplot as plt
@@ -6,8 +7,8 @@ from pathlib import Path
 from torchdyn.core import NeuralODE
 from torchdyn.datasets import generate_moons
 
-def train_CFM_model():
-    savedir = "Results/Moons"
+def main():
+    savedir = os.path.join(os.getcwd(), "Results/VFM")
     Path(savedir).mkdir(parents=True, exist_ok=True)
 
     sigma = 0.1
@@ -49,4 +50,4 @@ def train_CFM_model():
     torch.save(model, f"{savedir}/CFM.pt")
 
 if __name__ == "__main__":
-    train_CFM_model()
+    main()

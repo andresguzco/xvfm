@@ -1,3 +1,4 @@
+import os
 import time
 import torch
 import matplotlib.pyplot as plt
@@ -6,8 +7,8 @@ from pathlib import Path
 from torchdyn.core import NeuralODE
 from torchdyn.datasets import generate_moons
 
-def train_Lipman_model():
-    savedir = "Results/Moons"
+def main():
+    savedir = os.path.join(os.getcwd(), "Results/VFM")
     Path(savedir).mkdir(parents=True, exist_ok=True)
 
     sigma = 0.1
@@ -50,4 +51,4 @@ def train_Lipman_model():
 
 
 if __name__ == "__main__":
-    train_Lipman_model()
+    main()

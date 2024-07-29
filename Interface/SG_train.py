@@ -1,4 +1,6 @@
+import os
 import time
+import math
 import torch
 import matplotlib.pyplot as plt
 from tqdm import tqdm
@@ -7,18 +9,21 @@ from pathlib import Path
 from torchdyn.core import NeuralODE
 from torchdyn.datasets import generate_moons
 
-def train_Variational_model():
-    savedir = "Results/Moons"
+def main():
+    savedir = os.path.join(os.getcwd(), "Results/SG")
     Path(savedir).mkdir(parents=True, exist_ok=True)
 
     sigma = 0.1
     dim = 2
     batch_size = 256
+    g_t = math.sqrt(1.0)
+    var = torch.ones(batch_size, dim, requires_grad=False) * sigma**2
+
     model = MLP(dim=dim, time_varying=True)
+
     optimizer = torch.optim.Adam(model.parameters())
     FM = CFM(sigma=sigma)
     criterion = torch.nn.GaussianNLLLoss()
-
 
     start = time.time()
     for k in tqdm(range(20000)):
@@ -29,12 +34,17 @@ def train_Variational_model():
 
         t, xt, ut = FM.sample_location_and_conditional_flow(x0, x1)
 
+        # Calculate s_t^theta(x) = grad_x v_t^theta(x)
+        xt.requires_grad_(True)
         vt = model(torch.cat([xt, t[:, None]], dim=-1))
+        st = torch.autograd.grad(outputs=vt, inputs=xt, grad_outputs=torch.ones_like(vt), create_graph=True)[0]
 
-        var = torch.full_like(x1, sigma**2)
-        var.requires_grad = False
+        # Compute u_tilde
+        v_tilde = vt + (g_t ** 2 / 2) * st
+        u_tilde = ut + (g_t ** 2 / 2) * st
 
-        loss = criterion(vt, ut, var)
+        # Loss computation
+        loss = criterion(v_tilde, u_tilde, var)
 
         loss.backward()
         optimizer.step()
@@ -49,12 +59,12 @@ def train_Variational_model():
                     sample_8gaussians(1024),
                     t_span=torch.linspace(0, 1, 100),
                 )
-                plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/VFM_{k+1}.png")
+                plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/SG_{k+1}.png")
             
             evaluate(traj[-1].cpu(), sample_moons(1024))
                 
-    torch.save(model, f"{savedir}/VFM.pt")
+    torch.save(model, f"{savedir}/SG.pt")
 
 
 if __name__ == "__main__":
-    train_Variational_model()
+    main()
