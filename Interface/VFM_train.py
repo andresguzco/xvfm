@@ -1,12 +1,24 @@
 import os
 import time
 import torch
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 from Engine import *
 from pathlib import Path
-from torchdyn.core import NeuralODE
-from torchdyn.datasets import generate_moons
+
+
+def trajectories(model, x_0, steps):
+    xt = x_0
+    delta_t = 1 / steps
+    trajectory = [xt.cpu().numpy()]
+    for k in range(steps):
+        t = k / steps * torch.ones(xt.shape[0], 1)
+        x1 = model(torch.cat([xt, t], dim=-1))
+        v_t = (x1 - xt) / (1 - t)
+        xt = xt + v_t * delta_t
+        trajectory.append(xt.cpu().numpy())
+
+    trajectory = np.array(trajectory)
+    return torch.tensor(trajectory)
 
 def main():
     savedir = os.path.join(os.getcwd(), "Results/VFM")
@@ -15,14 +27,10 @@ def main():
     sigma = 0.1
     dim = 2
     batch_size = 256
-    var = torch.ones(batch_size, dim, requires_grad=False) * sigma**2
-
     model = MLP(dim=dim, time_varying=True)
-
     optimizer = torch.optim.Adam(model.parameters())
     FM = CFM(sigma=sigma)
-    criterion = torch.nn.GaussianNLLLoss()
-
+    criterion = torch.nn.MSELoss()
 
     start = time.time()
     for k in tqdm(range(20000)):
@@ -31,11 +39,10 @@ def main():
         x0 = sample_8gaussians(batch_size)
         x1 = sample_moons(batch_size)
 
-        t, xt, ut = FM.sample_location_and_conditional_flow(x0, x1)
+        t, xt, _ = FM.sample_location_and_conditional_flow(x0, x1)
 
         vt = model(torch.cat([xt, t[:, None]], dim=-1))
-
-        loss = criterion(vt, ut, var)
+        loss = criterion(vt, x1)
 
         loss.backward()
         optimizer.step()
@@ -44,18 +51,14 @@ def main():
             end = time.time()
             print(f"{k+1}: loss {loss.item():0.3f} time {(end - start):0.2f}")
             start = end
-            node = NeuralODE(torch_wrapper(model), solver="euler")
-            with torch.no_grad():
-                traj = node.trajectory(
-                    sample_8gaussians(1024),
-                    t_span=torch.linspace(0, 1, 100),
-                )
-                plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/VFM_{k+1}.png")
             
-            evaluate(traj[-1].cpu(), sample_moons(1024))
-                
-    torch.save(model, f"{savedir}/VFM.pt")
+            with torch.no_grad():
+                traj = trajectories(model, sample_8gaussians(1024), steps=100)
+                plot_trajectories(traj=traj, output=f"{savedir}/VFM_{k+1}.png")
+                evaluate(traj[-1], sample_moons(1024))
 
+    torch.save(model, f"{savedir}/VFM.pt")
+    
 
 if __name__ == "__main__":
     main()

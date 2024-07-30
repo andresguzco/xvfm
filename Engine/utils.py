@@ -43,15 +43,6 @@ def sample_8gaussians(n):
     return eight_normal_sample(n, 2, scale=5, var=0.1).float()
 
 
-class torch_wrapper(torch.nn.Module):
-    def __init__(self, model):
-        super().__init__()
-        self.model = model
-
-    def forward(self, t, x, *args, **kwargs):
-        return self.model(torch.cat([x, t.repeat(x.shape[0])[:, None]], 1))
-
-
 def plot_trajectories(traj, output=None):
     n = 2000
     plt.figure(figsize=(6, 6))
@@ -76,11 +67,10 @@ def evaluate(sample_1, sample_2):
     mu1, mu2 = np.mean(sample_1, axis=0), np.mean(sample_2, axis=0)
     sigma1, sigma2 = np.cov(sample_1, rowvar=False), np.cov(sample_2, rowvar=False)    
     covmean = sqrtm(sigma1.dot(sigma2))
+    
     if np.iscomplexobj(covmean):
             covmean = covmean.real
 
     frechet_distance = np.sum((mu1 - mu2)**2) + np.trace(sigma1 + sigma2 - 2 * covmean)
-    hausdorff_distance, _, _ = directed_hausdorff(sample_1, sample_2)
-    energy_ds = energy_distance(sample_1.flatten(), sample_2.flatten())
     
-    print(f"Fréchet Distance: {frechet_distance:.4f}. Hausdorff Distance: {hausdorff_distance:.4f}. Energy Distance: {energy_ds:.4f}.\n")
+    print(f"Fréchet Distance: {frechet_distance:.4f}.\n")

@@ -2,12 +2,23 @@ import os
 import time
 import math
 import torch
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 from Engine import *
 from pathlib import Path
-from torchdyn.core import NeuralODE
-from torchdyn.datasets import generate_moons
+
+def trajectories(model, x_0, steps, g_t):
+    xt = x_0
+    delta_t = 1 / steps
+    trajectory = [xt.cpu().numpy()]
+    for k in range(steps):
+        t = k / steps * torch.ones(xt.shape[0], 1)
+        v_t = model(torch.cat([xt, t], dim=-1))
+        v_t = (v_t - xt) / (1 - t)
+        xt = xt + v_t * delta_t
+        trajectory.append(xt.cpu().numpy())
+
+    trajectory = np.array(trajectory)
+    return torch.tensor(trajectory)
 
 def main():
     savedir = os.path.join(os.getcwd(), "Results/SG")
@@ -22,7 +33,7 @@ def main():
     model = MLP(dim=dim, time_varying=True)
 
     optimizer = torch.optim.Adam(model.parameters())
-    FM = CFM(sigma=sigma)
+    FM = VFM(sigma=sigma)
     criterion = torch.nn.GaussianNLLLoss()
 
     start = time.time()
@@ -34,17 +45,13 @@ def main():
 
         t, xt, ut = FM.sample_location_and_conditional_flow(x0, x1)
 
-        # Calculate s_t^theta(x) = grad_x v_t^theta(x)
         xt.requires_grad_(True)
         vt = model(torch.cat([xt, t[:, None]], dim=-1))
         st = torch.autograd.grad(outputs=vt, inputs=xt, grad_outputs=torch.ones_like(vt), create_graph=True)[0]
 
-        # Compute u_tilde
         v_tilde = vt + (g_t ** 2 / 2) * st
-        u_tilde = ut + (g_t ** 2 / 2) * st
 
-        # Loss computation
-        loss = criterion(v_tilde, u_tilde, var)
+        loss = criterion(v_tilde, ut, var)
 
         loss.backward()
         optimizer.step()
@@ -53,15 +60,11 @@ def main():
             end = time.time()
             print(f"{k+1}: loss {loss.item():0.3f} time {(end - start):0.2f}")
             start = end
-            node = NeuralODE(torch_wrapper(model), solver="euler")
+
             with torch.no_grad():
-                traj = node.trajectory(
-                    sample_8gaussians(1024),
-                    t_span=torch.linspace(0, 1, 100),
-                )
+                traj = trajectories(model, sample_8gaussians(1024), steps=100, g_t=g_t)
                 plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/SG_{k+1}.png")
-            
-            evaluate(traj[-1].cpu(), sample_moons(1024))
+                evaluate(traj[-1].cpu(), sample_moons(1024))
                 
     torch.save(model, f"{savedir}/SG.pt")
 

@@ -6,7 +6,14 @@ from functools import partial
 
 
 class OTSampler:
-    def __init__(self, method: str, reg: float = 0.05, reg_m: float = 1.0, normalize_cost: bool = False, warn: bool = True,) -> None:
+    def __init__(
+            self, 
+            method: str, 
+            reg: float = 0.05, 
+            reg_m: float = 1.0, 
+            normalize_cost: bool = False, 
+            warn: bool = True
+        ) -> None:
 
         if method == "exact":
             self.ot_fn = pot.emd

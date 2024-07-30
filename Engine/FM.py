@@ -61,28 +61,14 @@ class OT_CFM(CFM):
         x0, x1 = self.ot_sampler.sample_plan(x0, x1)
         return super().sample_location_and_conditional_flow(x0, x1, t, return_noise)
 
-
-class LOT_CFM(CFM):
+    
+class VFM(CFM):
     def __init__(self, sigma: Union[float, int] = 0.0):
         super().__init__(sigma=sigma)
-
-    def compute_mu_t(self, x0, x1, t):
-        del x0
-        t = pad_t_like_x(t, x1)
-        return t * x1
-
-    def compute_sigma_t(self, t):
-        return 1 - (1 - self.sigma) * t
-
+    
     def compute_conditional_flow(self, x0, x1, t, xt):
-        del xt
         t = pad_t_like_x(t, x1)
-        return x1 - (1 - self.sigma) * x0
-    
-    def psi_t(self, x1, xt, t):
-        t = pad_t_like_x(t, x1)
-        return (1 - (1 - self.sigma) * t) * xt + t * x1
-    
+        return (x1 - xt) / (1 - t)
 
 class SVFM(CFM):
     def __init__(self, sigma: Union[float, int] = 0.0):
