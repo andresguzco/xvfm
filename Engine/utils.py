@@ -34,8 +34,8 @@ def eight_normal_sample(n, dim, scale=1, var=1):
     return data
 
 
-def sample_moons(n):
-    x0, _ = generate_moons(n, noise=0.2)
+def sample_moons(n, noise=0.2):
+    x0, _ = generate_moons(n, noise=noise)
     return x0 * 3 - 1
 
 
