@@ -4,6 +4,7 @@ import torch
 from tqdm import tqdm
 from Engine import *
 from pathlib import Path
+from torch.autograd import Function
 
 
 def trajectories(model, x_0, steps):
@@ -20,6 +21,21 @@ def trajectories(model, x_0, steps):
     trajectory = np.array(trajectory)
     return torch.tensor(trajectory)
 
+
+class CustomLoss(Function):
+    @staticmethod
+    def forward(ctx, x, mu):
+        ctx.save_for_backward(x, mu)
+        loss = torch.mean((mu - x) ** 2)
+        return loss
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        x, mu = ctx.saved_tensors
+        grad_mu = mu - x 
+        return None, grad_mu
+
+
 def main():
     savedir = os.path.join(os.getcwd(), "Results/VFM")
     Path(savedir).mkdir(parents=True, exist_ok=True)
@@ -31,7 +47,8 @@ def main():
     optimizer = torch.optim.Adam(model.parameters())
     FM = CFM(sigma=sigma)
     # criterion = torch.nn.MSELoss()
-    criterion = torch.nn.GaussianNLLLoss()
+    # criterion = torch.nn.GaussianNLLLoss()
+    criterion = CustomLoss.apply
 
     start = time.time()
     for k in tqdm(range(20000)):
@@ -42,12 +59,12 @@ def main():
 
         t, xt, _ = FM.sample_location_and_conditional_flow(x0, x1)
 
-        var = torch.ones(batch_size, dim, requires_grad=False) * sigma**2
-        var.requires_grad_(False)
+        # var = torch.ones(batch_size, dim, requires_grad=False) * sigma**2
+        # var.requires_grad_(False)
 
         mu_theta = model(torch.cat([xt, t[:, None]], dim=-1))
-        # loss = criterion(mu_theta, x1)
-        loss = criterion(mu_theta, x1, var)
+        loss = criterion(x1, mu_theta)
+        # loss = criterion(mu_theta, x1, var)
 
         loss.backward()
         optimizer.step()
@@ -61,6 +78,9 @@ def main():
                 traj = trajectories(model, sample_8gaussians(1024), steps=100)
                 plot_trajectories(traj=traj, output=f"{savedir}/VFM_{k+1}.png")
                 evaluate(traj[-1], sample_moons(1024))
+
+            print(f"Avg. X_1 from p: {torch.mean(x1)}")
+            print(f"Avg. X_1 form q: {torch.mean(mu_theta)}")
 
     torch.save(model, f"{savedir}/VFM.pt")
     

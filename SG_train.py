@@ -22,13 +22,16 @@ def g_t(t):
 
 
 def trajectories(model, x_0, steps):
+
     xt = x_0
     delta_t = 1 / steps
     trajectory = [xt.cpu().numpy()]
+
     for k in range(steps):
         t = k / steps * torch.ones(xt.shape[0], 1)
         mu_theta, score_theta = model(torch.cat([xt, t], dim=-1))
         gt = g_t(t)
+
         v_tilde = ((mu_theta - xt) / (1 - t)) + ((gt**2 / 2) * score_theta)
         xt = xt + v_tilde * delta_t
         trajectory.append(xt.cpu().numpy())
@@ -46,7 +49,6 @@ def main():
     model = MLPWithScore(dim=dim, time_varying=True)
     optimizer = torch.optim.Adam(model.parameters())
     FM = CFM(sigma=sigma)
-    criterion_v = torch.nn.GaussianNLLLoss()
     criterion_s = torch.nn.MSELoss()
 
     start = time.time()
@@ -62,15 +64,11 @@ def main():
 
         var = torch.ones(batch_size, dim, requires_grad=False) * sigma**2
         var.requires_grad_(False)
-        gt = g_t(t)
 
         mu_theta, score_theta = model(torch.cat([xt, t[:, None]], dim=-1))
-        loss_v = criterion_v(mu_theta, x1, var / pad_t_like_x(gt, var)**2)
 
-        score_true = torch.autograd.grad((x1 - xt).sum(), xt, create_graph=True)[0]
-        loss_s = criterion_s(score_theta, score_true / pad_t_like_x(gt, score_true))
+        loss = criterion_s(mu_theta, x1)
         
-        loss = loss_v + loss_s
 
         loss.backward()
         optimizer.step()

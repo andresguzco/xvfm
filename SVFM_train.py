@@ -6,13 +6,31 @@ from Engine import *
 from pathlib import Path
 
 
+class MLPD(torch.nn.Module):
+    def __init__(self, dim, time_varying):
+        super(MLPD, self).__init__()
+        self.mu = MLP(dim=dim, time_varying=time_varying)
+        self.sigma = MLP(dim=dim, out_dim=1, time_varying=time_varying)
+        self.pos_filter = torch.nn.ReLU()
+        
+
+    def forward(self, x):
+        mu = self.mu(x)
+        sigma = self.sigma(x)
+        sigma = self.pos_filter(sigma)
+        return mu, sigma
+
+
+
 def trajectories(model, x_0, steps):
     xt = x_0
     delta_t = 1 / steps
     trajectory = [xt.cpu().numpy()]
     for k in range(steps):
         t = k / steps * torch.ones(xt.shape[0], 1)
-        x1 = model(torch.cat([xt, t], dim=-1))
+        x1, _ = model(torch.cat([xt, t], dim=-1))
+        print()
+
         v_t = (x1 - xt) / (1 - t)
         xt = xt + v_t * delta_t
         trajectory.append(xt.cpu().numpy())
@@ -21,25 +39,19 @@ def trajectories(model, x_0, steps):
     return torch.tensor(trajectory)
 
 
-class SigmaMLP(MLP):
-    def __init__(self, dim, out_dim=None, w=64, time_varying=False):
-        super().__init__(dim, out_dim=out_dim, w=w, time_varying=time_varying)
-        self.last_filter = torch.nn.ReLU()
+class MLPS(torch.nn.Module):
+    def __init__(self, dim, time_varying):
+        super(MLPS, self).__init__()
+        self.mu = MLP(dim=dim, time_varying=time_varying)
+        self.sigma = torch.nn.Parameter(torch.tensor([0.5, 0.5]))
+        # init_params = torch.rand(3)
+        # self.sigma = torch.nn.Parameter(torch.tensor([[init_params[0], init_params[1]*0.5], [init_params[1]*0.5, init_params[2]]]))
+        self.pos_filter = torch.nn.ReLU()
 
     def forward(self, x):
-        pred = self.net(x)
-        pred = self.last_filter(pred)
-        return pred
-
-
-class SingleParamModel(torch.nn.Module):
-    def __init__(self):
-        super(SingleParamModel, self).__init__()
-        self.param = torch.nn.Parameter(torch.randn(1))
-
-    def forward(self):
-        constrained_param = torch.sigmoid(self.param)
-        return constrained_param
+        mu = self.mu(x)
+        sigma = self.pos_filter(self.sigma)
+        return mu, sigma
 
 
 def main():
@@ -50,36 +62,28 @@ def main():
     batch_size = 256
     noise = 0.2
 
-    model = MLP(dim=dim, time_varying=True)
-    sigma_model = SigmaMLP(dim=0, out_dim=1, time_varying=True)
-    # sigma_model = SingleParamModel()
+    model = MLPS(dim=dim, time_varying=True)
 
-    optimizer = torch.optim.Adam(
-        [param for param in model.parameters()] + [param for param in sigma_model.parameters()]
-    )
+    optimizer = torch.optim.Adam(model.parameters())
 
-    FM = SVFM()
+    FM = CFM(sigma=noise)
     criterion = torch.nn.GaussianNLLLoss()
+    # criterion = MultivariateNormalNLLLoss()
 
 
     start = time.time()
-    for k in tqdm(range(50000)):
+    for k in tqdm(range(20000)):
         optimizer.zero_grad()
 
         x0 = sample_8gaussians(batch_size)
         x1 = sample_moons(batch_size, noise=noise)
-        # sigma = sigma_model()
 
-        # t, xt, _ = FM.sample_location_and_conditional_flow(sigma, x0, x1)
-        t, xt, _, sigma = FM.sample_location_and_conditional_flow(sigma_model, x0, x1)
+        t, xt, _ = FM.sample_location_and_conditional_flow(x0, x1)
 
-        mu_theta = model(torch.cat([xt, t[:, None]], dim=-1))
+        mu_theta, sigma_theta = model(torch.cat([xt, t[:, None]], dim=-1))
 
-        # var = torch.ones(batch_size, dim) * (sigma**2)
-
-        # loss = criterion(mu_theta, x1, var)
-        loss = criterion(mu_theta, x1, sigma**2)
-
+        loss = criterion(mu_theta, x1, sigma_theta.repeat(x1.shape[0], 1))
+        # loss = criterion(mu_theta, x1, sigma_theta)
         loss.backward()
         optimizer.step()
         
@@ -92,9 +96,12 @@ def main():
                 traj = trajectories(model, sample_8gaussians(1024), steps=100)
                 plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/SVFM_{k+1}.png")
                 evaluate(traj[-1].cpu(), sample_moons(1024))
+
+            print(f"Avg. X_1 from p: {torch.mean(x1)}")
+            print(f"Avg. X_1 form q: {torch.mean(mu_theta)}")
+            print(sigma_theta)
                 
     torch.save(model, f"{savedir}/SVFM.pt")
-    torch.save(sigma, f"{savedir}/Sigma.pt")
 
 
 if __name__ == "__main__":
