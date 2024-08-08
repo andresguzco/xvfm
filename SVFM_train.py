@@ -10,7 +10,7 @@ class MLPD(torch.nn.Module):
     def __init__(self, dim, time_varying):
         super(MLPD, self).__init__()
         self.mu = MLP(dim=dim, time_varying=time_varying)
-        self.sigma = MLP(dim=dim, out_dim=1, time_varying=time_varying)
+        self.sigma = MLP(dim=dim, out_dim=2, time_varying=time_varying)
         self.pos_filter = torch.nn.ReLU()
         
 
@@ -43,7 +43,7 @@ class MLPS(torch.nn.Module):
     def __init__(self, dim, time_varying):
         super(MLPS, self).__init__()
         self.mu = MLP(dim=dim, time_varying=time_varying)
-        self.sigma = torch.nn.Parameter(torch.tensor([0.5, 0.5]))
+        self.sigma = torch.nn.Parameter(torch.rand(2))
         # init_params = torch.rand(3)
         # self.sigma = torch.nn.Parameter(torch.tensor([[init_params[0], init_params[1]*0.5], [init_params[1]*0.5, init_params[2]]]))
         self.pos_filter = torch.nn.ReLU()
@@ -97,9 +97,10 @@ def main():
                 plot_trajectories(traj=traj.cpu().numpy(), output=f"{savedir}/SVFM_{k+1}.png")
                 evaluate(traj[-1].cpu(), sample_moons(1024))
 
-            print(f"Avg. X_1 from p: {torch.mean(x1)}")
-            print(f"Avg. X_1 form q: {torch.mean(mu_theta)}")
-            print(sigma_theta)
+            print(f"Avg. X_1 from p: [{torch.mean(x1):.4f}]")
+            print(f"Avg. X_1 form q: [{torch.mean(mu_theta):.4f}]")
+            print(f"Std. X_1 from p: [{torch.std(x1[:, 0]).item():.4f}, {torch.std(x1[:, 1]).item():.4f}]")
+            print(f"Std. X_1 from q: [{sigma_theta[0]:.4f}, {sigma_theta[1]:.4f}]") 
                 
     torch.save(model, f"{savedir}/SVFM.pt")
 
