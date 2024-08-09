@@ -11,7 +11,7 @@ class CustomLoss(Function):
     @staticmethod
     def forward(ctx, x, mu, var):
         ctx.save_for_backward(x, mu, var)
-        loss = torch.nn.GaussianNLLLoss()(mu, x, var)
+        loss = 0.5 * ((x - mu) ** 2 / var + torch.log(var))
         return loss
  
     @staticmethod
