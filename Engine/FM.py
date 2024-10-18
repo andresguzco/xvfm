@@ -56,12 +56,3 @@ class OT_CFM(CFM):
     def sample_location_and_conditional_flow(self, x0, x1, t=None, return_noise=False):
         x0, x1 = self.ot_sampler.sample_plan(x0, x1)
         return super().sample_location_and_conditional_flow(x0, x1, t, return_noise)
-
-    
-class VFM(CFM):
-    def __init__(self, sigma: Union[float, int] = 0.0):
-        super().__init__(sigma=sigma)
-    
-    def compute_conditional_flow(self, x0, x1, t, xt):
-        t = pad_t_like_x(t, x1)
-        return (x1 - xt) / (1 - t)

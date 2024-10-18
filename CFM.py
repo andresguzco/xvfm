@@ -26,13 +26,17 @@ def main():
     sigma = 0.1
     dim = 2
     batch_size = 256
+    patience = 500
+    counter = 0
+    best_loss = 1e10
+
     model = MLP(dim=dim, time_varying=True)
     optimizer = torch.optim.Adam(model.parameters())
     FM = CFM(sigma=sigma)
     criterion = torch.nn.MSELoss()
 
-    start = time.time()
-    for k in tqdm(range(20000)):
+    # start = time.time()
+    for k in range(50000):
         optimizer.zero_grad()
 
         x0 = sample_8gaussians(batch_size)
@@ -42,21 +46,42 @@ def main():
 
         vt = model(torch.cat([xt, t[:, None]], dim=-1))
         loss = criterion(vt, ut)
+        if loss.item() < best_loss:
+            best_loss = loss.item()
+            best_FD = evaluate(xt, x1)
+            best_k = k+1
+            counter = 0
+        else:
+            counter += 1
+            if counter > patience:
+                # end = time.time()
+                # print(f"{k+1}: Loss [{best_loss:0.3f}]. FD: [{best_FD:.3f}]. Time [{(end - start):0.2f}].")
+                # start = end
+                
+                with torch.no_grad():
+                    traj = trajectories(model, sample_8gaussians(1024), steps=100)
+                    plot_trajectories(traj=traj, output=f"{savedir}/CFM_{k+1}.png")
+                    evaluate(traj[-1], sample_moons(1024))
 
+                break
+            
         loss.backward()
         optimizer.step()
 
-        if (k + 1) % 5000 == 0:
-            end = time.time()
-            print(f"{k+1}: loss {loss.item():0.3f} time {(end - start):0.2f}")
-            start = end
+        if (k + 1) % 1000 == 0:
+            # end = time.time()
+            # print(f"{k+1}: loss {loss.item():0.3f} time {(end - start):0.2f}")
+            # start = end
             
             with torch.no_grad():
                 traj = trajectories(model, sample_8gaussians(1024), steps=100)
                 plot_trajectories(traj=traj, output=f"{savedir}/CFM_{k+1}.png")
-                evaluate(traj[-1], sample_moons(1024))
+                # evaluate(traj[-1], sample_moons(1024))
 
+    if best_k == 0: best_k = 5000
+    # print(f"{best_k}: Loss [{best_loss:0.3f}]. FD: [{best_FD:.3f}]. Time [{(end - start):0.2f}].")
     torch.save(model, f"{savedir}/CFM.pt")
+    return best_loss, best_FD, best_k
 
 if __name__ == "__main__":
     main()

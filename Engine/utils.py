@@ -75,16 +75,5 @@ def evaluate(sample_1, sample_2):
 
     frechet_distance = np.sum((mu1 - mu2)**2) + np.trace(sigma1 + sigma2 - 2 * covmean)
     
-    print(f"Fréchet Distance: {frechet_distance:.4f}.\n")
-
-
-class MultivariateNormalNLLLoss(nn.Module):
-    def __init__(self):
-        super(MultivariateNormalNLLLoss, self).__init__()
-
-    def forward(self, true_samples, predicted_samples, covariance_matrix):
-        covariance_matrix = covariance_matrix + 1e-6 * torch.eye(covariance_matrix.size(-1))
-        mvn = dist.MultivariateNormal(predicted_samples, covariance_matrix)
-        log_likelihood = mvn.log_prob(true_samples)
-        nll = -torch.mean(log_likelihood)
-        return nll
+    # print(f"Fréchet Distance: {frechet_distance:.4f}.\n")
+    return frechet_distance
