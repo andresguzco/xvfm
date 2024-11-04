@@ -1,9 +1,12 @@
 import os
 import time
 import torch
+import numpy as np
 from tqdm import tqdm
-from Engine import *
 from pathlib import Path
+from xvfm.utils import sample_8gaussians, sample_moons, evaluate, plot_trajectories
+from xvfm.models.models import MLP
+from xvfm.models.FM import CFM
 
 def trajectories(model, x_0, steps):
     x_t = x_0

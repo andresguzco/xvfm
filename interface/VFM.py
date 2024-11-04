@@ -1,9 +1,13 @@
 import os
 import time
 import torch
-from tqdm import tqdm
-from Engine import *
+import numpy as np
 from pathlib import Path
+from xvfm.models.models import MLP
+from xvfm.models.FM import CFM
+from xvfm.utils import sample_8gaussians, sample_moons, evaluate, plot_trajectories
+from xvfm.models.models import MLP
+from xvfm.models.FM import CFM
 
 
 def trajectories(model, x_0, steps):
@@ -56,16 +60,10 @@ def main():
             counter = 0
         else:
             counter += 1
-            if counter > patience:
-                # print(f"Early stopping at iteration {k}")
-                # end = time.time()
-                # print(f"{k+1}: Loss [{best_loss:0.3f}]. FD: [{best_FD:.3f}]. Time [{(end - start):0.2f}].")
-                # start = end
-                
+            if counter > patience:                
                 with torch.no_grad():
                     traj = trajectories(model, sample_8gaussians(1024), steps=100)
                     plot_trajectories(traj=traj, output=f"{savedir}/VFM_{k+1}.png")
-
                 break
             
         loss.backward()

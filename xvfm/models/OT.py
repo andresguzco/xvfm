@@ -8,24 +8,13 @@ from functools import partial
 class OTSampler:
     def __init__(
             self, 
-            method: str, 
             reg: float = 0.05, 
             reg_m: float = 1.0, 
             normalize_cost: bool = False, 
             warn: bool = True
         ) -> None:
 
-        if method == "exact":
-            self.ot_fn = pot.emd
-        elif method == "sinkhorn":
-            self.ot_fn = partial(pot.sinkhorn, reg=reg)
-        elif method == "unbalanced":
-            self.ot_fn = partial(pot.unbalanced.sinkhorn_knopp_unbalanced, reg=reg, reg_m=reg_m)
-        elif method == "partial":
-            self.ot_fn = partial(pot.partial.entropic_partial_wasserstein, reg=reg)
-        else:
-            raise ValueError(f"Unknown method: {method}")
-        
+        self.ot_fn = pot.emd
         self.reg = reg
         self.reg_m = reg_m
         self.normalize_cost = normalize_cost

@@ -1,21 +1,11 @@
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
-from matplotlib.patches import Ellipse
-from os.path import join as pjoin
-inv = np.linalg.inv 
 import matplotlib
-
-
-
-import pandas as pd
+import numpy as np
 import seaborn as sns
 import pub_ready_plots as prp
-import matplotlib.pyplot as plt
+from os.path import join as pjoin
+
 
 def main():
-
-
     sns.set_style("whitegrid")
     sns.set_palette("pastel")
 
@@ -76,17 +66,15 @@ def main():
         xhat = np.array([8., 3.])
 
         for _ in range(10):
-                g = -0.3 * inv(A) @ fgrad(*xhat)
+                g = -0.3 * np.linalg.inv(A) @ fgrad(*xhat)
                 axs[1].arrow(*xhat, *g, head_width=0.4, color="black")
                 xhat += g
 
         axs[1].set_title(r"$\theta_{t+1} = \theta_t - \gamma \: I_\varepsilon (\theta) ^{-1}\nabla_\theta \mathcal{L}_{\text{VFM}}(\theta)$")
         axs[1].set_xticks([])
         axs[1].set_yticks([])
-        # axs[1].tight_layout()
 
     fig.savefig(pjoin("Results", "Optimization.pdf"), dpi=300, bbox_inches='tight')
-    # plt.show()
 
 if __name__ == "__main__":
     main()

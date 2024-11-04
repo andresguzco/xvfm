@@ -1,16 +1,12 @@
 import os
-import time
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from tqdm import tqdm
 from Engine import * 
 from pathlib import Path
 from torchvision import datasets, transforms
-from torch.autograd import Function
 from torch.utils.data import DataLoader
-from torcheval.metrics import FrechetInceptionDistance
 
 
 def binarize(image):
@@ -54,7 +50,6 @@ def main():
     optimizer = torch.optim.Adam(model.parameters())
     criterion = nn.CrossEntropyLoss()
 
-    # start = time.time()
 
     for k in range(5000):
         model.train()
@@ -91,27 +86,6 @@ def main():
             optimizer.step()
             break 
 
-        # if (k + 1) % 1000 == 0:
-            # end = time.time()
-            # print(f"{k+1}: Loss [{loss.item():0.3f}]. Time [{(end - start):0.2f}]")
-            # start = end
-
-            # model.eval()
-            # correct = 0
-            # total = 0
-
-            # with torch.no_grad():
-            #     for images, labels in test_loader:
-            #         images = images.view(images.size(0), -1)
-            #         outputs = model(images)
-            #         _, predicted = torch.max(outputs.data, 1)
-            #         total += labels.size(0)
-            #         correct += (predicted == labels).sum().item()
-
-            # accuracy = 100 * correct / total
-            # print(f"Accuracy after {k+1} iterations: {accuracy:.2f}%")
-
-    # print(f"{best_k}: Loss [{best_loss:0.6f}]. Accuracy: [{best_accuracy:.3f}]. Time [{(end - start):0.2f}].")
     torch.save(model, f"{savedir}/CatFlow.pt")
     return best_loss, best_accuracy, best_k
 

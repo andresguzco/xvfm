@@ -1,15 +1,10 @@
 import math
 import torch
-import torch.nn as nn
-import torch.distributions as dist
 import numpy as np
 import matplotlib.pyplot as plt
 
-from scipy.stats import energy_distance
 from scipy.linalg import sqrtm
 from torchdyn.datasets import generate_moons
-from scipy.spatial.distance import directed_hausdorff
-
 
 
 def eight_normal_sample(n, dim, scale=1, var=1):
@@ -74,6 +69,5 @@ def evaluate(sample_1, sample_2):
             covmean = covmean.real
 
     frechet_distance = np.sum((mu1 - mu2)**2) + np.trace(sigma1 + sigma2 - 2 * covmean)
-    
     # print(f"Fréchet Distance: {frechet_distance:.4f}.\n")
     return frechet_distance
