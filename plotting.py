@@ -74,7 +74,7 @@ def main():
         axs[1].set_xticks([])
         axs[1].set_yticks([])
 
-    fig.savefig(pjoin("Results", "Optimization.pdf"), dpi=300, bbox_inches='tight')
+    fig.savefig(pjoin("results", "optimization.pdf"), dpi=300, bbox_inches='tight')
 
 if __name__ == "__main__":
     main()
