@@ -4,7 +4,7 @@ from torch.distributions.normal import Normal
 from torch.distributions.gamma import Gamma
 from torch.distributions.uniform import Uniform
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
-from gmm.kls_gmm import posterior_z
+from kls_gmm import posterior_z
 
 class HMC():
     def __init__(self, S, B, N, K, D, hmc_num_steps, leapfrog_step_size, leapfrog_num_steps, CUDA, device):

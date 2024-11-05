@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import Ellipse
 from resampler import Resampler
-from gmm.objectives import apg_objective, bpg_objective, gibbs_objective, hmc_objective
-from gmm.hmc_sampler import HMC
+from objectives import apg_objective, bpg_objective, gibbs_objective, hmc_objective
+from hmc import HMC
 
     
 def density_all_instances(models, data, sample_size, K, num_sweeps, lf_step_size, lf_num_steps, bpg_factor, CUDA, device, batch_size=100):

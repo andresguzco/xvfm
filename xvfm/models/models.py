@@ -19,6 +19,19 @@ class MLP(torch.nn.Module):
 
     def forward(self, x):
         return self.net(x)
+    
+
+class MLPS(torch.nn.Module):
+    def __init__(self, dim, time_varying):
+        super(MLPS, self).__init__()
+        self.mu = MLP(dim=dim, time_varying=time_varying)
+        self.sigma = torch.nn.Parameter(torch.ones(2))
+        self.pos_filter = torch.nn.ReLU()
+
+    def forward(self, x, params=None):
+        mu = self.mu(x)
+        sigma = self.pos_filter(self.sigma)
+        return mu, sigma
 
 
 class GradModel(torch.nn.Module):

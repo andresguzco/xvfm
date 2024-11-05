@@ -4,7 +4,7 @@ from torch.distributions.normal import Normal
 from torch.distributions.gamma import Gamma
 from torch.distributions.uniform import Uniform
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
-from gmm.kls_gmm import kls_eta, posterior_eta, posterior_z
+from kls_gmm import kls_eta, posterior_eta, posterior_z
 
 def apg_objective(models, x, result_flags, num_sweeps, block, resampler):
     """

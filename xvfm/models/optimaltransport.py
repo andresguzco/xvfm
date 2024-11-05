@@ -2,7 +2,6 @@ import torch
 import warnings
 import ot as pot
 import numpy as np
-from functools import partial
 
 
 class OTSampler:

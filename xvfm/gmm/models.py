@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.distributions.normal import Normal
 from torch.distributions.gamma import Gamma
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
-from gmm.kls_gmm import posterior_eta
+from kls_gmm import posterior_eta
 import probtorch
 
 class Enc_rws_eta(nn.Module):

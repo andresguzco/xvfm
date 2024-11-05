@@ -2,7 +2,7 @@ import os
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
-from gmm.evaluation import plot_cov_ellipse
+from evaluation import plot_cov_ellipse
 from torch.distributions.gamma import Gamma
 from torch.distributions.normal import Normal
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
