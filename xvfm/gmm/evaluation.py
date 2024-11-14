@@ -1,16 +1,14 @@
-import os
 import time
+import torch
 import numpy as np
 import pandas as pd
-import torch
-import torch.nn.functional as F
-from torch.distributions.one_hot_categorical import OneHotCategorical as cat
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+
 from matplotlib.patches import Ellipse
-from resampler import Resampler
-from objectives import apg_objective, bpg_objective, gibbs_objective, hmc_objective
-from hmc import HMC
+from xvfm.gmm.resampler import Resampler
+from xvfm.gmm.objectives import apg_objective, bpg_objective, gibbs_objective, hmc_objective
+from xvfm.gmm.hmc import HMC
 
     
 def density_all_instances(models, data, sample_size, K, num_sweeps, lf_step_size, lf_num_steps, bpg_factor, CUDA, device, batch_size=100):

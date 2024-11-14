@@ -1,10 +1,10 @@
 import torch
 import torch.nn.functional as F
-from torch.distributions.normal import Normal
+
 from torch.distributions.gamma import Gamma
-from torch.distributions.uniform import Uniform
+from xvfm.gmm.kls_gmm import posterior_eta, posterior_z
+from torch.distributions.normal import Normal
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
-from kls_gmm import kls_eta, posterior_eta, posterior_z
 
 def apg_objective(models, x, result_flags, num_sweeps, block, resampler):
     """
@@ -113,50 +113,66 @@ def apg_update_joint(enc_apg_z, enc_apg_eta, generative, x, z_old, tau_old, mu_o
     """
     Jointly update all the variables
     """
+
     q_f_eta = enc_apg_eta(x, z=z_old, prior_ng=generative.prior_ng, sampled=True) 
     p_f_eta = generative.eta_prior(q=q_f_eta)
+
     log_q_f_eta = q_f_eta['means'].log_prob.sum(-1).sum(-1) + q_f_eta['precisions'].log_prob.sum(-1).sum(-1)
     log_p_f_eta = p_f_eta['means'].log_prob.sum(-1).sum(-1) + p_f_eta['precisions'].log_prob.sum(-1).sum(-1)
+
     tau = q_f_eta['precisions'].value
     mu = q_f_eta['means'].value
+
     q_f_z = enc_apg_z(x, tau=tau, mu=mu, sampled=True)
     p_f_z = generative.z_prior(q=q_f_z)
+
     log_q_f_z = q_f_z['states'].log_prob.sum(-1)
     log_p_f_z = p_f_z['states'].log_prob.sum(-1)
+
     z = q_f_z['states'].value
+
     ll_f = generative.log_prob(x, z=z, tau=tau, mu=mu, aggregate=True)
     log_w_f = ll_f + log_p_f_eta - log_q_f_eta - log_q_f_z + log_p_f_z
-    ## backward
+
+    # Backward
     q_b_z = enc_apg_z(x, tau=tau, mu=mu, sampled=False, z_old=z_old)
     p_b_z = generative.z_prior(q=q_b_z)
+
     log_q_b_z = q_b_z['states'].log_prob.sum(-1)
     log_p_b_z = p_b_z['states'].log_prob.sum(-1)
+
     q_b_eta = enc_apg_eta(x, z=z_old, prior_ng=generative.prior_ng, sampled=False, tau_old=tau_old, mu_old=mu_old)
     p_b_eta = generative.eta_prior(q=q_b_eta)
+
     log_q_b_eta = q_b_eta['means'].log_prob.sum(-1).sum(-1) + q_b_eta['precisions'].log_prob.sum(-1).sum(-1)
     log_p_b_eta = p_b_eta['means'].log_prob.sum(-1).sum(-1) + p_b_eta['precisions'].log_prob.sum(-1).sum(-1)
+
     ll_b = generative.log_prob(x, z=z_old, tau=tau_old, mu=mu_old, aggregate=True)
     log_w_b = ll_b + log_p_b_eta - log_q_b_eta + log_p_b_z - log_q_b_z
     log_w = (log_w_f - log_w_b).detach()
+
     w = F.softmax(log_w, 0).detach()
+
     if result_flags['loss_required']:
         loss = (w * (- log_q_f_eta - log_q_f_z)).sum(0).mean()
         trace['loss'].append(loss.unsqueeze(0))
+
     if result_flags['ess_required']:
         ess = (1. / (w**2).sum(0))
         trace['ess'].append(ess.unsqueeze(0)) 
+
     if result_flags['mode_required']:
-        E_tau = (q_f['precisions'].dist.concentration / q_f['precisions'].dist.rate).mean(0).detach()
-        E_mu = q_f['means'].dist.loc.mean(0).detach()
+        E_tau = (q_f_eta['precisions'].dist.concentration / q_f_eta['precisions'].dist.rate).mean(0).detach()
+        E_mu = q_f_eta['means'].dist.loc.mean(0).detach()
         trace['E_tau'].append(E_tau.unsqueeze(0))
         trace['E_mu'].append(E_mu.unsqueeze(0))
-        E_z = q_f['states'].dist.probs.mean(0).detach()
+        E_z = q_f_z['states'].dist.probs.mean(0).detach()
         trace['E_z'].append(z.unsqueeze(0))
+
     if result_flags['density_required']:
         log_joint = (ll_f + log_p_f_eta + log_p_f_z).detach()
         trace['density'].append(log_joint.unsqueeze(0))
     return log_w, tau, mu, z, trace
-
 
 def apg_update_eta(enc_apg_eta, generative, x, z, tau_old, mu_old, trace, result_flags):
     """
@@ -164,34 +180,46 @@ def apg_update_eta(enc_apg_eta, generative, x, z, tau_old, mu_old, trace, result
     """
     q_f = enc_apg_eta(x, z=z, prior_ng=generative.prior_ng, sampled=True) ## forward kernel
     p_f = generative.eta_prior(q=q_f)
+
     log_q_f = q_f['means'].log_prob.sum(-1).sum(-1) + q_f['precisions'].log_prob.sum(-1).sum(-1)
     log_p_f = p_f['means'].log_prob.sum(-1).sum(-1) + p_f['precisions'].log_prob.sum(-1).sum(-1)
+
     tau = q_f['precisions'].value
     mu = q_f['means'].value
+
     ll_f = generative.log_prob(x, z=z, tau=tau, mu=mu, aggregate=True)
     log_w_f = ll_f + log_p_f - log_q_f
-    ## backward
+
+    # Backward
     q_b = enc_apg_eta(x, z=z, prior_ng=generative.prior_ng, sampled=False, tau_old=tau_old, mu_old=mu_old)
     p_b = generative.eta_prior(q=q_b)
+
     log_q_b = q_b['means'].log_prob.sum(-1).sum(-1) + q_b['precisions'].log_prob.sum(-1).sum(-1)
     log_p_b = p_b['means'].log_prob.sum(-1).sum(-1) + p_b['precisions'].log_prob.sum(-1).sum(-1)
+
     ll_b = generative.log_prob(x, z=z, tau=tau_old, mu=mu_old, aggregate=True)
     log_w_b = ll_b + log_p_b - log_q_b
     log_w = (log_w_f - log_w_b).detach()
+
     w = F.softmax(log_w, 0).detach()
+
     if result_flags['loss_required']:
         loss = (w * (- log_q_f)).sum(0).mean()
         trace['loss'].append(loss.unsqueeze(0))
+
     if result_flags['ess_required']:
         ess = (1. / (w**2).sum(0))
         trace['ess'].append(ess.unsqueeze(0)) # 1-by-B tensor
+
     if result_flags['mode_required']:
         E_tau = (q_f['precisions'].dist.concentration / q_f['precisions'].dist.rate).mean(0).detach()
         E_mu = q_f['means'].dist.loc.mean(0).detach()
         trace['E_tau'].append(E_tau.unsqueeze(0))
         trace['E_mu'].append(E_mu.unsqueeze(0))
+
     if result_flags['density_required']:
         trace['density'].append(log_p_f.unsqueeze(0)) # 1-by-B-length vector
+
     return log_w, tau, mu, trace
 
 def apg_update_z(enc_apg_z, generative, x, tau, mu, z_old, trace, result_flags):
@@ -201,29 +229,38 @@ def apg_update_z(enc_apg_z, generative, x, tau, mu, z_old, trace, result_flags):
     """
     q_f = enc_apg_z(x, tau=tau, mu=mu, sampled=True)
     p_f = generative.z_prior(q=q_f)
+
     log_q_f = q_f['states'].log_prob
     log_p_f = p_f['states'].log_prob
+
     z = q_f['states'].value
     ll_f = generative.log_prob(x, z=z, tau=tau, mu=mu, aggregate=False)
     log_w_f = ll_f + log_p_f - log_q_f
-    ## backward
+
+    # Backward
     q_b = enc_apg_z(x, tau=tau, mu=mu, sampled=False, z_old=z_old)
     p_b = generative.z_prior(q=q_b)
+
     log_q_b = q_b['states'].log_prob
     log_p_b = p_b['states'].log_prob
+
     ll_b = generative.log_prob(x, z=z_old, tau=tau, mu=mu, aggregate=False)
     log_w_b = ll_b + log_p_b - log_q_b
     log_w_local = (log_w_f - log_w_b).detach()
     w_local = F.softmax(log_w_local, 0).detach()
     log_w = log_w_local.sum(-1)
+
     if result_flags['loss_required']:
         loss = (w_local * (- log_q_f)).sum(0).sum(-1).mean()
         trace['loss'][-1] = trace['loss'][-1] + loss.unsqueeze(0)
+
     if result_flags['mode_required']:
         E_z = q_f['states'].dist.probs.mean(0).detach()
         trace['E_z'].append(E_z.unsqueeze(0))
+
     if result_flags['density_required']:
         trace['density'][-1] = trace['density'][-1] + (ll_f + log_p_f).sum(-1).unsqueeze(0)
+
     return log_w, z, trace
 
 def resample_variables(resampler, tau, mu, z, log_weights):
@@ -233,7 +270,6 @@ def resample_variables(resampler, tau, mu, z, log_weights):
     z = resampler.resample_4dims(var=z, ancestral_index=ancestral_index)
     return tau, mu, z
 
-
 def gibbs_objective(models, x, result_flags, num_sweeps):
     """
     The Gibbs sampler objective 
@@ -241,10 +277,13 @@ def gibbs_objective(models, x, result_flags, num_sweeps):
     trace = {'density' : []} 
     (enc_rws_eta, enc_rws_z, _, generative) = models
     _, tau, mu, z, trace = oneshot(enc_rws_eta, enc_rws_z, generative, x, trace, result_flags)
+
     for m in range(num_sweeps-1):
         tau, mu, z, trace = gibbs_sweep(generative, x, z, trace)
+
     if result_flags['density_required']:
         trace['density'] = torch.cat(trace['density'], 0)  # (num_sweeps) * S * B
+
     return trace
 
 def gibbs_sweep(generative, x, z, trace):
@@ -260,16 +299,22 @@ def gibbs_sweep(generative, x, z, trace):
 
     E_tau = (post_alpha / post_beta).mean(0)
     E_mu = post_mu.mean(0)
+
     tau = Gamma(post_alpha, post_beta).sample()
     mu = Normal(post_mu, 1. / (post_nu * tau).sqrt()).sample()
+
     posterior_logits = posterior_z(x, tau, mu, generative.prior_pi)
+
     E_z = posterior_logits.exp().mean(0)
     z = cat(logits=posterior_logits).sample()
+
     ll = generative.log_prob(x, z=z, tau=tau, mu=mu, aggregate=True)
+
     log_prior_tau = Gamma(generative.prior_alpha, generative.prior_beta).log_prob(tau).sum(-1).sum(-1)
     log_prior_mu = Normal(generative.prior_mu, 1. / (generative.prior_nu * tau).sqrt()).log_prob(mu).sum(-1).sum(-1)
     log_prior_z = cat(probs=generative.prior_pi).log_prob(z).sum(-1)
     log_joint = ll + log_prior_tau + log_prior_mu + log_prior_z
+
     trace['density'].append(log_joint.unsqueeze(0)) # 1-by-B-length vector
     return tau, mu, z, trace
 

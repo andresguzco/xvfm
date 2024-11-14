@@ -1,7 +1,8 @@
 import torch
+import torch.nn.functional as F
+
 from torch.distributions.categorical import Categorical
 from torch.distributions.uniform import Uniform
-import torch.nn.functional as F
 
 
 class Resampler():
@@ -44,7 +45,7 @@ class Resampler():
         return ancestral_index
 
     def resample_4dims(self, var, ancestral_index):
-        sample_dim, batch_dim, dim3, dim4 = var.shape
+        sample_dim, batch_dim, dim3, dim4 = var.shape 
         gather_index = ancestral_index.unsqueeze(-1).unsqueeze(-1).repeat(1, 1, dim3, dim4)
         return torch.gather(var, 0, gather_index)
 

@@ -9,7 +9,7 @@ from xvfm.gmm.apg_training import train, init_apg_models, init_rws_models
 def main():
     parser = argparse.ArgumentParser('GMM Experiment')
 
-    parser.add_argument('--data_dir', default='../../data/gmm/')
+    parser.add_argument('--data_dir', default='data/gmm/')
     parser.add_argument('--device', default=0, type=int)
     parser.add_argument('--num_epochs', default=50, type=int)
     parser.add_argument('--batch_size', default=20, type=int)
@@ -45,6 +45,7 @@ def main():
             load_version=None, 
             lr=args.lr
             )
+        
         train(
             rws_objective, 
             optimizer, 
@@ -55,7 +56,8 @@ def main():
             sample_size, 
             args.batch_size, 
             CUDA, 
-            device
+            device,
+            model_version
             )
         
     elif args.num_sweeps > 1: # apg sampler
@@ -91,8 +93,13 @@ def main():
             device, 
             num_sweeps=args.num_sweeps, 
             block=args.block_strategy, 
-            resampler=resampler
+            resampler=resampler,
+            model_version=model_version
             )
         
     else:
         raise ValueError
+    
+
+if __name__ == "__main__":
+    main()

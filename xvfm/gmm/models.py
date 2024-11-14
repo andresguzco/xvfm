@@ -1,11 +1,13 @@
 import torch
+import probtorch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.distributions.normal import Normal
+
+from xvfm.gmm.kls_gmm import posterior_eta
 from torch.distributions.gamma import Gamma
+from torch.distributions.normal import Normal
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
-from kls_gmm import posterior_eta
-import probtorch
+
 
 class Enc_rws_eta(nn.Module):
     """
@@ -25,6 +27,7 @@ class Enc_rws_eta(nn.Module):
         q = probtorch.Trace()
         (prior_alpha, prior_beta, prior_mu, prior_nu) = prior_ng
         q_alpha, q_beta, q_mu, q_nu = posterior_eta(self.ob(ob) , self.gamma(ob), prior_alpha, prior_beta, prior_mu, prior_nu)
+        
         if sampled: ## used in forward transition kernel where we need to sample
             tau = Gamma(q_alpha, q_beta).sample()
             q.gamma(q_alpha,
@@ -47,6 +50,7 @@ class Enc_rws_eta(nn.Module):
                      name='means')
         return q
     
+
 class Enc_apg_eta(nn.Module):
     """
     Conditional proposal of {mean, covariance} i.e. \eta
@@ -103,18 +107,22 @@ class Enc_apg_z(nn.Module):
         q = probtorch.Trace()
         gamma_list = []
         N = ob.shape[-2]
+
         for k in range(mu.shape[-2]):
             data_ck = torch.cat((ob, mu[:, :, k, :].unsqueeze(-2).repeat(1,1,N,1), tau[:, :, k, :].unsqueeze(-2).repeat(1, 1, N, 1)), -1) ## S * B * N * 3D
             gamma_list.append(self.pi_log_prob(data_ck))
         q_probs = F.softmax(torch.cat(gamma_list, -1), -1)
+
         if sampled == True:
             z = cat(q_probs).sample()
             _ = q.variable(cat, probs=q_probs, value=z, name='states')
         else:
             _ = q.variable(cat, probs=q_probs, value=z_old, name='states')
+
         return q
     
-class Generative():
+    
+class Generative:
     """
     The generative model of GMM
     """
@@ -136,6 +144,7 @@ class Generative():
                 self.prior_pi = self.prior_pi.cuda()
 
         self.prior_ng = (self.prior_alpha, self.prior_beta, self.prior_mu, self.prior_nu) ## this tuple is needed as parameter in enc_eta as enc_rws
+
     def eta_prior(self, q):
         p = probtorch.Trace()
         ## prior distributions

@@ -1,8 +1,10 @@
 import os
 import torch
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
-from evaluation import plot_cov_ellipse
+
+from xvfm.gmm.evaluation import plot_cov_ellipse
 from torch.distributions.gamma import Gamma
 from torch.distributions.normal import Normal
 from torch.distributions.one_hot_categorical import OneHotCategorical as cat
@@ -68,17 +70,21 @@ class Sim_GMM():
         np.save(PATH + 'assignment', ASSIGNMENT)
 
 if __name__ == '__main__':
-    import argparse
+
     parser = argparse.ArgumentParser('GMM_DATA')
-    parser.add_argument('--num_instances', default=10000, type=int)
     parser.add_argument('--data_path', default='../../data/gmm/')
+
+    parser.add_argument('--num_instances', default=20000, type=int)
     parser.add_argument('--N', default=60, help='number of points in one GMM instance')
     parser.add_argument('--K', default=3, help='number of clusters in one GMM instance')
     parser.add_argument('--D', default=2, help='dimension of data points')
+
     parser.add_argument('--alpha', default=2.0, help='alpha parameter of the normal-gamma prior')
     parser.add_argument('--beta', default=2.0, help='beta parameter of the normal-gamma prior')
     parser.add_argument('--mu', default=0.0, help='mu parameter of the normal-gamma prior')
     parser.add_argument('--nu', default=0.1, help='nu/lambda parameter of the normal-gamma prior')
+
     args = parser.parse_args()
+
     simulator = Sim_GMM(args.N, args.K, args.D, args.alpha, args.beta, args.mu, args.nu)
     simulator.sim_save_data(args.num_instances, args.data_path)

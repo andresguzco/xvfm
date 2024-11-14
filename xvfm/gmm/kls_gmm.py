@@ -168,12 +168,10 @@ def kls_NGs(q_alpha, q_beta, q_mu, q_nu, p_alpha, p_beta, p_mu, p_nu):
     kl_in = kl_NG_NG(p_alpha, p_beta, p_mu, p_nu, q_alpha, q_beta, q_mu, q_nu).sum(-1)
     return kl_ex, kl_in
 
-from torch._six import inf
-
 def kl_cat_cat(p_logits, q_logits, EPS=-1e14):
     p_probs= p_logits.exp()
     ## To prevent from infinite KL due to ill-defined support of q
-    q_logits[q_logits == -inf] = EPS
+    q_logits[q_logits == -float("Inf")] = EPS
     t = p_probs * (p_logits - q_logits)
     # t[(q_probs == 0).expand_as(t)] = inf
     t[(p_probs == 0).expand_as(t)] = 0
