@@ -1,0 +1,22 @@
+Tue Nov 19 12:44:34 EST 2024: Job 13971489 is allocated resources.
+Inside slurm_launcher.slrm (/var/spool/slurmd/job13971489/slurm_script). received arguments: main.py --vfm_loss=Gaussian
+Training vfm model with the following configuration:
+Using loss function: Gaussian with learned sigma
+Device: cuda, Epochs: 5000, Batch Size: 256, Sigma: 0.1
+  0%|          | 0/5000 [00:00<?, ?it/s]  0%|          | 0/5000 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/h/aguzmanc/XVFM/main.py", line 137, in <module>
+    main(args)
+  File "/h/aguzmanc/XVFM/main.py", line 82, in main
+    train_model(args, model, flow_model, criterion, optimizer, device, savedir, args.verbose)
+  File "/h/aguzmanc/XVFM/main.py", line 119, in train_model
+    loss = criterion(mu_theta, x_1, sigma_theta.repeat(x_1.shape[0], 1))
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/loss.py", line 442, in forward
+    return F.gaussian_nll_loss(
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/functional.py", line 3278, in gaussian_nll_loss
+    raise ValueError("var is of incorrect size")
+ValueError: var is of incorrect size

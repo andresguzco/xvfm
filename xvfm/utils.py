@@ -42,6 +42,7 @@ def sample_8gaussians(n):
 
 def plot_trajectories(traj, output=None):
     n = 2000
+    traj = traj.cpu().numpy()
     plt.figure(figsize=(6, 6))
     plt.scatter(traj[0, :n, 0], traj[0, :n, 1], s=10, alpha=0.8, c="black")
     plt.scatter(traj[:-2, :n, 0], traj[:-2, :n, 1], s=0.2, alpha=0.2, c="olive")

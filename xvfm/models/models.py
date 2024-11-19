@@ -17,7 +17,8 @@ class MLP(torch.nn.Module):
             torch.nn.Linear(w, out_dim),
         )
 
-    def forward(self, x):
+    def forward(self, x_t, t):
+        x = torch.cat([x_t, t[:, None]], dim=-1) if self.time_varying else x_t
         return self.net(x)
     
 
@@ -26,11 +27,10 @@ class MLPS(torch.nn.Module):
         super(MLPS, self).__init__()
         self.mu = MLP(dim=dim, time_varying=time_varying)
         self.sigma = torch.nn.Parameter(torch.ones(2))
-        self.pos_filter = torch.nn.ReLU()
 
-    def forward(self, x, params=None):
-        mu = self.mu(x)
-        sigma = self.pos_filter(self.sigma)
+    def forward(self, x, t):
+        mu = self.mu(x, t)
+        sigma = torch.exp(self.sigma)
         return mu, sigma
 
 

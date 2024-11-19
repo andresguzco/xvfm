@@ -7,7 +7,7 @@ from typing import Union
 class FlowModel(ABC):
 
     @abstractmethod
-    def interpolation(self, x_t, t):
+    def interpolation(self, x_t, t, y=None):
         pass
 
     @abstractmethod
@@ -28,18 +28,18 @@ class FlowModel(ABC):
         else:
             return t, xt, ut
 
-    def integration(self, model, x_0, steps, device=None):
+    def integration(self, model, x_0, steps, device=None, y=None):
         xt = x_0.to(device) if device else x_0
         delta_t = 1.0 / steps
 
-        trajectory = torch.zeros((steps + 1, *xt.shape), device=xt.device)
+        trajectory = torch.zeros((steps + 1, *xt.shape), device=device)
         trajectory[0] = xt
         
-        time_steps = torch.linspace(0, 1, steps, device=xt.device).unsqueeze(1)
+        time_steps = torch.linspace(0, 1, steps, device=device).unsqueeze(1)
 
         for k in range(steps):
-            t = time_steps[k].expand(xt.shape[0], 1)
-            v_t = self.interpolation(model, xt, t)
+            t = self.pad_t_like_x(time_steps[k].expand(xt.shape[0]), xt)
+            v_t = self.interpolation(model, xt, t, y)
             xt = xt + v_t * delta_t
             trajectory[k + 1] = xt
 
@@ -62,9 +62,12 @@ class CFM(FlowModel):
         self.sigma = sigma
 
     @staticmethod
-    def interpolation(model, x_t, t):
+    def interpolation(model, x_t, t, y=None):
         with torch.no_grad():
-            return model(torch.cat([x_t, t], dim=-1))
+            if y is None:
+                return model(x_t, t)
+            else:
+                return model(x_t, t, y)
 
     def compute_mu_t(self, x0, x1, t):
         t = self.pad_t_like_x(t, x0)
@@ -97,15 +100,26 @@ class OT_CFM(CFM):
 
 
 class VFM(FlowModel):
-    def __init__(self, model: torch.nn.Module, sigma: Union[float, int] = 0.0):
+    def __init__(self, sigma: Union[float, int] = 0.0, learn_sigma=False):
         super().__init__()
         self.sigma = sigma
+        self.learn_sigma = learn_sigma
 
-    @staticmethod
-    def interpolation(model, x_t, t):
+    def interpolation(self, model, x_t, t, y=None):
         with torch.no_grad():
-            mu, _ = model(torch.cat([x_t, t], dim=-1))
-            v_t = (mu - x_t) / (1 - t)
+            if y is None:
+                if self.learn_sigma:
+                    mu, _ = model(x_t, t)
+                else:
+                    mu = model(x_t, t)
+                v_t = (mu - x_t) / (1 - t)
+            else:
+                if self.learn_sigma:
+                    mu, _ = model(x_t, t, y)
+                else:
+                    mu = model(x_t, t, y)
+
+                v_t = (mu - x_t) / (1 - t)
             return v_t
 
     def compute_mu_t(self, x0, x1, t):
