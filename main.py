@@ -5,14 +5,14 @@ import argparse
 import matplotlib.pyplot as plt
 
 from torchvision import datasets, transforms
-from torchvision.transforms import ToPILImage
 from torchvision.utils import make_grid
+from torchvision.transforms import ToPILImage
 
 from tqdm import tqdm
 from pathlib import Path
-from xvfm.models.models import MLP, MLPS
-from xvfm.models.unet import UNetModel
-from xvfm.models.fm import CFM, OT_CFM, VFM
+from xvfm.fm import CFM, OT_CFM, VFM
+from xvfm.unet import UNetModel
+from xvfm.models import MLP, MLPS, DMLP
 from xvfm.utils import sample_8gaussians, sample_moons, plot_trajectories
 
 
@@ -21,7 +21,7 @@ MODEL_MAP = {
         'cfm': {'flow': CFM, 'model': MLP},
         'ot': {'flow': OT_CFM, 'model': MLP},
         'vfm': {
-            True: {'flow': VFM, 'model': MLPS},
+            True: {'flow': VFM, 'model': DMLP},
             False: {'flow': VFM, 'model': MLP}
         }
     },
@@ -36,8 +36,8 @@ MODEL_MAP = {
 }
 
 CRITERION_MAP = {
-    'cfm': {'default': torch.nn.MSELoss},
-    'ot': {'default': torch.nn.MSELoss},
+    'cfm': torch.nn.MSELoss,
+    'ot': torch.nn.MSELoss,
     'vfm': {
         'MSE': torch.nn.MSELoss,
         'SSM': lambda: None,  # Placeholder for SSM loss
@@ -49,12 +49,12 @@ CRITERION_MAP = {
 def get_args():
     """Parse and return command-line arguments."""
     parser = argparse.ArgumentParser(description='Two Moon Experiment')
-    parser.add_argument('--model_type', default='vfm', type=str, help="Type of model: 'cfm', 'ot', 'vfm'")
+    parser.add_argument('--model_type', default='cfm', type=str, help="Type of model: 'cfm', 'ot', 'vfm'")
     parser.add_argument('--device', default=0, type=int, help="CUDA device number, -1 for CPU")
-    parser.add_argument('--num_epochs', default=5, type=int, help="Number of training epochs")
+    parser.add_argument('--num_epochs', default=10, type=int, help="Number of training epochs")
     parser.add_argument('--batch_size', default=128, type=int, help="Training batch size")
     parser.add_argument('--vfm_loss', default='MSE', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
-    parser.add_argument('--learn_sigma', default=False, help="Flag to learn sigma in VFM")
+    parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
     parser.add_argument('--dim', default=2, type=int, help="Dimensionality of the model input")
     parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
@@ -64,60 +64,56 @@ def get_args():
     return parser.parse_args()
 
 
-def main(args):
+def initialize_model_and_flow(args, device):
+    dataset_models = MODEL_MAP[args.dataset][args.model_type]
 
-    TRAINING_MAP = {
-        'two_moons': train_two_moons,
-        'MNIST': train_MNIST
-    }
-
-    # Check if model_type is valid
-    assert args.model_type in MODEL_MAP[args.dataset], "Model type incorrect or not implemented."
-    if args.vfm_loss == "MSE":
-        assert args.learn_sigma == False, "Learning sigma is only available with loglikelihood loss in VFM."
-    
-    device = torch.device("cuda" if torch.cuda.is_available() and args.device >= 0 else "cpu")
-
-    if args.model_type in ['cfm', 'ot']:
-        savedir = os.path.join(os.getcwd(), f"results/{args.dataset}/{args.model_type}")
+    if args.model_type == 'vfm':
+        flow = dataset_models[args.learn_sigma]['flow'](args.sigma, args.learn_sigma)
+        model = dataset_models[args.learn_sigma]['model']
     else:
-        savedir = os.path.join(os.getcwd(), f"results/{args.dataset}/{args.model_type}_{args.vfm_loss}_{'learned' if args.learn_sigma else 'fixed'}")
+        flow = dataset_models['flow'](args.sigma)
+        model = dataset_models['model']
 
+    if args.dataset == 'two_moons':
+        model = model(args.dim, time_varying=True)
+    else:  # MNIST
+        model = model(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10, class_cond=True)
+
+    return flow, model.to(device)
+
+def initialize_criterion(args):
+    if args.model_type == 'vfm':
+        return CRITERION_MAP['vfm'][args.vfm_loss]()
+    return CRITERION_MAP[args.model_type]()
+
+def save_directory(args):
+    suffix = f"{args.model_type}_{args.vfm_loss}_{'learned' if args.learn_sigma else 'fixed'}" if args.model_type == 'vfm' else args.model_type
+    return os.path.join(os.getcwd(), f"results/{args.dataset}/{suffix}")
+
+def main(args):
+    assert args.model_type in MODEL_MAP[args.dataset], "Invalid model type for dataset."
+    if args.model_type == 'vfm' and args.vfm_loss == 'MSE' and args.learn_sigma:
+        raise ValueError("Learning sigma is only available with loglikelihood loss in VFM.")
+
+    device = torch.device("cuda" if torch.cuda.is_available() and args.device >= 0 else "cpu")
+    flow_model, model = initialize_model_and_flow(args, device)
+    criterion = initialize_criterion(args)
+    optimizer = torch.optim.Adam(model.parameters())
+    savedir = save_directory(args)
     Path(savedir).mkdir(parents=True, exist_ok=True)
 
-    print(f"Training {args.model_type} model with the following configuration:")
-    if args.model_type == 'vfm':
-        print(f"Using loss function: {args.vfm_loss}", ("with fixed sigma" if args.learn_sigma == False else "with learned sigma") if args.vfm_loss != "MSE" else "")
-    print(f"Device: {device}, Epochs: {args.num_epochs}, Batch Size: {args.batch_size}, Sigma: {args.sigma}, Dataset: {args.dataset}")  
+    print(f"Training parameters: {vars(args)}")
 
-    # Initialize models and criteria using dictionary mapping
-    if args.dataset == 'two_moons':
-        if args.model_type == 'vfm':
-            flow_model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['flow'](args.sigma, args.learn_sigma)
-            model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['model'](args.dim, time_varying=True).to(device)
-        else:
-            flow_model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['flow'](args.sigma)
-            model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['model'](args.dim, time_varying=True).to(device)
-    else:
-        if args.model_type == 'vfm':
-            flow_model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['flow'](args.sigma, args.learn_sigma)
-            model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['model'](dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10, class_cond=True).to(device)
-        else:
-            flow_model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['flow'](args.sigma)
-            model = MODEL_MAP[args.dataset][args.model_type][args.learn_sigma]['model'](dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10, class_cond=True).to(device)
-
-    criterion = CRITERION_MAP[args.model_type][args.vfm_loss if args.model_type == 'vfm' else 'default']()
-
-    optimizer = torch.optim.Adam(model.parameters())
-    TRAINING_MAP[args.dataset](args, model, flow_model, criterion, optimizer, device, savedir, args.verbose)
+    training_function = two_moons if args.dataset == 'two_moons' else mnist
+    training_function(args, model, flow_model, criterion, optimizer, device, savedir)
 
     if args.save_model:
         torch.save(model.state_dict(), f"{savedir}/model.pt")
 
 
-def train_two_moons(args, model, flow_model, criterion, optimizer, device, savedir, verbose):
+def two_moons(args, model, flow_model, criterion, optimizer, device, savedir):
     """Train the model based on the given configuration."""
-    if verbose:
+    if args.verbose:
         start = time.time()
 
     for epoch in tqdm(range(args.num_epochs)):
@@ -133,19 +129,18 @@ def train_two_moons(args, model, flow_model, criterion, optimizer, device, saved
         x_1 = x_1.to(device)
         t = t.to(device)
 
+        if args.learn_sigma:
+            mu_theta, sigma_theta = model(x_t, t)
+        else:
+            mu_theta, sigma_theta = model(x_t, t), torch.tensor(args.sigma).to(device)
+
+
         if args.model_type in ['cfm', 'ot']:
-            v_t = model(x_t, t)
-            loss = criterion(v_t, u_t)
+            loss = criterion(mu_theta, u_t)
         else:  # VFM model
             if args.vfm_loss == 'MSE':
-                mu_theta = model(x_t, t)
                 loss = criterion(mu_theta, x_1)
             else:
-                if args.learn_sigma:
-                    mu_theta, sigma_theta = model(x_t, t)
-                else:
-                    mu_theta = model(x_t, t)
-                    sigma_theta = torch.tensor(args.sigma).to(device)
                 loss = criterion(mu_theta, x_1, sigma_theta.repeat(x_1.shape[0], 1))
 
         loss.backward()
@@ -154,14 +149,14 @@ def train_two_moons(args, model, flow_model, criterion, optimizer, device, saved
         if (epoch + 1) % 1000 == 0:
             end = time.time()
 
-            if verbose:
+            if args.verbose:
                 print(f"{epoch+1}: loss {loss.item():0.3f} time {(end - start):0.2f}")
 
             start = end
             traj = flow_model.integration(model, sample_8gaussians(1024), steps=args.integration_steps, device=device)
             plot_trajectories(traj=traj, output=f"{savedir}/iter_{epoch+1}.png")
 
-def train_MNIST(args, model, flow_model, criterion, optimizer, device, savedir, verbose):
+def mnist(args, model, flow_model, criterion, optimizer, device, savedir):
 
     trainset = datasets.MNIST(
         "data",
@@ -186,13 +181,25 @@ def train_MNIST(args, model, flow_model, criterion, optimizer, device, savedir, 
             x0 = torch.randn_like(x1)
 
             t, xt, ut = flow_model.sample_location_and_conditional_flow(x0, x1)
-            vt = model(xt, t, y)
-            loss = criterion(vt, ut)
+
+            if args.learn_sigma:
+                mu_theta, sigma_theta = model(xt, t, y)
+            else:
+                mu_theta = model(xt, t, y)
+                sigma_theta = torch.tensor([args.sigma]).repeat(mu_theta.shape[0], 1, 28, 28).to(device)
+
+            if args.model_type in ['cfm', 'ot']:
+                loss = criterion(mu_theta, ut)
+            else:
+                if args.vfm_loss == 'MSE':
+                    loss = criterion(mu_theta, x1)
+                else:
+                    loss = criterion(mu_theta, x1, sigma_theta)
 
             loss.backward()
             optimizer.step()
 
-            if verbose:
+            if args.verbose:
                 print(f"epoch: {epoch}, steps: {i}, loss: {loss.item():.4}", end="\r")
 
             pbar.update(1)

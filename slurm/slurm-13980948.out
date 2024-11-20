@@ -1,0 +1,20 @@
+Wed Nov 20 07:27:46 EST 2024: Job 13980948 is allocated resources.
+Inside slurm_launcher.slrm (/var/spool/slurmd/job13980948/slurm_script). received arguments: main.py --model_type vfm --num_epochs 5000 --batch_size 256 --vfm_loss Gaussian --dataset two_moons
+Training parameters: {'model_type': 'vfm', 'device': 0, 'num_epochs': 5000, 'batch_size': 256, 'vfm_loss': 'Gaussian', 'learn_sigma': True, 'integration_steps': 100, 'dim': 2, 'sigma': 0.1, 'save_model': False, 'verbose': False, 'dataset': 'two_moons'}
+  0%|          | 0/5000 [00:00<?, ?it/s]  0%|          | 0/5000 [00:02<?, ?it/s]
+Traceback (most recent call last):
+  File "/h/aguzmanc/XVFM/main.py", line 229, in <module>
+    main(args)
+  File "/h/aguzmanc/XVFM/main.py", line 108, in main
+    training_function(args, model, flow_model, criterion, optimizer, device, savedir)
+  File "/h/aguzmanc/XVFM/main.py", line 133, in two_moons
+    mu_theta, sigma_theta = model(x_t, t)
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/fs01/home/aguzmanc/XVFM/xvfm/models.py", line 56, in forward
+    return output[:, :self.outdim], output[:, self.outdim:].exp().view(-1, self.outdim, self.outdim)
+  File "/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1931, in __getattr__
+    raise AttributeError(
+AttributeError: 'DMLP' object has no attribute 'outdim'. Did you mean: 'out_dim'?
