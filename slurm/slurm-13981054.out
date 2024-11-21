@@ -1,12 +1,0 @@
-Wed Nov 20 07:36:21 EST 2024: Job 13981054 is allocated resources.
-Inside slurm_launcher.slrm (/var/spool/slurmd/job13981054/slurm_script). received arguments: main.py --model_type vfm --num_epochs 5000 --batch_size 256 --vfm_loss Gaussian --dataset two_moons
-Training parameters: {'model_type': 'vfm', 'device': 0, 'num_epochs': 5000, 'batch_size': 256, 'vfm_loss': 'Gaussian', 'learn_sigma': True, 'integration_steps': 100, 'dim': 2, 'sigma': 0.1, 'save_model': False, 'verbose': False, 'dataset': 'two_moons'}
-  0%|          | 0/5000 [00:00<?, ?it/s]  0%|          | 0/5000 [00:01<?, ?it/s]
-Traceback (most recent call last):
-  File "/h/aguzmanc/XVFM/main.py", line 229, in <module>
-    main(args)
-  File "/h/aguzmanc/XVFM/main.py", line 108, in main
-    training_function(args, model, flow_model, criterion, optimizer, device, savedir)
-  File "/h/aguzmanc/XVFM/main.py", line 144, in two_moons
-    loss = criterion(mu_theta, x_1, sigma_theta.repeat(x_1.shape[0], 1))
-RuntimeError: Number of dimensions of repeat dims can not be smaller than number of dimensions of tensor

@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=4
 # a40, 48GB, gpu[001-015], gpu[027-056]
 # rtx6000, 24GB
-#SBATCH --partition=rtx6000
+#SBATCH --partition=a40
 #SBATCH --gres=gpu:1
 # sacctmgr list qos format=Name%15,Priority,MaxWall,MaxTRESPerUser normal,m,m2,m3,m4,m5,long
 #SBATCH --qos=normal

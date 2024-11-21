@@ -1,9 +1,0 @@
-Wed Nov 20 07:23:55 EST 2024: Job 13980924 is allocated resources.
-Inside slurm_launcher.slrm (/var/spool/slurmd/job13980924/slurm_script). received arguments: main.py --model_type vfm --num_epochs 5000 --batch_size 256 --vfm_loss Gaussian --dataset two_moons --learn_sigma
-usage: main.py [-h] [--model_type MODEL_TYPE] [--device DEVICE]
-               [--num_epochs NUM_EPOCHS] [--batch_size BATCH_SIZE]
-               [--vfm_loss VFM_LOSS] [--learn_sigma LEARN_SIGMA]
-               [--integration_steps INTEGRATION_STEPS] [--dim DIM]
-               [--sigma SIGMA] [--save_model] [--verbose VERBOSE]
-               [--dataset DATASET]
-main.py: error: argument --learn_sigma: expected one argument

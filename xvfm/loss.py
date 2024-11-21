@@ -3,20 +3,15 @@ from torch.autograd import Function
 
 class MVGaussian(Function):
     @staticmethod
-    def forward(ctx, x, mu, sigma):
-        inv_sigma = torch.inverse(sigma)
-        det_sigma = torch.det(sigma)
-        diff = x - mu
-        d = x.size(-1)
-        
-        nll = 0.5 * (torch.log(det_sigma) + torch.einsum('bi,bij,bj->b', diff, inv_sigma, diff) + d * torch.log(torch.tensor(2 * torch.pi)))
-        
-        ctx.save_for_backward(x, mu, sigma, inv_sigma, diff)
+    def forward(ctx, posterior, x):
+        nll = -posterior.log_prob(x)
+        ctx.save_for_backward(x, posterior.mean, posterior.sigma)
         return nll.mean()
 
     @staticmethod
     def backward(ctx, grad_output):
-        x, mu, sigma, _, diff = ctx.saved_tensors
+        x, mu, sigma = ctx.saved_tensors
+        diff = x - mu
         
         # Empirical and expected sufficient statistics
         empirical_mu = x.mean(dim=0)
@@ -42,20 +37,16 @@ class MVGaussian(Function):
 
 class MVGaussianNatural(Function):
     @staticmethod
-    def forward(ctx, x, mu, sigma):
-        inv_sigma = torch.inverse(sigma)
-        det_sigma = torch.det(sigma)
-        diff = x - mu
-        d = x.size(-1)
-        
-        nll = 0.5 * (torch.log(det_sigma) + torch.einsum('bi,bij,bj->b', diff, inv_sigma, diff) + d * torch.log(torch.tensor(2 * torch.pi)))
-        
-        ctx.save_for_backward(x, mu, sigma, inv_sigma, diff)
+    def forward(ctx, posterior, x):
+        nll = -posterior.log_prob(x)
+        ctx.save_for_backward(x, posterior.mean, posterior.sigma)
         return nll.mean()
 
     @staticmethod
     def backward(ctx, grad_output):
-        x, mu, sigma, inv_sigma, diff = ctx.saved_tensors
+        x, mu, sigma = ctx.saved_tensors
+        inv_sigma = torch.inverse(sigma)
+        diff = x - mu
         
         # Empirical and expected sufficient statistics
         empirical_mu = x.mean(dim=0)
