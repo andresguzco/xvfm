@@ -30,13 +30,13 @@ def get_args():
     parser.add_argument('--num_epochs', default=10, type=int, help="Number of training epochs")
     parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
-    parser.add_argument('--loss_fn', default='MSE', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
+    parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
     parser.add_argument('--learn_sigma', type=bool, default=False, help="Flag to learn sigma in VFM")
     parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
     parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
     parser.add_argument('--save_model', action='store_true', help="Flag to save the trained model")
-    parser.add_argument('--dataset', default='mnist', type=str, help="Dataset to train the model on")
+    parser.add_argument('--dataset', default='two_moons', type=str, help="Dataset to train the model on")
     parser.add_argument('--log_interval', default=1, type=int, help="Logging interval for training")
     return parser.parse_args()
 
@@ -69,7 +69,7 @@ def main(args):
         interpolator=OTInterpolator(sigma_min=args.sigma),
     ).to(device)
 
-    criterion = CRITERION_MAP[args.loss_fn]()
+    criterion = CRITERION_MAP[args.loss_fn]
     optimizer = torch.optim.Adam(flow_model.variational_dist.posterior_mu_model.parameters(), lr=args.lr)
 
     num_params = sum(p.numel() for p in flow_model.variational_dist.posterior_mu_model.parameters())

@@ -47,7 +47,7 @@ class FlowModel(torch.nn.Module, ABC):
                 trajectory[0] = xt
                 time_steps = torch.linspace(0, 1, steps, device=device).unsqueeze(1)
 
-                for k in range(steps):
+                for k in range(steps - 1):
                     t = time_steps[k].expand(xt.shape[0], 1)
                     v_t = self.velocity_field(xt, t)
                     xt = xt + v_t * delta_t
