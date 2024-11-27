@@ -14,11 +14,12 @@ from xvfm.models import MLP
 from data.two_moons import generate_two_moons
 from xvfm.variational import GaussianVariationalDist
 from xvfm.interpolator import OTInterpolator
+from xvfm.loss import SSMGaussian
 
 
 CRITERION_MAP = {
     'MSE': lambda posterior, x_1: torch.mean((x_1 - posterior.mean) ** 2),
-    'SSM': lambda: None,  # Placeholder for SSM loss,
+    'SSM': lambda posterior, x_1: SSMGaussian(posterior, x_1),  # Placeholder for SSM loss,
     'Gaussian': lambda posterior, x_1: -1 * posterior.log_prob(x_1).mean()
 }
 
@@ -31,21 +32,30 @@ def get_args():
     parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
     parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
-    parser.add_argument('--learn_sigma', type=bool, default=False, help="Flag to learn sigma in VFM")
+    parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
     parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
     parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
     parser.add_argument('--save_model', action='store_true', help="Flag to save the trained model")
-    parser.add_argument('--dataset', default='two_moons', type=str, help="Dataset to train the model on")
+    parser.add_argument('--dataset', default='mnist', type=str, help="Dataset to train the model on")
     parser.add_argument('--log_interval', default=1, type=int, help="Logging interval for training")
     return parser.parse_args()
 
 
 def get_model(args):
-    if args.dataset == 'two_moons':
-        return MLP(dim=2)
-    else:  # MNIST
-        return UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10)
+    if args.dataset == 'two_moons' and not args.learn_sigma:
+        return (MLP(dim=2), None)
+    elif args.dataset == 'two_moons' and args.learn_sigma:
+        return (MLP(dim=2), MLP(dim=0, out_dim=2))
+    elif args.dataset == 'mnist' and not args.learn_sigma:
+        return (UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), None)
+    elif args.dataset == 'mnist' and args.learn_sigma:
+        return (
+            UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
+            MLP(dim=0, out_dim=28*28)
+        )
+    else:
+        raise ValueError("Invalid dataset argument")
 
 def save_directory(args):
     if args.model_type == 'vfm' and args.learn_sigma:
@@ -65,15 +75,16 @@ def main(args):
 
     flow_model = VFM(
         prior=StandardGaussianPrior(28**2) if args.dataset == 'mnist' else MultiGaussianPrior(2),
-        variational_dist=GaussianVariationalDist(get_model(args)),
+        variational_dist=GaussianVariationalDist(*get_model(args)),
         interpolator=OTInterpolator(sigma_min=args.sigma),
     ).to(device)
 
     criterion = CRITERION_MAP[args.loss_fn]
-    optimizer = torch.optim.Adam(flow_model.variational_dist.posterior_mu_model.parameters(), lr=args.lr)
 
-    num_params = sum(p.numel() for p in flow_model.variational_dist.posterior_mu_model.parameters())
-    print(f"Number of parameters: {num_params}")
+    params = flow_model.variational_dist.get_parameters()
+    optimizer = torch.optim.Adam(params, lr=args.lr)
+    
+    print(f"Number of parameters: {len(params)}")
     print(f"Training parameters: {vars(args)}")
 
     dataloader = get_dataloader(args)

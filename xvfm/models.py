@@ -15,8 +15,8 @@ class MLP(torch.nn.Module):
             torch.nn.Linear(w, out_dim),
         )
 
-    def forward(self, x_t, t):
-        return self.net(torch.cat([x_t, t], dim=-1))
+    def forward(self, x):
+        return self.net(x)
 
 
 class GradModel(torch.nn.Module):

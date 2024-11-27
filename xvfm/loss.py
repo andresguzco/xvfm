@@ -1,7 +1,8 @@
 import torch
 from torch.autograd import Function
 
-class MVGaussian(Function):
+class SSMGaussian(Function):
+    
     @staticmethod
     def forward(ctx, posterior, x):
         nll = -posterior.log_prob(x)
@@ -35,7 +36,7 @@ class MVGaussian(Function):
         return None, grad_mu_scaled, grad_sigma_scaled
 
 
-class MVGaussianNatural(Function):
+class SSMNatGradGaussian(Function):
     @staticmethod
     def forward(ctx, posterior, x):
         nll = -posterior.log_prob(x)
