@@ -29,6 +29,7 @@ class GaussianVariationalDist(VariationalDist):
             # if sigma.dim() > 2:
             #     sigma = sigma.view(-1, math.prod(sigma.shape[1:]))
             sigma = sigma.unsqueeze(-1) * identity
+            # sigma = sigma.view(-1, mu.size(1), mu.size(1))
         else:
             t = t.unsqueeze(1).expand(-1, mu.size(1), mu.size(1))
             t = torch.clamp(t, 0, 1)

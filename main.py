@@ -27,12 +27,12 @@ CRITERION_MAP = {
 def get_args():
     """Parse and return command-line arguments."""
     parser = argparse.ArgumentParser(description='Two Moon Experiment')
-    parser.add_argument('--model_type', default='vfm', type=str, help="Type of model: 'cfm', 'vfm'")
     parser.add_argument('--num_epochs', default=10, type=int, help="Number of training epochs")
     parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
     parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
     parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
+    parser.add_argument('--learned_structure', default='scalar', help="Flag to learn structure in VFM")
     parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
     parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
@@ -43,27 +43,43 @@ def get_args():
 
 
 def get_model(args):
-    if args.dataset == 'two_moons' and not args.learn_sigma:
-        return (MLP(dim=2), None)
-    elif args.dataset == 'two_moons' and args.learn_sigma:
-        return (MLP(dim=2), MLP(dim=0, out_dim=2))
-    elif args.dataset == 'mnist' and not args.learn_sigma:
-        return (UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), None)
-    elif args.dataset == 'mnist' and args.learn_sigma:
-        return (
-            UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
-            MLP(dim=0, out_dim=28*28)
-        )
+    if args.dataset == 'two_moons':
+        if args.learn_sigma and args.learned_structure == "scalar":
+            return (MLP(dim=2), MLP(dim=0, out_dim=1))
+        elif args.learn_sigma and args.learned_structure == "vector":
+            return (MLP(dim=2), MLP(dim=0, out_dim=2))
+        elif args.learn_sigma and args.learned_structure == "matrix":
+            return (MLP(dim=2), MLP(dim=0, out_dim=2**2))
+        else:
+            return (MLP(dim=2), None)
+    elif args.dataset == 'mnist':
+        if args.learn_sigma and args.learned_structure == "scalar":
+            return (
+                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
+                MLP(dim=0, out_dim=1)
+            )
+        elif args.learn_sigma and args.learned_structure == "vector":
+            return (
+                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
+                MLP(dim=0, out_dim=28*28)
+            )
+        elif args.learn_sigma and args.learned_structure == "matrix":
+            return (
+                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
+                MLP(dim=0, out_dim=(28*28)**2)
+            )
+        else:
+            return (UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), None)
     else:
         raise ValueError("Invalid dataset argument")
 
 def save_directory(args):
-    if args.model_type == 'vfm' and args.learn_sigma:
-        suffix = f"{args.model_type}_{args.loss_fn}_learned"
-    elif args.model_type == 'vfm' and not args.learn_sigma:
-        suffix = f"{args.model_type}_{args.loss_fn}_fixed"
+    if args.loss_fn == 'Gaussian' and args.learn_sigma:
+        suffix = f"{args.loss_fn}_learned_{args.learned_structure}"
+    elif args.loss_fn == 'Gaussian' and not args.learn_sigma:
+        suffix = f"{args.loss_fn}_fixed"
     else:
-        suffix = f"{args.model_type}"
+        suffix = f"{args.loss_fn}"
     return os.path.join(os.getcwd(), f"results/{args.dataset}/{suffix}")
 
 def main(args):

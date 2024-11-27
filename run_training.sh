@@ -1,8 +1,18 @@
 #!/bin/bash
+# strucures=("vector") # "scalar" "matrix"
+# data=("two_moons" "mnist")
+
+# for dataset in "${data[@]}"; do
+#   for structure in "${structures[@]}"; do
+#     sbatch slurm_launcher.slrm main.py \
+#       --vfm_loss "Gaussian" \
+#       --dataset "$dataset" \
+#       --learned_structure "$structure"
+#       # --learn_sigma true
+#   done
+# done
+
 sbatch slurm_launcher.slrm main.py \
-  --model_type "vfm" \
-  --num_epochs 5000 \
-  --batch_size 256 \
-  --vfm_loss "Gaussian" \
-  --dataset "two_moons" \
-  # --learn_sigma
+  --loss_fn "Gaussian" \
+  --dataset "mnist" \
+  --learned_structure "scalar"
