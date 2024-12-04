@@ -10,8 +10,8 @@
 #SBATCH --partition=a40
 #SBATCH --gres=gpu:1
 # sacctmgr list qos format=Name%15,Priority,MaxWall,MaxTRESPerUser normal,m,m2,m3,m4,m5,long
-#SBATCH --qos=normal
-#SBATCH --time=00:30:00
+#SBATCH --qos=m2
+#SBATCH --time=08:00:00
 #SBATCH --output=slurm/slurm-%j.out
 
 # Append is important because otherwise preemption resets the file

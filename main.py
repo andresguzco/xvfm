@@ -1,6 +1,7 @@
 import os
 import torch
 import argparse
+import wandb
 
 from torchvision import datasets, transforms
 
@@ -31,14 +32,18 @@ def get_args():
     parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
     parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
-    parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
+    parser.add_argument('--learn_sigma', type=bool, default=False, help="Flag to learn sigma in VFM")
     parser.add_argument('--learned_structure', default='scalar', help="Flag to learn structure in VFM")
     parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
     parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
     parser.add_argument('--save_model', action='store_true', help="Flag to save the trained model")
     parser.add_argument('--dataset', default='mnist', type=str, help="Dataset to train the model on")
-    parser.add_argument('--log_interval', default=1, type=int, help="Logging interval for training")
+    parser.add_argument('--log_interval', default=2, type=int, help="Logging interval for training")
+    parser.add_argument('--seed', default=42, type=int, help="Random seed for reproducibility")
+    parser.add_argument('--checkpoint_interval', default=50, type=int, help="Interval to save checkpoints")
+    parser.add_argument('--checkpoint_dir', default='checkpoints', type=str, help="Directory to save checkpoints")
+    parser.add_argument('--results_dir', default='results', type=str, help="Directory to save results")
     return parser.parse_args()
 
 
@@ -73,21 +78,25 @@ def get_model(args):
     else:
         raise ValueError("Invalid dataset argument")
 
-def save_directory(args):
+def get_directories(args):
     if args.loss_fn == 'Gaussian' and args.learn_sigma:
         suffix = f"{args.loss_fn}_learned_{args.learned_structure}"
     elif args.loss_fn == 'Gaussian' and not args.learn_sigma:
         suffix = f"{args.loss_fn}_fixed"
     else:
         suffix = f"{args.loss_fn}"
-    return os.path.join(os.getcwd(), f"results/{args.dataset}/{suffix}")
+    return (os.path.join(os.getcwd(), f"{args.results_dir}/{args.dataset}/{suffix}"), 
+            os.path.join(os.getcwd(), f"{args.checkpoint_dir}/{args.dataset}/{suffix}"))
 
 def main(args):
-    savedir = save_directory(args)
-    Path(savedir).mkdir(parents=True, exist_ok=True)
 
+    torch.manual_seed(args.seed)
+    savedir, checkpoint_dir = get_directories(args)
+    Path(savedir).mkdir(parents=True, exist_ok=True)
+    Path(checkpoint_dir).mkdir(parents=True, exist_ok=True)
+
+    log = wandb.init(project="XVFM", config=vars(args))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(device)
 
     flow_model = VFM(
         prior=StandardGaussianPrior(28**2) if args.dataset == 'mnist' else MultiGaussianPrior(2),
@@ -96,7 +105,6 @@ def main(args):
     ).to(device)
 
     criterion = CRITERION_MAP[args.loss_fn]
-
     params = flow_model.variational_dist.get_parameters()
     optimizer = torch.optim.Adam(params, lr=args.lr)
     
@@ -104,7 +112,9 @@ def main(args):
     print(f"Training parameters: {vars(args)}")
 
     dataloader = get_dataloader(args)
-    train(dataloader, flow_model, criterion, optimizer, device, savedir, args)
+    train(dataloader, flow_model, criterion, optimizer, device, savedir, args, log, checkpoint_dir)
+
+    wandb.finish()
 
     if args.save_model:
         torch.save(flow_model.state_dict(), f"{savedir}/model.pt")
@@ -125,9 +135,10 @@ def get_dataloader(args):
         raise ValueError("Invalid dataset argument")
 
 
-def train(train_loader, model, criterion, optimizer, device, savedir, args):
+def train(train_loader, model, criterion, optimizer, device, savedir, args, wandb, checkdir):
 
-    pbar = tqdm(total=args.num_epochs * len(train_loader))
+    pbar = tqdm(total=args.num_epochs)
+    plotting = False
 
     for epoch in range(args.num_epochs):
         for x_1 in train_loader:
@@ -146,14 +157,25 @@ def train(train_loader, model, criterion, optimizer, device, savedir, args):
             loss = criterion(posterior, x_1)
             loss.backward()
             optimizer.step()
-            pbar.update(1)
 
-        pbar.set_description(f"Epoch {epoch+1}, Loss: {loss.item():.4f}")
-        if args.log_interval > 0 and (epoch+1) % args.log_interval == 0:
-            evaluate(args, model, savedir, device, epoch+1)
+        if args.log_interval > 0 and (epoch + 1) % args.log_interval == 0:
+            plotting = True
+
+        if args.checkpoint_interval > 0 and (epoch + 1) % args.checkpoint_interval == 0:
+            torch.save({
+                "model": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "epoch": epoch + 1,
+                "loss": loss.item()
+                }, 
+                f"{checkdir}/model_{epoch+1}.pt")
+
+        score = evaluate(args, model, savedir, plotting, device, epoch+1)
+        wandb.log({"loss": loss.item(), "fid": score})
+        plotting = False
+        pbar.update(1)
 
     pbar.close()
-
     evaluate(args, model, savedir, device)
 
 

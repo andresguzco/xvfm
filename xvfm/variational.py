@@ -33,10 +33,10 @@ class GaussianVariationalDist(VariationalDist):
         else:
             t = t.unsqueeze(1).expand(-1, mu.size(1), mu.size(1))
             t = torch.clamp(t, 0, 1)
-            sigma = (1 - (1 - 0.01) * t) * identity
-            # covariance = ((1 - (1 - 0.01) * t)**2) * identity
-            # covariance = (1/2) * identity
-            # covariance = identity
+
+            # sigma = (1 - (1 - 0.01) * t) * identity
+            sigma = ((1 - (1 - 0.01) * t)**2) * identity
+            # sigma = identity
 
         return torch.distributions.MultivariateNormal(mu, sigma)
     
