@@ -15,12 +15,14 @@ from xvfm.models import MLP
 from data.two_moons import generate_two_moons
 from xvfm.variational import GaussianVariationalDist
 from xvfm.interpolator import OTInterpolator
+from torchvision.transforms import Compose, Normalize, ToTensor, ToPILImage
+
 from xvfm.loss import SSMGaussian
 
 
 CRITERION_MAP = {
     'MSE': lambda posterior, x_1: torch.mean((x_1 - posterior.mean) ** 2),
-    'SSM': lambda posterior, x_1: SSMGaussian(posterior, x_1),  # Placeholder for SSM loss,
+    'SSM': lambda posterior, x_1: SSMGaussian(posterior, x_1),
     'Gaussian': lambda posterior, x_1: -1 * posterior.log_prob(x_1).mean()
 }
 
@@ -32,7 +34,7 @@ def get_args():
     parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
     parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
-    parser.add_argument('--learn_sigma', type=bool, default=False, help="Flag to learn sigma in VFM")
+    parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
     parser.add_argument('--learned_structure', default='scalar', help="Flag to learn structure in VFM")
     parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
     parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
@@ -41,7 +43,7 @@ def get_args():
     parser.add_argument('--dataset', default='mnist', type=str, help="Dataset to train the model on")
     parser.add_argument('--log_interval', default=2, type=int, help="Logging interval for training")
     parser.add_argument('--seed', default=42, type=int, help="Random seed for reproducibility")
-    parser.add_argument('--checkpoint_interval', default=50, type=int, help="Interval to save checkpoints")
+    parser.add_argument('--checkpoint_interval', default=100, type=int, help="Interval to save checkpoints")
     parser.add_argument('--checkpoint_dir', default='checkpoints', type=str, help="Directory to save checkpoints")
     parser.add_argument('--results_dir', default='results', type=str, help="Directory to save results")
     return parser.parse_args()
@@ -85,15 +87,14 @@ def get_directories(args):
         suffix = f"{args.loss_fn}_fixed"
     else:
         suffix = f"{args.loss_fn}"
-    return (os.path.join(os.getcwd(), f"{args.results_dir}/{args.dataset}/{suffix}"), 
-            os.path.join(os.getcwd(), f"{args.checkpoint_dir}/{args.dataset}/{suffix}"))
+    return os.path.join(os.getcwd(), f"{args.results_dir}/{args.dataset}/{suffix}")
 
 def main(args):
 
     torch.manual_seed(args.seed)
-    savedir, checkpoint_dir = get_directories(args)
+    savedir = get_directories(args)
     Path(savedir).mkdir(parents=True, exist_ok=True)
-    Path(checkpoint_dir).mkdir(parents=True, exist_ok=True)
+    Path(args.checkpoint_dir).mkdir(parents=True, exist_ok=True)
 
     log = wandb.init(project="XVFM", config=vars(args))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -108,11 +109,11 @@ def main(args):
     params = flow_model.variational_dist.get_parameters()
     optimizer = torch.optim.Adam(params, lr=args.lr)
     
-    print(f"Number of parameters: {len(params)}")
+    print(f"Number of parameters: {sum([p.numel() for p in params])}")
     print(f"Training parameters: {vars(args)}")
 
     dataloader = get_dataloader(args)
-    train(dataloader, flow_model, criterion, optimizer, device, savedir, args, log, checkpoint_dir)
+    train(dataloader, flow_model, criterion, optimizer, device, savedir, args, log)
 
     wandb.finish()
 
@@ -128,17 +129,23 @@ def get_dataloader(args):
             "data",
             train=True,
             download=True,
-            transform=transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))]),
+            transform=Compose([ToTensor(), Normalize((0.5,), (0.5,))])
         )   
         return torch.utils.data.DataLoader(data, batch_size=args.batch_size, shuffle=True)
     else:
         raise ValueError("Invalid dataset argument")
 
 
-def train(train_loader, model, criterion, optimizer, device, savedir, args, wandb, checkdir):
+def train(train_loader, model, criterion, optimizer, device, savedir, args, wandb):
 
     pbar = tqdm(total=args.num_epochs)
-    plotting = False
+    plotting = True
+    if args.loss_fn == 'Gaussian' and args.learn_sigma:
+        suffix = f"{args.loss_fn}_learned_{args.learned_structure}"
+    elif args.loss_fn == 'Gaussian' and not args.learn_sigma:
+        suffix = f"{args.loss_fn}_fixed"
+    else:
+        suffix = f"{args.loss_fn}"
 
     for epoch in range(args.num_epochs):
         for x_1 in train_loader:
@@ -165,10 +172,10 @@ def train(train_loader, model, criterion, optimizer, device, savedir, args, wand
             torch.save({
                 "model": model.state_dict(),
                 "optimizer": optimizer.state_dict(),
-                "epoch": epoch + 1,
+                "epoch": epoch,
                 "loss": loss.item()
                 }, 
-                f"{checkdir}/model_{epoch+1}.pt")
+                f"{args.checkpoint_dir}/{suffix}.pt")
 
         score = evaluate(args, model, savedir, plotting, device, epoch+1)
         wandb.log({"loss": loss.item(), "fid": score})

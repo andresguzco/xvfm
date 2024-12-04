@@ -1,0 +1,15 @@
+Wed Dec 4 16:31:59 EST 2024: Job 14060667 is allocated resources.
+Inside slurm_launcher.slrm (/var/spool/slurmd/job14060667/slurm_script). received arguments: main.py --num_epochs 1000 --log_interval 100 --loss_fn Gaussian --dataset mnist
+/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: andresguzco. Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.18.7
+wandb: Run data is saved locally in /fs01/home/aguzmanc/XVFM/wandb/run-20241204_163211-kmrcusj3
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run crisp-cherry-43
+wandb: ⭐️ View project at https://wandb.ai/andresguzco/XVFM
+wandb: 🚀 View run at https://wandb.ai/andresguzco/XVFM/runs/kmrcusj3
+Number of parameters: 1075361
+Training parameters: {'num_epochs': 1000, 'batch_size': 256, 'lr': 0.001, 'loss_fn': 'Gaussian', 'learn_sigma': False, 'learned_structure': 'scalar', 'int_method': 'euler', 'integration_steps': 100, 'sigma': 0.1, 'save_model': False, 'dataset': 'mnist', 'log_interval': 100, 'seed': 42, 'checkpoint_interval': 100, 'checkpoint_dir': 'checkpoints', 'results_dir': 'results'}
+  0%|          | 0/1000 [00:00<?, ?it/s]

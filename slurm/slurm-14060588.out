@@ -1,0 +1,1007 @@
+Wed Dec 4 15:39:43 EST 2024: Job 14060588 is allocated resources.
+Inside slurm_launcher.slrm (/var/spool/slurmd/job14060588/slurm_script). received arguments: fid.py
+/h/aguzmanc/miniforge3/envs/xvfm/lib/python3.10/site-packages/ignite/handlers/checkpoint.py:16: DeprecationWarning: `TorchScript` support for functional optimizers is deprecated and will be removed in a future PyTorch release. Consider using the `torch.compile` optimizer instead.
+  from torch.distributed.optim import ZeroRedundancyOptimizer
+ITERATION - loss: 0.00:   0%|          | 0/235 [00:00<?, ?it/s]2024-12-04 15:39:55,111 trainer INFO: Engine run starting with max_epochs=100.
+ITERATION - loss: 1.26: 100%|██████████| 235/235 [00:19<00:00, 12.13it/s]ITERATION - loss: 1.26: 100%|██████████| 235/235 [00:19<00:00, 12.13it/s]2024-12-04 15:40:14,477 evaluator INFO: Engine run starting with max_epochs=1.
+ITERATION - loss: 1.26: 100%|██████████| 235/235 [00:29<00:00, 12.13it/s]2024-12-04 15:40:27,780 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.302
+2024-12-04 15:40:27,780 evaluator INFO: Engine run complete. Time taken: 00:00:13.303
+                                                                         ITERATION - loss: 1.26: 100%|██████████| 235/235 [00:32<00:00, 12.13it/s]2024-12-04 15:40:27,780 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:40:30,000 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 15:40:30,000 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 1.26: 100%|██████████| 235/235 [00:34<00:00, 12.13it/s]                                                                         ITERATION - loss: 1.26:   0%|          | 0/235 [00:34<00:19, 12.13it/s]2024-12-04 15:40:30,001 trainer INFO: Epoch[1] Complete. Time taken: 00:00:34.889
+ITERATION - loss: 0.72: 100%|██████████| 235/235 [00:48<00:00,  9.35it/s]ITERATION - loss: 0.72: 100%|██████████| 235/235 [00:48<00:00,  9.35it/s]2024-12-04 15:40:43,650 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:40:56,948 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.298
+2024-12-04 15:40:56,949 evaluator INFO: Engine run complete. Time taken: 00:00:13.299
+                                                                         ITERATION - loss: 0.72: 100%|██████████| 235/235 [01:01<00:00,  9.35it/s]2024-12-04 15:40:56,949 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:40:59,171 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.222
+2024-12-04 15:40:59,171 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.72: 100%|██████████| 235/235 [01:04<00:00,  9.35it/s]                                                                         ITERATION - loss: 0.72:   0%|          | 0/235 [01:04<00:25,  9.35it/s]2024-12-04 15:40:59,172 trainer INFO: Epoch[2] Complete. Time taken: 00:00:29.171
+ITERATION - loss: 0.82: 100%|██████████| 235/235 [01:17<00:00,  8.72it/s]ITERATION - loss: 0.82: 100%|██████████| 235/235 [01:17<00:00,  8.72it/s]2024-12-04 15:41:12,739 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:41:25,992 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.253
+2024-12-04 15:41:25,992 evaluator INFO: Engine run complete. Time taken: 00:00:13.254
+                                                                         ITERATION - loss: 0.82: 100%|██████████| 235/235 [01:30<00:00,  8.72it/s]2024-12-04 15:41:25,993 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:41:28,195 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 15:41:28,197 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.82: 100%|██████████| 235/235 [01:33<00:00,  8.72it/s]                                                                         ITERATION - loss: 0.82:   0%|          | 0/235 [01:33<00:26,  8.72it/s]2024-12-04 15:41:28,197 trainer INFO: Epoch[3] Complete. Time taken: 00:00:29.025
+ITERATION - loss: 0.56: 100%|██████████| 235/235 [01:46<00:00,  8.46it/s]ITERATION - loss: 0.56: 100%|██████████| 235/235 [01:46<00:00,  8.46it/s]2024-12-04 15:41:41,771 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:41:55,074 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.302
+2024-12-04 15:41:55,074 evaluator INFO: Engine run complete. Time taken: 00:00:13.302
+                                                                         ITERATION - loss: 0.56: 100%|██████████| 235/235 [01:59<00:00,  8.46it/s]2024-12-04 15:41:55,074 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:41:57,297 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.223
+2024-12-04 15:41:57,298 evaluator INFO: Engine run complete. Time taken: 00:00:02.223
+                                                                         ITERATION - loss: 0.56: 100%|██████████| 235/235 [02:02<00:00,  8.46it/s]                                                                         ITERATION - loss: 0.56:   0%|          | 0/235 [02:02<00:27,  8.46it/s]2024-12-04 15:41:57,298 trainer INFO: Epoch[4] Complete. Time taken: 00:00:29.101
+ITERATION - loss: 0.45: 100%|██████████| 235/235 [02:15<00:00,  8.32it/s]ITERATION - loss: 0.45: 100%|██████████| 235/235 [02:15<00:00,  8.32it/s]2024-12-04 15:42:10,851 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:42:24,165 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.313
+2024-12-04 15:42:24,165 evaluator INFO: Engine run complete. Time taken: 00:00:13.314
+                                                                         ITERATION - loss: 0.45: 100%|██████████| 235/235 [02:29<00:00,  8.32it/s]2024-12-04 15:42:24,166 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:42:26,384 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.218
+2024-12-04 15:42:26,386 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.45: 100%|██████████| 235/235 [02:31<00:00,  8.32it/s]                                                                         ITERATION - loss: 0.45:   0%|          | 0/235 [02:31<00:28,  8.32it/s]2024-12-04 15:42:26,386 trainer INFO: Epoch[5] Complete. Time taken: 00:00:29.088
+ITERATION - loss: 0.27: 100%|██████████| 235/235 [02:44<00:00,  8.23it/s]ITERATION - loss: 0.27: 100%|██████████| 235/235 [02:44<00:00,  8.23it/s]2024-12-04 15:42:39,969 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:42:53,237 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.267
+2024-12-04 15:42:53,239 evaluator INFO: Engine run complete. Time taken: 00:00:13.269
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [02:58<00:00,  8.23it/s]2024-12-04 15:42:53,239 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:42:55,443 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.204
+2024-12-04 15:42:55,443 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [03:00<00:00,  8.23it/s]                                                                         ITERATION - loss: 0.27:   0%|          | 0/235 [03:00<00:28,  8.23it/s]2024-12-04 15:42:55,443 trainer INFO: Epoch[6] Complete. Time taken: 00:00:29.057
+ITERATION - loss: 0.47: 100%|██████████| 235/235 [03:13<00:00,  8.19it/s]ITERATION - loss: 0.47: 100%|██████████| 235/235 [03:13<00:00,  8.19it/s]2024-12-04 15:43:09,013 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:43:22,346 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.333
+2024-12-04 15:43:22,347 evaluator INFO: Engine run complete. Time taken: 00:00:13.334
+                                                                         ITERATION - loss: 0.47: 100%|██████████| 235/235 [03:27<00:00,  8.19it/s]2024-12-04 15:43:22,348 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:43:24,569 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 15:43:24,570 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.47: 100%|██████████| 235/235 [03:29<00:00,  8.19it/s]                                                                         ITERATION - loss: 0.47:   0%|          | 0/235 [03:29<00:28,  8.19it/s]2024-12-04 15:43:24,571 trainer INFO: Epoch[7] Complete. Time taken: 00:00:29.127
+ITERATION - loss: 0.33: 100%|██████████| 235/235 [03:43<00:00,  8.15it/s]ITERATION - loss: 0.33: 100%|██████████| 235/235 [03:43<00:00,  8.15it/s]2024-12-04 15:43:38,139 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:43:51,403 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.264
+2024-12-04 15:43:51,404 evaluator INFO: Engine run complete. Time taken: 00:00:13.264
+                                                                         ITERATION - loss: 0.33: 100%|██████████| 235/235 [03:56<00:00,  8.15it/s]2024-12-04 15:43:51,404 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:43:53,605 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 15:43:53,605 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.33: 100%|██████████| 235/235 [03:58<00:00,  8.15it/s]                                                                         ITERATION - loss: 0.33:   0%|          | 0/235 [03:58<00:28,  8.15it/s]2024-12-04 15:43:53,606 trainer INFO: Epoch[8] Complete. Time taken: 00:00:29.035
+ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:12<00:00,  8.13it/s]ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:12<00:00,  8.13it/s]2024-12-04 15:44:07,204 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:44:20,520 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.316
+2024-12-04 15:44:20,520 evaluator INFO: Engine run complete. Time taken: 00:00:13.316
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:25<00:00,  8.13it/s]2024-12-04 15:44:20,521 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:44:22,742 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 15:44:22,742 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:27<00:00,  8.13it/s]                                                                         ITERATION - loss: 0.27:   0%|          | 0/235 [04:27<00:28,  8.13it/s]2024-12-04 15:44:22,742 trainer INFO: Epoch[9] Complete. Time taken: 00:00:29.136
+ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:41<00:00,  8.11it/s]ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:41<00:00,  8.11it/s]2024-12-04 15:44:36,283 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:44:49,550 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.267
+2024-12-04 15:44:49,550 evaluator INFO: Engine run complete. Time taken: 00:00:13.267
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:54<00:00,  8.11it/s]2024-12-04 15:44:49,551 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:44:51,751 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.200
+2024-12-04 15:44:51,751 evaluator INFO: Engine run complete. Time taken: 00:00:02.200
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [04:56<00:00,  8.11it/s]                                                                         ITERATION - loss: 0.27:   0%|          | 0/235 [04:56<00:28,  8.11it/s]2024-12-04 15:44:51,751 trainer INFO: Epoch[10] Complete. Time taken: 00:00:29.009
+ITERATION - loss: 0.37: 100%|██████████| 235/235 [05:10<00:00,  8.10it/s]ITERATION - loss: 0.37: 100%|██████████| 235/235 [05:10<00:00,  8.10it/s]2024-12-04 15:45:05,392 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:45:18,672 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.280
+2024-12-04 15:45:18,672 evaluator INFO: Engine run complete. Time taken: 00:00:13.280
+                                                                         ITERATION - loss: 0.37: 100%|██████████| 235/235 [05:23<00:00,  8.10it/s]2024-12-04 15:45:18,673 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:45:20,887 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.214
+2024-12-04 15:45:20,887 evaluator INFO: Engine run complete. Time taken: 00:00:02.215
+                                                                         ITERATION - loss: 0.37: 100%|██████████| 235/235 [05:25<00:00,  8.10it/s]                                                                         ITERATION - loss: 0.37:   0%|          | 0/235 [05:25<00:29,  8.10it/s]2024-12-04 15:45:20,888 trainer INFO: Epoch[11] Complete. Time taken: 00:00:29.136
+ITERATION - loss: 0.30: 100%|██████████| 235/235 [05:39<00:00,  8.10it/s]ITERATION - loss: 0.30: 100%|██████████| 235/235 [05:39<00:00,  8.10it/s]2024-12-04 15:45:34,432 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:45:47,731 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.299
+2024-12-04 15:45:47,731 evaluator INFO: Engine run complete. Time taken: 00:00:13.299
+                                                                         ITERATION - loss: 0.30: 100%|██████████| 235/235 [05:52<00:00,  8.10it/s]2024-12-04 15:45:47,731 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:45:49,957 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.226
+2024-12-04 15:45:49,957 evaluator INFO: Engine run complete. Time taken: 00:00:02.226
+                                                                         ITERATION - loss: 0.30: 100%|██████████| 235/235 [05:54<00:00,  8.10it/s]                                                                         ITERATION - loss: 0.30:   0%|          | 0/235 [05:54<00:29,  8.10it/s]2024-12-04 15:45:49,958 trainer INFO: Epoch[12] Complete. Time taken: 00:00:29.070
+ITERATION - loss: 0.28: 100%|██████████| 235/235 [06:08<00:00,  8.09it/s]ITERATION - loss: 0.28: 100%|██████████| 235/235 [06:08<00:00,  8.09it/s]2024-12-04 15:46:03,553 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:46:16,814 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.261
+2024-12-04 15:46:16,814 evaluator INFO: Engine run complete. Time taken: 00:00:13.261
+                                                                         ITERATION - loss: 0.28: 100%|██████████| 235/235 [06:21<00:00,  8.09it/s]2024-12-04 15:46:16,815 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:46:19,017 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 15:46:19,018 evaluator INFO: Engine run complete. Time taken: 00:00:02.203
+                                                                         ITERATION - loss: 0.28: 100%|██████████| 235/235 [06:23<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.28:   0%|          | 0/235 [06:23<00:29,  8.09it/s]2024-12-04 15:46:19,018 trainer INFO: Epoch[13] Complete. Time taken: 00:00:29.060
+ITERATION - loss: 0.41: 100%|██████████| 235/235 [06:37<00:00,  8.09it/s]ITERATION - loss: 0.41: 100%|██████████| 235/235 [06:37<00:00,  8.09it/s]2024-12-04 15:46:32,562 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:46:45,900 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.338
+2024-12-04 15:46:45,900 evaluator INFO: Engine run complete. Time taken: 00:00:13.338
+                                                                         ITERATION - loss: 0.41: 100%|██████████| 235/235 [06:50<00:00,  8.09it/s]2024-12-04 15:46:45,901 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:46:48,120 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 15:46:48,121 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.41: 100%|██████████| 235/235 [06:53<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.41:   0%|          | 0/235 [06:53<00:29,  8.09it/s]2024-12-04 15:46:48,121 trainer INFO: Epoch[14] Complete. Time taken: 00:00:29.103
+ITERATION - loss: 0.24: 100%|██████████| 235/235 [07:06<00:00,  8.09it/s]ITERATION - loss: 0.24: 100%|██████████| 235/235 [07:06<00:00,  8.09it/s]2024-12-04 15:47:01,656 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:47:14,917 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.261
+2024-12-04 15:47:14,918 evaluator INFO: Engine run complete. Time taken: 00:00:13.262
+                                                                         ITERATION - loss: 0.24: 100%|██████████| 235/235 [07:19<00:00,  8.09it/s]2024-12-04 15:47:14,919 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:47:17,125 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.206
+2024-12-04 15:47:17,126 evaluator INFO: Engine run complete. Time taken: 00:00:02.207
+                                                                         ITERATION - loss: 0.24: 100%|██████████| 235/235 [07:22<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.24:   0%|          | 0/235 [07:22<00:29,  8.09it/s]2024-12-04 15:47:17,126 trainer INFO: Epoch[15] Complete. Time taken: 00:00:29.005
+ITERATION - loss: 0.29: 100%|██████████| 235/235 [07:35<00:00,  8.09it/s]ITERATION - loss: 0.29: 100%|██████████| 235/235 [07:35<00:00,  8.09it/s]2024-12-04 15:47:30,655 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:47:43,992 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.336
+2024-12-04 15:47:43,993 evaluator INFO: Engine run complete. Time taken: 00:00:13.338
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [07:48<00:00,  8.09it/s]2024-12-04 15:47:43,994 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:47:46,221 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.226
+2024-12-04 15:47:46,221 evaluator INFO: Engine run complete. Time taken: 00:00:02.227
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [07:51<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.29:   0%|          | 0/235 [07:51<00:29,  8.09it/s]2024-12-04 15:47:46,221 trainer INFO: Epoch[16] Complete. Time taken: 00:00:29.095
+ITERATION - loss: 0.17: 100%|██████████| 235/235 [08:04<00:00,  8.09it/s]ITERATION - loss: 0.17: 100%|██████████| 235/235 [08:04<00:00,  8.09it/s]2024-12-04 15:47:59,774 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:48:13,025 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.251
+2024-12-04 15:48:13,025 evaluator INFO: Engine run complete. Time taken: 00:00:13.251
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [08:17<00:00,  8.09it/s]2024-12-04 15:48:13,026 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:48:15,229 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.203
+2024-12-04 15:48:15,229 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [08:20<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.17:   0%|          | 0/235 [08:20<00:29,  8.09it/s]2024-12-04 15:48:15,230 trainer INFO: Epoch[17] Complete. Time taken: 00:00:29.009
+ITERATION - loss: 0.18: 100%|██████████| 235/235 [08:33<00:00,  8.09it/s]ITERATION - loss: 0.18: 100%|██████████| 235/235 [08:33<00:00,  8.09it/s]2024-12-04 15:48:28,849 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:48:42,105 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.256
+2024-12-04 15:48:42,107 evaluator INFO: Engine run complete. Time taken: 00:00:13.258
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [08:46<00:00,  8.09it/s]2024-12-04 15:48:42,107 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:48:44,328 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 15:48:44,328 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [08:49<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.18:   0%|          | 0/235 [08:49<00:29,  8.09it/s]2024-12-04 15:48:44,328 trainer INFO: Epoch[18] Complete. Time taken: 00:00:29.098
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [09:02<00:00,  8.09it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [09:02<00:00,  8.09it/s]2024-12-04 15:48:57,847 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:49:11,104 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.257
+2024-12-04 15:49:11,105 evaluator INFO: Engine run complete. Time taken: 00:00:13.257
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [09:15<00:00,  8.09it/s]2024-12-04 15:49:11,105 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:49:13,316 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.211
+2024-12-04 15:49:13,316 evaluator INFO: Engine run complete. Time taken: 00:00:02.211
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [09:18<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [09:18<00:29,  8.09it/s]2024-12-04 15:49:13,316 trainer INFO: Epoch[19] Complete. Time taken: 00:00:28.988
+ITERATION - loss: 0.26: 100%|██████████| 235/235 [09:31<00:00,  8.09it/s]ITERATION - loss: 0.26: 100%|██████████| 235/235 [09:31<00:00,  8.09it/s]2024-12-04 15:49:26,929 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:49:40,160 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.231
+2024-12-04 15:49:40,160 evaluator INFO: Engine run complete. Time taken: 00:00:13.232
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [09:45<00:00,  8.09it/s]2024-12-04 15:49:40,161 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:49:42,374 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.213
+2024-12-04 15:49:42,374 evaluator INFO: Engine run complete. Time taken: 00:00:02.213
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [09:47<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.26:   0%|          | 0/235 [09:47<00:29,  8.09it/s]2024-12-04 15:49:42,375 trainer INFO: Epoch[20] Complete. Time taken: 00:00:29.058
+ITERATION - loss: 0.24: 100%|██████████| 235/235 [10:00<00:00,  8.10it/s]ITERATION - loss: 0.24: 100%|██████████| 235/235 [10:00<00:00,  8.10it/s]2024-12-04 15:49:55,893 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:50:09,243 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.350
+2024-12-04 15:50:09,244 evaluator INFO: Engine run complete. Time taken: 00:00:13.351
+                                                                         ITERATION - loss: 0.24: 100%|██████████| 235/235 [10:14<00:00,  8.10it/s]2024-12-04 15:50:09,244 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:50:11,466 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.222
+2024-12-04 15:50:11,466 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.24: 100%|██████████| 235/235 [10:16<00:00,  8.10it/s]                                                                         ITERATION - loss: 0.24:   0%|          | 0/235 [10:16<00:29,  8.10it/s]2024-12-04 15:50:11,467 trainer INFO: Epoch[21] Complete. Time taken: 00:00:29.092
+ITERATION - loss: 0.14: 100%|██████████| 235/235 [10:29<00:00,  8.09it/s]ITERATION - loss: 0.14: 100%|██████████| 235/235 [10:29<00:00,  8.09it/s]2024-12-04 15:50:25,002 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:50:38,260 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.258
+2024-12-04 15:50:38,260 evaluator INFO: Engine run complete. Time taken: 00:00:13.259
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [10:43<00:00,  8.09it/s]2024-12-04 15:50:38,261 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:50:40,462 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 15:50:40,462 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [10:45<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.14:   0%|          | 0/235 [10:45<00:29,  8.09it/s]2024-12-04 15:50:40,462 trainer INFO: Epoch[22] Complete. Time taken: 00:00:28.996
+ITERATION - loss: 0.22: 100%|██████████| 235/235 [10:58<00:00,  8.09it/s]ITERATION - loss: 0.22: 100%|██████████| 235/235 [10:58<00:00,  8.09it/s]2024-12-04 15:50:53,995 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:51:07,320 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.325
+2024-12-04 15:51:07,321 evaluator INFO: Engine run complete. Time taken: 00:00:13.326
+                                                                         ITERATION - loss: 0.22: 100%|██████████| 235/235 [11:12<00:00,  8.09it/s]2024-12-04 15:51:07,321 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:51:09,540 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 15:51:09,540 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.22: 100%|██████████| 235/235 [11:14<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.22:   0%|          | 0/235 [11:14<00:29,  8.09it/s]2024-12-04 15:51:09,541 trainer INFO: Epoch[23] Complete. Time taken: 00:00:29.078
+ITERATION - loss: 0.12: 100%|██████████| 235/235 [11:27<00:00,  8.09it/s]ITERATION - loss: 0.12: 100%|██████████| 235/235 [11:27<00:00,  8.09it/s]2024-12-04 15:51:23,078 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:51:36,355 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.276
+2024-12-04 15:51:36,355 evaluator INFO: Engine run complete. Time taken: 00:00:13.277
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [11:41<00:00,  8.09it/s]2024-12-04 15:51:36,355 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:51:38,559 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.203
+2024-12-04 15:51:38,559 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [11:43<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.12:   0%|          | 0/235 [11:43<00:29,  8.09it/s]2024-12-04 15:51:38,559 trainer INFO: Epoch[24] Complete. Time taken: 00:00:29.018
+ITERATION - loss: 0.34: 100%|██████████| 235/235 [11:56<00:00,  8.09it/s]ITERATION - loss: 0.34: 100%|██████████| 235/235 [11:56<00:00,  8.09it/s]2024-12-04 15:51:52,101 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:52:05,442 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.341
+2024-12-04 15:52:05,443 evaluator INFO: Engine run complete. Time taken: 00:00:13.341
+                                                                         ITERATION - loss: 0.34: 100%|██████████| 235/235 [12:10<00:00,  8.09it/s]2024-12-04 15:52:05,443 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:52:07,657 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.214
+2024-12-04 15:52:07,657 evaluator INFO: Engine run complete. Time taken: 00:00:02.214
+                                                                         ITERATION - loss: 0.34: 100%|██████████| 235/235 [12:12<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.34:   0%|          | 0/235 [12:12<00:29,  8.09it/s]2024-12-04 15:52:07,658 trainer INFO: Epoch[25] Complete. Time taken: 00:00:29.098
+ITERATION - loss: 0.28: 100%|██████████| 235/235 [12:26<00:00,  8.09it/s]ITERATION - loss: 0.28: 100%|██████████| 235/235 [12:26<00:00,  8.09it/s]2024-12-04 15:52:21,195 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:52:34,458 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.262
+2024-12-04 15:52:34,458 evaluator INFO: Engine run complete. Time taken: 00:00:13.263
+                                                                         ITERATION - loss: 0.28: 100%|██████████| 235/235 [12:39<00:00,  8.09it/s]2024-12-04 15:52:34,459 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:52:36,661 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.203
+2024-12-04 15:52:36,661 evaluator INFO: Engine run complete. Time taken: 00:00:02.203
+                                                                         ITERATION - loss: 0.28: 100%|██████████| 235/235 [12:41<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.28:   0%|          | 0/235 [12:41<00:29,  8.09it/s]2024-12-04 15:52:36,662 trainer INFO: Epoch[26] Complete. Time taken: 00:00:29.004
+ITERATION - loss: 0.14: 100%|██████████| 235/235 [12:55<00:00,  8.09it/s]ITERATION - loss: 0.14: 100%|██████████| 235/235 [12:55<00:00,  8.09it/s]2024-12-04 15:52:50,215 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:53:03,546 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.331
+2024-12-04 15:53:03,546 evaluator INFO: Engine run complete. Time taken: 00:00:13.332
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [13:08<00:00,  8.09it/s]2024-12-04 15:53:03,547 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:53:05,766 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 15:53:05,766 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [13:10<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.14:   0%|          | 0/235 [13:10<00:29,  8.09it/s]2024-12-04 15:53:05,767 trainer INFO: Epoch[27] Complete. Time taken: 00:00:29.105
+ITERATION - loss: 0.27: 100%|██████████| 235/235 [13:24<00:00,  8.09it/s]ITERATION - loss: 0.27: 100%|██████████| 235/235 [13:24<00:00,  8.09it/s]2024-12-04 15:53:19,278 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:53:32,501 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.223
+2024-12-04 15:53:32,501 evaluator INFO: Engine run complete. Time taken: 00:00:13.223
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [13:37<00:00,  8.09it/s]2024-12-04 15:53:32,501 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:53:34,702 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 15:53:34,703 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.27: 100%|██████████| 235/235 [13:39<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.27:   0%|          | 0/235 [13:39<00:29,  8.09it/s]2024-12-04 15:53:34,703 trainer INFO: Epoch[28] Complete. Time taken: 00:00:28.936
+ITERATION - loss: 0.18: 100%|██████████| 235/235 [13:53<00:00,  8.09it/s]ITERATION - loss: 0.18: 100%|██████████| 235/235 [13:53<00:00,  8.09it/s]2024-12-04 15:53:48,344 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:54:01,600 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.256
+2024-12-04 15:54:01,600 evaluator INFO: Engine run complete. Time taken: 00:00:13.256
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [14:06<00:00,  8.09it/s]2024-12-04 15:54:01,601 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:54:03,817 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.216
+2024-12-04 15:54:03,817 evaluator INFO: Engine run complete. Time taken: 00:00:02.217
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [14:08<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.18:   0%|          | 0/235 [14:08<00:29,  8.09it/s]2024-12-04 15:54:03,818 trainer INFO: Epoch[29] Complete. Time taken: 00:00:29.115
+ITERATION - loss: 0.25: 100%|██████████| 235/235 [14:22<00:00,  8.09it/s]ITERATION - loss: 0.25: 100%|██████████| 235/235 [14:22<00:00,  8.09it/s]2024-12-04 15:54:17,339 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:54:30,605 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.266
+2024-12-04 15:54:30,605 evaluator INFO: Engine run complete. Time taken: 00:00:13.267
+                                                                         ITERATION - loss: 0.25: 100%|██████████| 235/235 [14:35<00:00,  8.09it/s]2024-12-04 15:54:30,606 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:54:32,812 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.206
+2024-12-04 15:54:32,812 evaluator INFO: Engine run complete. Time taken: 00:00:02.206
+                                                                         ITERATION - loss: 0.25: 100%|██████████| 235/235 [14:37<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.25:   0%|          | 0/235 [14:37<00:29,  8.09it/s]2024-12-04 15:54:32,813 trainer INFO: Epoch[30] Complete. Time taken: 00:00:28.995
+ITERATION - loss: 0.26: 100%|██████████| 235/235 [14:51<00:00,  8.09it/s]ITERATION - loss: 0.26: 100%|██████████| 235/235 [14:51<00:00,  8.09it/s]2024-12-04 15:54:46,425 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:54:59,676 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.251
+2024-12-04 15:54:59,676 evaluator INFO: Engine run complete. Time taken: 00:00:13.251
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [15:04<00:00,  8.09it/s]2024-12-04 15:54:59,676 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:55:01,896 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 15:55:01,896 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [15:06<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.26:   0%|          | 0/235 [15:06<00:29,  8.09it/s]2024-12-04 15:55:01,896 trainer INFO: Epoch[31] Complete. Time taken: 00:00:29.084
+ITERATION - loss: 0.29: 100%|██████████| 235/235 [15:20<00:00,  8.09it/s]ITERATION - loss: 0.29: 100%|██████████| 235/235 [15:20<00:00,  8.09it/s]2024-12-04 15:55:15,440 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:55:28,710 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.269
+2024-12-04 15:55:28,710 evaluator INFO: Engine run complete. Time taken: 00:00:13.270
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [15:33<00:00,  8.09it/s]2024-12-04 15:55:28,710 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:55:30,918 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.208
+2024-12-04 15:55:30,918 evaluator INFO: Engine run complete. Time taken: 00:00:02.208
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [15:35<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.29:   0%|          | 0/235 [15:35<00:29,  8.09it/s]2024-12-04 15:55:30,919 trainer INFO: Epoch[32] Complete. Time taken: 00:00:29.022
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [15:49<00:00,  8.09it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [15:49<00:00,  8.09it/s]2024-12-04 15:55:44,544 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:55:57,808 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.264
+2024-12-04 15:55:57,808 evaluator INFO: Engine run complete. Time taken: 00:00:13.264
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:02<00:00,  8.09it/s]2024-12-04 15:55:57,809 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:56:00,029 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 15:56:00,029 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:04<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [16:04<00:29,  8.09it/s]2024-12-04 15:56:00,030 trainer INFO: Epoch[33] Complete. Time taken: 00:00:29.111
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:18<00:00,  8.09it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:18<00:00,  8.09it/s]2024-12-04 15:56:13,568 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:56:26,877 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.308
+2024-12-04 15:56:26,877 evaluator INFO: Engine run complete. Time taken: 00:00:13.309
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:31<00:00,  8.09it/s]2024-12-04 15:56:26,878 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:56:29,101 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.223
+2024-12-04 15:56:29,101 evaluator INFO: Engine run complete. Time taken: 00:00:02.223
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [16:33<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [16:33<00:29,  8.09it/s]2024-12-04 15:56:29,102 trainer INFO: Epoch[34] Complete. Time taken: 00:00:29.072
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [16:47<00:00,  8.08it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [16:47<00:00,  8.08it/s]2024-12-04 15:56:42,678 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:56:55,948 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.270
+2024-12-04 15:56:55,948 evaluator INFO: Engine run complete. Time taken: 00:00:13.270
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [17:00<00:00,  8.08it/s]2024-12-04 15:56:55,949 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:56:58,150 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 15:56:58,150 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [17:03<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [17:03<00:29,  8.08it/s]2024-12-04 15:56:58,150 trainer INFO: Epoch[35] Complete. Time taken: 00:00:29.049
+ITERATION - loss: 0.19: 100%|██████████| 235/235 [17:16<00:00,  8.09it/s]ITERATION - loss: 0.19: 100%|██████████| 235/235 [17:16<00:00,  8.09it/s]2024-12-04 15:57:11,717 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:57:25,089 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.372
+2024-12-04 15:57:25,089 evaluator INFO: Engine run complete. Time taken: 00:00:13.372
+                                                                         ITERATION - loss: 0.19: 100%|██████████| 235/235 [17:29<00:00,  8.09it/s]2024-12-04 15:57:25,090 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:57:27,311 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 15:57:27,311 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.19: 100%|██████████| 235/235 [17:32<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.19:   0%|          | 0/235 [17:32<00:29,  8.09it/s]2024-12-04 15:57:27,312 trainer INFO: Epoch[36] Complete. Time taken: 00:00:29.161
+ITERATION - loss: 0.23: 100%|██████████| 235/235 [17:45<00:00,  8.08it/s]ITERATION - loss: 0.23: 100%|██████████| 235/235 [17:45<00:00,  8.08it/s]2024-12-04 15:57:40,872 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:57:54,153 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.281
+2024-12-04 15:57:54,154 evaluator INFO: Engine run complete. Time taken: 00:00:13.282
+                                                                         ITERATION - loss: 0.23: 100%|██████████| 235/235 [17:59<00:00,  8.08it/s]2024-12-04 15:57:54,154 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:57:56,362 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.208
+2024-12-04 15:57:56,362 evaluator INFO: Engine run complete. Time taken: 00:00:02.208
+                                                                         ITERATION - loss: 0.23: 100%|██████████| 235/235 [18:01<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.23:   0%|          | 0/235 [18:01<00:29,  8.08it/s]2024-12-04 15:57:56,363 trainer INFO: Epoch[37] Complete. Time taken: 00:00:29.051
+ITERATION - loss: 0.15: 100%|██████████| 235/235 [18:14<00:00,  8.08it/s]ITERATION - loss: 0.15: 100%|██████████| 235/235 [18:14<00:00,  8.08it/s]2024-12-04 15:58:09,947 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:58:23,307 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.360
+2024-12-04 15:58:23,307 evaluator INFO: Engine run complete. Time taken: 00:00:13.361
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [18:28<00:00,  8.08it/s]2024-12-04 15:58:23,308 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:58:25,529 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 15:58:25,529 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [18:30<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.15:   0%|          | 0/235 [18:30<00:29,  8.08it/s]2024-12-04 15:58:25,529 trainer INFO: Epoch[38] Complete. Time taken: 00:00:29.166
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [18:43<00:00,  8.07it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [18:43<00:00,  8.07it/s]2024-12-04 15:58:39,097 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:58:52,365 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.267
+2024-12-04 15:58:52,365 evaluator INFO: Engine run complete. Time taken: 00:00:13.267
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [18:57<00:00,  8.07it/s]2024-12-04 15:58:52,365 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:58:54,569 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.204
+2024-12-04 15:58:54,569 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [18:59<00:00,  8.07it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [18:59<00:29,  8.07it/s]2024-12-04 15:58:54,569 trainer INFO: Epoch[39] Complete. Time taken: 00:00:29.040
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [19:13<00:00,  8.08it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [19:13<00:00,  8.08it/s]2024-12-04 15:59:08,173 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:59:21,431 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.258
+2024-12-04 15:59:21,431 evaluator INFO: Engine run complete. Time taken: 00:00:13.258
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [19:26<00:00,  8.08it/s]2024-12-04 15:59:21,432 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:59:23,646 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.214
+2024-12-04 15:59:23,646 evaluator INFO: Engine run complete. Time taken: 00:00:02.214
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [19:28<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [19:28<00:29,  8.08it/s]2024-12-04 15:59:23,646 trainer INFO: Epoch[40] Complete. Time taken: 00:00:29.077
+ITERATION - loss: 0.39: 100%|██████████| 235/235 [19:42<00:00,  8.09it/s]ITERATION - loss: 0.39: 100%|██████████| 235/235 [19:42<00:00,  8.09it/s]2024-12-04 15:59:37,166 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:59:50,461 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.294
+2024-12-04 15:59:50,461 evaluator INFO: Engine run complete. Time taken: 00:00:13.295
+                                                                         ITERATION - loss: 0.39: 100%|██████████| 235/235 [19:55<00:00,  8.09it/s]2024-12-04 15:59:50,462 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 15:59:52,662 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 15:59:52,662 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.39: 100%|██████████| 235/235 [19:57<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.39:   0%|          | 0/235 [19:57<00:29,  8.09it/s]2024-12-04 15:59:52,663 trainer INFO: Epoch[41] Complete. Time taken: 00:00:29.016
+ITERATION - loss: 0.18: 100%|██████████| 235/235 [20:11<00:00,  8.08it/s]ITERATION - loss: 0.18: 100%|██████████| 235/235 [20:11<00:00,  8.08it/s]2024-12-04 16:00:06,281 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:00:19,546 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.264
+2024-12-04 16:00:19,546 evaluator INFO: Engine run complete. Time taken: 00:00:13.265
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [20:24<00:00,  8.08it/s]2024-12-04 16:00:19,547 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:00:21,762 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:00:21,762 evaluator INFO: Engine run complete. Time taken: 00:00:02.215
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [20:26<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.18:   0%|          | 0/235 [20:26<00:29,  8.08it/s]2024-12-04 16:00:21,763 trainer INFO: Epoch[42] Complete. Time taken: 00:00:29.100
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [20:40<00:00,  8.09it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [20:40<00:00,  8.09it/s]2024-12-04 16:00:35,287 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:00:48,611 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.324
+2024-12-04 16:00:48,611 evaluator INFO: Engine run complete. Time taken: 00:00:13.324
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [20:53<00:00,  8.09it/s]2024-12-04 16:00:48,612 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:00:50,834 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.222
+2024-12-04 16:00:50,834 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [20:55<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [20:55<00:29,  8.09it/s]2024-12-04 16:00:50,834 trainer INFO: Epoch[43] Complete. Time taken: 00:00:29.072
+ITERATION - loss: 0.09: 100%|██████████| 235/235 [21:09<00:00,  8.08it/s]ITERATION - loss: 0.09: 100%|██████████| 235/235 [21:09<00:00,  8.08it/s]2024-12-04 16:01:04,404 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:01:17,654 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.250
+2024-12-04 16:01:17,655 evaluator INFO: Engine run complete. Time taken: 00:00:13.250
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [21:22<00:00,  8.08it/s]2024-12-04 16:01:17,655 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:01:19,855 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.199
+2024-12-04 16:01:19,855 evaluator INFO: Engine run complete. Time taken: 00:00:02.200
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [21:24<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.09:   0%|          | 0/235 [21:24<00:29,  8.08it/s]2024-12-04 16:01:19,855 trainer INFO: Epoch[44] Complete. Time taken: 00:00:29.021
+ITERATION - loss: 0.17: 100%|██████████| 235/235 [21:38<00:00,  8.09it/s]ITERATION - loss: 0.17: 100%|██████████| 235/235 [21:38<00:00,  8.09it/s]2024-12-04 16:01:33,413 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:01:46,759 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.346
+2024-12-04 16:01:46,759 evaluator INFO: Engine run complete. Time taken: 00:00:13.346
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [21:51<00:00,  8.09it/s]2024-12-04 16:01:46,760 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:01:48,980 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 16:01:48,980 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [21:53<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.17:   0%|          | 0/235 [21:53<00:29,  8.09it/s]2024-12-04 16:01:48,980 trainer INFO: Epoch[45] Complete. Time taken: 00:00:29.125
+ITERATION - loss: 0.20: 100%|██████████| 235/235 [22:07<00:00,  8.08it/s]ITERATION - loss: 0.20: 100%|██████████| 235/235 [22:07<00:00,  8.08it/s]2024-12-04 16:02:02,533 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:02:15,804 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.271
+2024-12-04 16:02:15,805 evaluator INFO: Engine run complete. Time taken: 00:00:13.272
+                                                                         ITERATION - loss: 0.20: 100%|██████████| 235/235 [22:20<00:00,  8.08it/s]2024-12-04 16:02:15,805 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:02:18,011 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.206
+2024-12-04 16:02:18,011 evaluator INFO: Engine run complete. Time taken: 00:00:02.206
+                                                                         ITERATION - loss: 0.20: 100%|██████████| 235/235 [22:22<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.20:   0%|          | 0/235 [22:22<00:29,  8.08it/s]2024-12-04 16:02:18,012 trainer INFO: Epoch[46] Complete. Time taken: 00:00:29.031
+ITERATION - loss: 0.15: 100%|██████████| 235/235 [22:36<00:00,  8.09it/s]ITERATION - loss: 0.15: 100%|██████████| 235/235 [22:36<00:00,  8.09it/s]2024-12-04 16:02:31,572 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:02:44,932 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.360
+2024-12-04 16:02:44,932 evaluator INFO: Engine run complete. Time taken: 00:00:13.360
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [22:49<00:00,  8.09it/s]2024-12-04 16:02:44,933 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:02:47,152 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 16:02:47,152 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [22:52<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.15:   0%|          | 0/235 [22:52<00:29,  8.09it/s]2024-12-04 16:02:47,153 trainer INFO: Epoch[47] Complete. Time taken: 00:00:29.141
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [23:05<00:00,  8.08it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [23:05<00:00,  8.08it/s]2024-12-04 16:03:00,700 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:03:13,970 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.270
+2024-12-04 16:03:13,971 evaluator INFO: Engine run complete. Time taken: 00:00:13.271
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [23:18<00:00,  8.08it/s]2024-12-04 16:03:13,971 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:03:16,175 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.204
+2024-12-04 16:03:16,175 evaluator INFO: Engine run complete. Time taken: 00:00:02.205
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [23:21<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [23:21<00:29,  8.08it/s]2024-12-04 16:03:16,176 trainer INFO: Epoch[48] Complete. Time taken: 00:00:29.023
+ITERATION - loss: 0.08: 100%|██████████| 235/235 [23:34<00:00,  8.08it/s]ITERATION - loss: 0.08: 100%|██████████| 235/235 [23:34<00:00,  8.08it/s]2024-12-04 16:03:29,728 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:03:43,091 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.363
+2024-12-04 16:03:43,091 evaluator INFO: Engine run complete. Time taken: 00:00:13.363
+                                                                         ITERATION - loss: 0.08: 100%|██████████| 235/235 [23:47<00:00,  8.08it/s]2024-12-04 16:03:43,091 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:03:45,309 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.217
+2024-12-04 16:03:45,309 evaluator INFO: Engine run complete. Time taken: 00:00:02.218
+                                                                         ITERATION - loss: 0.08: 100%|██████████| 235/235 [23:50<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.08:   0%|          | 0/235 [23:50<00:29,  8.08it/s]2024-12-04 16:03:45,310 trainer INFO: Epoch[49] Complete. Time taken: 00:00:29.134
+ITERATION - loss: 0.08: 100%|██████████| 235/235 [24:03<00:00,  8.08it/s]ITERATION - loss: 0.08: 100%|██████████| 235/235 [24:03<00:00,  8.08it/s]2024-12-04 16:03:58,852 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:04:12,107 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.255
+2024-12-04 16:04:12,109 evaluator INFO: Engine run complete. Time taken: 00:00:13.257
+                                                                         ITERATION - loss: 0.08: 100%|██████████| 235/235 [24:16<00:00,  8.08it/s]2024-12-04 16:04:12,109 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:04:14,316 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.206
+2024-12-04 16:04:14,316 evaluator INFO: Engine run complete. Time taken: 00:00:02.207
+                                                                         ITERATION - loss: 0.08: 100%|██████████| 235/235 [24:19<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.08:   0%|          | 0/235 [24:19<00:29,  8.08it/s]2024-12-04 16:04:14,316 trainer INFO: Epoch[50] Complete. Time taken: 00:00:29.006
+ITERATION - loss: 0.12: 100%|██████████| 235/235 [24:32<00:00,  8.08it/s]ITERATION - loss: 0.12: 100%|██████████| 235/235 [24:32<00:00,  8.08it/s]2024-12-04 16:04:27,913 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:04:41,203 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.290
+2024-12-04 16:04:41,205 evaluator INFO: Engine run complete. Time taken: 00:00:13.291
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [24:46<00:00,  8.08it/s]2024-12-04 16:04:41,205 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:04:43,425 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 16:04:43,425 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [24:48<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.12:   0%|          | 0/235 [24:48<00:29,  8.08it/s]2024-12-04 16:04:43,426 trainer INFO: Epoch[51] Complete. Time taken: 00:00:29.109
+ITERATION - loss: 0.25: 100%|██████████| 235/235 [25:01<00:00,  8.08it/s]ITERATION - loss: 0.25: 100%|██████████| 235/235 [25:01<00:00,  8.08it/s]2024-12-04 16:04:56,981 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:05:10,214 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.234
+2024-12-04 16:05:10,214 evaluator INFO: Engine run complete. Time taken: 00:00:13.234
+                                                                         ITERATION - loss: 0.25: 100%|██████████| 235/235 [25:15<00:00,  8.08it/s]2024-12-04 16:05:10,215 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:05:12,417 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 16:05:12,417 evaluator INFO: Engine run complete. Time taken: 00:00:02.203
+                                                                         ITERATION - loss: 0.25: 100%|██████████| 235/235 [25:17<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.25:   0%|          | 0/235 [25:17<00:29,  8.08it/s]2024-12-04 16:05:12,418 trainer INFO: Epoch[52] Complete. Time taken: 00:00:28.992
+ITERATION - loss: 0.16: 100%|██████████| 235/235 [25:30<00:00,  8.09it/s]ITERATION - loss: 0.16: 100%|██████████| 235/235 [25:30<00:00,  8.09it/s]2024-12-04 16:05:26,008 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:05:39,293 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.285
+2024-12-04 16:05:39,295 evaluator INFO: Engine run complete. Time taken: 00:00:13.286
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [25:44<00:00,  8.09it/s]2024-12-04 16:05:39,296 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:05:41,514 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.218
+2024-12-04 16:05:41,514 evaluator INFO: Engine run complete. Time taken: 00:00:02.218
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [25:46<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.16:   0%|          | 0/235 [25:46<00:29,  8.09it/s]2024-12-04 16:05:41,514 trainer INFO: Epoch[53] Complete. Time taken: 00:00:29.096
+ITERATION - loss: 0.11: 100%|██████████| 235/235 [25:59<00:00,  8.09it/s]ITERATION - loss: 0.11: 100%|██████████| 235/235 [25:59<00:00,  8.09it/s]2024-12-04 16:05:55,053 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:06:08,330 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.276
+2024-12-04 16:06:08,330 evaluator INFO: Engine run complete. Time taken: 00:00:13.276
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [26:13<00:00,  8.09it/s]2024-12-04 16:06:08,330 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:06:10,549 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.218
+2024-12-04 16:06:10,549 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [26:15<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.11:   0%|          | 0/235 [26:15<00:29,  8.09it/s]2024-12-04 16:06:10,549 trainer INFO: Epoch[54] Complete. Time taken: 00:00:29.035
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [26:29<00:00,  8.08it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [26:29<00:00,  8.08it/s]2024-12-04 16:06:24,152 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:06:37,398 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.246
+2024-12-04 16:06:37,398 evaluator INFO: Engine run complete. Time taken: 00:00:13.246
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [26:42<00:00,  8.08it/s]2024-12-04 16:06:37,399 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:06:39,608 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.209
+2024-12-04 16:06:39,608 evaluator INFO: Engine run complete. Time taken: 00:00:02.210
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [26:44<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [26:44<00:29,  8.08it/s]2024-12-04 16:06:39,609 trainer INFO: Epoch[55] Complete. Time taken: 00:00:29.059
+ITERATION - loss: 0.26: 100%|██████████| 235/235 [26:58<00:00,  8.09it/s]ITERATION - loss: 0.26: 100%|██████████| 235/235 [26:58<00:00,  8.09it/s]2024-12-04 16:06:53,150 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:07:06,479 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.329
+2024-12-04 16:07:06,481 evaluator INFO: Engine run complete. Time taken: 00:00:13.331
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [27:11<00:00,  8.09it/s]2024-12-04 16:07:06,482 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:07:08,696 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:07:08,697 evaluator INFO: Engine run complete. Time taken: 00:00:02.216
+                                                                         ITERATION - loss: 0.26: 100%|██████████| 235/235 [27:13<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.26:   0%|          | 0/235 [27:13<00:29,  8.09it/s]2024-12-04 16:07:08,698 trainer INFO: Epoch[56] Complete. Time taken: 00:00:29.089
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [27:27<00:00,  8.09it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [27:27<00:00,  8.09it/s]2024-12-04 16:07:22,230 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:07:35,501 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.271
+2024-12-04 16:07:35,501 evaluator INFO: Engine run complete. Time taken: 00:00:13.271
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [27:40<00:00,  8.09it/s]2024-12-04 16:07:35,501 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:07:37,702 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 16:07:37,703 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [27:42<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [27:42<00:29,  8.09it/s]2024-12-04 16:07:37,703 trainer INFO: Epoch[57] Complete. Time taken: 00:00:29.005
+ITERATION - loss: 0.23: 100%|██████████| 235/235 [27:56<00:00,  8.09it/s]ITERATION - loss: 0.23: 100%|██████████| 235/235 [27:56<00:00,  8.09it/s]2024-12-04 16:07:51,235 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:08:04,567 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.332
+2024-12-04 16:08:04,569 evaluator INFO: Engine run complete. Time taken: 00:00:13.334
+                                                                         ITERATION - loss: 0.23: 100%|██████████| 235/235 [28:09<00:00,  8.09it/s]2024-12-04 16:08:04,570 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:08:06,784 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.214
+2024-12-04 16:08:06,784 evaluator INFO: Engine run complete. Time taken: 00:00:02.214
+                                                                         ITERATION - loss: 0.23: 100%|██████████| 235/235 [28:11<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.23:   0%|          | 0/235 [28:11<00:29,  8.09it/s]2024-12-04 16:08:06,784 trainer INFO: Epoch[58] Complete. Time taken: 00:00:29.081
+ITERATION - loss: 0.16: 100%|██████████| 235/235 [28:25<00:00,  8.09it/s]ITERATION - loss: 0.16: 100%|██████████| 235/235 [28:25<00:00,  8.09it/s]2024-12-04 16:08:20,308 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:08:33,541 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.232
+2024-12-04 16:08:33,541 evaluator INFO: Engine run complete. Time taken: 00:00:13.233
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [28:38<00:00,  8.09it/s]2024-12-04 16:08:33,541 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:08:35,744 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 16:08:35,744 evaluator INFO: Engine run complete. Time taken: 00:00:02.203
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [28:40<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.16:   0%|          | 0/235 [28:40<00:29,  8.09it/s]2024-12-04 16:08:35,744 trainer INFO: Epoch[59] Complete. Time taken: 00:00:28.960
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [28:54<00:00,  8.09it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [28:54<00:00,  8.09it/s]2024-12-04 16:08:49,296 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:09:02,594 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.297
+2024-12-04 16:09:02,594 evaluator INFO: Engine run complete. Time taken: 00:00:13.298
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [29:07<00:00,  8.09it/s]2024-12-04 16:09:02,595 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:09:04,812 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.217
+2024-12-04 16:09:04,812 evaluator INFO: Engine run complete. Time taken: 00:00:02.217
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [29:09<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [29:09<00:29,  8.09it/s]2024-12-04 16:09:04,813 trainer INFO: Epoch[60] Complete. Time taken: 00:00:29.068
+ITERATION - loss: 0.17: 100%|██████████| 235/235 [29:23<00:00,  8.09it/s]ITERATION - loss: 0.17: 100%|██████████| 235/235 [29:23<00:00,  8.09it/s]2024-12-04 16:09:18,350 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:09:31,602 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.252
+2024-12-04 16:09:31,604 evaluator INFO: Engine run complete. Time taken: 00:00:13.253
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [29:36<00:00,  8.09it/s]2024-12-04 16:09:31,604 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:09:33,806 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.201
+2024-12-04 16:09:33,806 evaluator INFO: Engine run complete. Time taken: 00:00:02.202
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [29:38<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.17:   0%|          | 0/235 [29:38<00:29,  8.09it/s]2024-12-04 16:09:33,806 trainer INFO: Epoch[61] Complete. Time taken: 00:00:28.993
+ITERATION - loss: 0.18: 100%|██████████| 235/235 [29:52<00:00,  8.09it/s]ITERATION - loss: 0.18: 100%|██████████| 235/235 [29:52<00:00,  8.09it/s]2024-12-04 16:09:47,409 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:10:00,675 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.266
+2024-12-04 16:10:00,676 evaluator INFO: Engine run complete. Time taken: 00:00:13.267
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [30:05<00:00,  8.09it/s]2024-12-04 16:10:00,676 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:10:02,893 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.217
+2024-12-04 16:10:02,893 evaluator INFO: Engine run complete. Time taken: 00:00:02.217
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [30:07<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.18:   0%|          | 0/235 [30:07<00:29,  8.09it/s]2024-12-04 16:10:02,893 trainer INFO: Epoch[62] Complete. Time taken: 00:00:29.087
+ITERATION - loss: 0.06: 100%|██████████| 235/235 [30:21<00:00,  8.09it/s]ITERATION - loss: 0.06: 100%|██████████| 235/235 [30:21<00:00,  8.09it/s]2024-12-04 16:10:16,426 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:10:29,670 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.244
+2024-12-04 16:10:29,670 evaluator INFO: Engine run complete. Time taken: 00:00:13.245
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [30:34<00:00,  8.09it/s]2024-12-04 16:10:29,671 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:10:31,877 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.206
+2024-12-04 16:10:31,877 evaluator INFO: Engine run complete. Time taken: 00:00:02.207
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [30:36<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.06:   0%|          | 0/235 [30:36<00:29,  8.09it/s]2024-12-04 16:10:31,878 trainer INFO: Epoch[63] Complete. Time taken: 00:00:28.984
+ITERATION - loss: 0.15: 100%|██████████| 235/235 [30:50<00:00,  8.09it/s]ITERATION - loss: 0.15: 100%|██████████| 235/235 [30:50<00:00,  8.09it/s]2024-12-04 16:10:45,469 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:10:58,701 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.231
+2024-12-04 16:10:58,702 evaluator INFO: Engine run complete. Time taken: 00:00:13.233
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [31:03<00:00,  8.09it/s]2024-12-04 16:10:58,703 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:11:00,918 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:11:00,918 evaluator INFO: Engine run complete. Time taken: 00:00:02.216
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [31:05<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.15:   0%|          | 0/235 [31:05<00:29,  8.09it/s]2024-12-04 16:11:00,919 trainer INFO: Epoch[64] Complete. Time taken: 00:00:29.041
+ITERATION - loss: 0.11: 100%|██████████| 235/235 [31:19<00:00,  8.10it/s]ITERATION - loss: 0.11: 100%|██████████| 235/235 [31:19<00:00,  8.10it/s]2024-12-04 16:11:14,430 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:11:27,671 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.241
+2024-12-04 16:11:27,672 evaluator INFO: Engine run complete. Time taken: 00:00:13.242
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [31:32<00:00,  8.10it/s]2024-12-04 16:11:27,672 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:11:29,897 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.225
+2024-12-04 16:11:29,897 evaluator INFO: Engine run complete. Time taken: 00:00:02.225
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [31:34<00:00,  8.10it/s]                                                                         ITERATION - loss: 0.11:   0%|          | 0/235 [31:34<00:29,  8.10it/s]2024-12-04 16:11:29,897 trainer INFO: Epoch[65] Complete. Time taken: 00:00:28.978
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [31:48<00:00,  8.09it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [31:48<00:00,  8.09it/s]2024-12-04 16:11:43,541 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:11:56,923 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.381
+2024-12-04 16:11:56,923 evaluator INFO: Engine run complete. Time taken: 00:00:13.382
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [32:01<00:00,  8.09it/s]2024-12-04 16:11:56,923 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:11:59,155 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.231
+2024-12-04 16:11:59,155 evaluator INFO: Engine run complete. Time taken: 00:00:02.232
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [32:04<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [32:04<00:29,  8.09it/s]2024-12-04 16:11:59,155 trainer INFO: Epoch[66] Complete. Time taken: 00:00:29.258
+ITERATION - loss: 0.04: 100%|██████████| 235/235 [32:17<00:00,  8.08it/s]ITERATION - loss: 0.04: 100%|██████████| 235/235 [32:17<00:00,  8.08it/s]2024-12-04 16:12:12,682 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:12:26,015 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.333
+2024-12-04 16:12:26,017 evaluator INFO: Engine run complete. Time taken: 00:00:13.335
+                                                                         ITERATION - loss: 0.04: 100%|██████████| 235/235 [32:30<00:00,  8.08it/s]2024-12-04 16:12:26,017 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:12:28,233 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:12:28,233 evaluator INFO: Engine run complete. Time taken: 00:00:02.216
+                                                                         ITERATION - loss: 0.04: 100%|██████████| 235/235 [32:33<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.04:   0%|          | 0/235 [32:33<00:29,  8.08it/s]2024-12-04 16:12:28,233 trainer INFO: Epoch[67] Complete. Time taken: 00:00:29.078
+ITERATION - loss: 0.11: 100%|██████████| 235/235 [32:46<00:00,  8.08it/s]ITERATION - loss: 0.11: 100%|██████████| 235/235 [32:46<00:00,  8.08it/s]2024-12-04 16:12:41,757 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:12:55,030 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.273
+2024-12-04 16:12:55,030 evaluator INFO: Engine run complete. Time taken: 00:00:13.273
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [32:59<00:00,  8.08it/s]2024-12-04 16:12:55,030 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:12:57,226 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.196
+2024-12-04 16:12:57,226 evaluator INFO: Engine run complete. Time taken: 00:00:02.196
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [33:02<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.11:   0%|          | 0/235 [33:02<00:29,  8.08it/s]2024-12-04 16:12:57,226 trainer INFO: Epoch[68] Complete. Time taken: 00:00:28.993
+ITERATION - loss: 0.18: 100%|██████████| 235/235 [33:15<00:00,  8.09it/s]ITERATION - loss: 0.18: 100%|██████████| 235/235 [33:15<00:00,  8.09it/s]2024-12-04 16:13:10,767 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:13:24,107 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.340
+2024-12-04 16:13:24,109 evaluator INFO: Engine run complete. Time taken: 00:00:13.342
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [33:28<00:00,  8.09it/s]2024-12-04 16:13:24,109 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:13:26,326 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.216
+2024-12-04 16:13:26,353 evaluator INFO: Engine run complete. Time taken: 00:00:02.243
+                                                                         ITERATION - loss: 0.18: 100%|██████████| 235/235 [33:31<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.18:   0%|          | 0/235 [33:31<00:29,  8.09it/s]2024-12-04 16:13:26,353 trainer INFO: Epoch[69] Complete. Time taken: 00:00:29.127
+ITERATION - loss: 0.12: 100%|██████████| 235/235 [33:44<00:00,  8.08it/s]ITERATION - loss: 0.12: 100%|██████████| 235/235 [33:44<00:00,  8.08it/s]2024-12-04 16:13:39,889 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:13:53,163 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.274
+2024-12-04 16:13:53,163 evaluator INFO: Engine run complete. Time taken: 00:00:13.274
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [33:58<00:00,  8.08it/s]2024-12-04 16:13:53,164 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:13:55,371 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.207
+2024-12-04 16:13:55,371 evaluator INFO: Engine run complete. Time taken: 00:00:02.208
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [34:00<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.12:   0%|          | 0/235 [34:00<00:29,  8.08it/s]2024-12-04 16:13:55,372 trainer INFO: Epoch[70] Complete. Time taken: 00:00:29.018
+ITERATION - loss: 0.14: 100%|██████████| 235/235 [34:13<00:00,  8.08it/s]ITERATION - loss: 0.14: 100%|██████████| 235/235 [34:13<00:00,  8.08it/s]2024-12-04 16:14:08,984 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:14:22,245 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.261
+2024-12-04 16:14:22,245 evaluator INFO: Engine run complete. Time taken: 00:00:13.261
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [34:27<00:00,  8.08it/s]2024-12-04 16:14:22,246 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:14:24,459 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.213
+2024-12-04 16:14:24,459 evaluator INFO: Engine run complete. Time taken: 00:00:02.213
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [34:29<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.14:   0%|          | 0/235 [34:29<00:29,  8.08it/s]2024-12-04 16:14:24,459 trainer INFO: Epoch[71] Complete. Time taken: 00:00:29.087
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [34:42<00:00,  8.09it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [34:42<00:00,  8.09it/s]2024-12-04 16:14:37,980 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:14:51,245 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.265
+2024-12-04 16:14:51,245 evaluator INFO: Engine run complete. Time taken: 00:00:13.265
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [34:56<00:00,  8.09it/s]2024-12-04 16:14:51,245 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:14:53,448 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.203
+2024-12-04 16:14:53,448 evaluator INFO: Engine run complete. Time taken: 00:00:02.203
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [34:58<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [34:58<00:29,  8.09it/s]2024-12-04 16:14:53,449 trainer INFO: Epoch[72] Complete. Time taken: 00:00:28.989
+ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:11<00:00,  8.09it/s]ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:11<00:00,  8.09it/s]2024-12-04 16:15:07,054 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:15:20,307 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.252
+2024-12-04 16:15:20,307 evaluator INFO: Engine run complete. Time taken: 00:00:13.253
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:25<00:00,  8.09it/s]2024-12-04 16:15:20,308 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:15:22,523 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:15:22,523 evaluator INFO: Engine run complete. Time taken: 00:00:02.215
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:27<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.06:   0%|          | 0/235 [35:27<00:29,  8.09it/s]2024-12-04 16:15:22,524 trainer INFO: Epoch[73] Complete. Time taken: 00:00:29.075
+ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:40<00:00,  8.09it/s]ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:40<00:00,  8.09it/s]2024-12-04 16:15:36,051 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:15:49,305 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.254
+2024-12-04 16:15:49,307 evaluator INFO: Engine run complete. Time taken: 00:00:13.256
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:54<00:00,  8.09it/s]2024-12-04 16:15:49,308 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:15:51,513 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.205
+2024-12-04 16:15:51,513 evaluator INFO: Engine run complete. Time taken: 00:00:02.205
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [35:56<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.06:   0%|          | 0/235 [35:56<00:29,  8.09it/s]2024-12-04 16:15:51,513 trainer INFO: Epoch[74] Complete. Time taken: 00:00:28.990
+ITERATION - loss: 0.16: 100%|██████████| 235/235 [36:10<00:00,  8.09it/s]ITERATION - loss: 0.16: 100%|██████████| 235/235 [36:10<00:00,  8.09it/s]2024-12-04 16:16:05,130 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:16:18,393 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.263
+2024-12-04 16:16:18,394 evaluator INFO: Engine run complete. Time taken: 00:00:13.263
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [36:23<00:00,  8.09it/s]2024-12-04 16:16:18,394 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:16:20,614 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 16:16:20,614 evaluator INFO: Engine run complete. Time taken: 00:00:02.220
+                                                                         ITERATION - loss: 0.16: 100%|██████████| 235/235 [36:25<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.16:   0%|          | 0/235 [36:25<00:29,  8.09it/s]2024-12-04 16:16:20,614 trainer INFO: Epoch[75] Complete. Time taken: 00:00:29.101
+ITERATION - loss: 0.12: 100%|██████████| 235/235 [36:39<00:00,  8.09it/s]ITERATION - loss: 0.12: 100%|██████████| 235/235 [36:39<00:00,  8.09it/s]2024-12-04 16:16:34,164 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:16:47,486 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.322
+2024-12-04 16:16:47,487 evaluator INFO: Engine run complete. Time taken: 00:00:13.322
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [36:52<00:00,  8.09it/s]2024-12-04 16:16:47,487 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:16:49,709 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 16:16:49,709 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.12: 100%|██████████| 235/235 [36:54<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.12:   0%|          | 0/235 [36:54<00:29,  8.09it/s]2024-12-04 16:16:49,709 trainer INFO: Epoch[76] Complete. Time taken: 00:00:29.095
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [37:08<00:00,  8.09it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [37:08<00:00,  8.09it/s]2024-12-04 16:17:03,233 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:17:16,484 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.251
+2024-12-04 16:17:16,486 evaluator INFO: Engine run complete. Time taken: 00:00:13.253
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [37:21<00:00,  8.09it/s]2024-12-04 16:17:16,486 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:17:18,689 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 16:17:18,689 evaluator INFO: Engine run complete. Time taken: 00:00:02.202
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [37:23<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [37:23<00:29,  8.09it/s]2024-12-04 16:17:18,689 trainer INFO: Epoch[77] Complete. Time taken: 00:00:28.980
+ITERATION - loss: 0.06: 100%|██████████| 235/235 [37:37<00:00,  8.09it/s]ITERATION - loss: 0.06: 100%|██████████| 235/235 [37:37<00:00,  8.09it/s]2024-12-04 16:17:32,255 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:17:45,606 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.350
+2024-12-04 16:17:45,606 evaluator INFO: Engine run complete. Time taken: 00:00:13.351
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [37:50<00:00,  8.09it/s]2024-12-04 16:17:45,607 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:17:47,825 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.218
+2024-12-04 16:17:47,825 evaluator INFO: Engine run complete. Time taken: 00:00:02.218
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [37:52<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.06:   0%|          | 0/235 [37:52<00:29,  8.09it/s]2024-12-04 16:17:47,825 trainer INFO: Epoch[78] Complete. Time taken: 00:00:29.136
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [38:06<00:00,  8.09it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [38:06<00:00,  8.09it/s]2024-12-04 16:18:01,361 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:18:14,628 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.266
+2024-12-04 16:18:14,628 evaluator INFO: Engine run complete. Time taken: 00:00:13.267
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [38:19<00:00,  8.09it/s]2024-12-04 16:18:14,628 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:18:16,829 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.200
+2024-12-04 16:18:16,829 evaluator INFO: Engine run complete. Time taken: 00:00:02.201
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [38:21<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [38:21<00:29,  8.09it/s]2024-12-04 16:18:16,829 trainer INFO: Epoch[79] Complete. Time taken: 00:00:29.004
+ITERATION - loss: 0.29: 100%|██████████| 235/235 [38:35<00:00,  8.09it/s]ITERATION - loss: 0.29: 100%|██████████| 235/235 [38:35<00:00,  8.09it/s]2024-12-04 16:18:30,382 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:18:43,736 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.354
+2024-12-04 16:18:43,736 evaluator INFO: Engine run complete. Time taken: 00:00:13.354
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [38:48<00:00,  8.09it/s]2024-12-04 16:18:43,737 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:18:45,956 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 16:18:45,956 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.29: 100%|██████████| 235/235 [38:50<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.29:   0%|          | 0/235 [38:50<00:29,  8.09it/s]2024-12-04 16:18:45,957 trainer INFO: Epoch[80] Complete. Time taken: 00:00:29.127
+ITERATION - loss: 0.19: 100%|██████████| 235/235 [39:04<00:00,  8.08it/s]ITERATION - loss: 0.19: 100%|██████████| 235/235 [39:04<00:00,  8.08it/s]2024-12-04 16:18:59,502 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:19:12,758 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.255
+2024-12-04 16:19:12,758 evaluator INFO: Engine run complete. Time taken: 00:00:13.256
+                                                                         ITERATION - loss: 0.19: 100%|██████████| 235/235 [39:17<00:00,  8.08it/s]2024-12-04 16:19:12,758 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:19:14,962 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.204
+2024-12-04 16:19:14,962 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.19: 100%|██████████| 235/235 [39:19<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.19:   0%|          | 0/235 [39:19<00:29,  8.08it/s]2024-12-04 16:19:14,963 trainer INFO: Epoch[81] Complete. Time taken: 00:00:29.006
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [39:33<00:00,  8.09it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [39:33<00:00,  8.09it/s]2024-12-04 16:19:28,549 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:19:41,836 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.286
+2024-12-04 16:19:41,836 evaluator INFO: Engine run complete. Time taken: 00:00:13.287
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [39:46<00:00,  8.09it/s]2024-12-04 16:19:41,837 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:19:44,056 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 16:19:44,056 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [39:48<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [39:48<00:29,  8.09it/s]2024-12-04 16:19:44,057 trainer INFO: Epoch[82] Complete. Time taken: 00:00:29.094
+ITERATION - loss: 0.22: 100%|██████████| 235/235 [40:02<00:00,  8.09it/s]ITERATION - loss: 0.22: 100%|██████████| 235/235 [40:02<00:00,  8.09it/s]2024-12-04 16:19:57,606 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:20:10,864 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.258
+2024-12-04 16:20:10,864 evaluator INFO: Engine run complete. Time taken: 00:00:13.258
+                                                                         ITERATION - loss: 0.22: 100%|██████████| 235/235 [40:15<00:00,  8.09it/s]2024-12-04 16:20:10,864 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:20:13,068 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.204
+2024-12-04 16:20:13,069 evaluator INFO: Engine run complete. Time taken: 00:00:02.204
+                                                                         ITERATION - loss: 0.22: 100%|██████████| 235/235 [40:17<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.22:   0%|          | 0/235 [40:17<00:29,  8.09it/s]2024-12-04 16:20:13,069 trainer INFO: Epoch[83] Complete. Time taken: 00:00:29.012
+ITERATION - loss: 0.06: 100%|██████████| 235/235 [40:31<00:00,  8.08it/s]ITERATION - loss: 0.06: 100%|██████████| 235/235 [40:31<00:00,  8.08it/s]2024-12-04 16:20:26,683 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:20:39,933 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.249
+2024-12-04 16:20:39,933 evaluator INFO: Engine run complete. Time taken: 00:00:13.249
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [40:44<00:00,  8.08it/s]2024-12-04 16:20:39,934 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:20:42,153 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.219
+2024-12-04 16:20:42,153 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.06: 100%|██████████| 235/235 [40:47<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.06:   0%|          | 0/235 [40:47<00:29,  8.08it/s]2024-12-04 16:20:42,153 trainer INFO: Epoch[84] Complete. Time taken: 00:00:29.084
+ITERATION - loss: 0.03: 100%|██████████| 235/235 [41:00<00:00,  8.09it/s]ITERATION - loss: 0.03: 100%|██████████| 235/235 [41:00<00:00,  8.09it/s]2024-12-04 16:20:55,696 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:21:08,971 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.274
+2024-12-04 16:21:08,971 evaluator INFO: Engine run complete. Time taken: 00:00:13.275
+                                                                         ITERATION - loss: 0.03: 100%|██████████| 235/235 [41:13<00:00,  8.09it/s]2024-12-04 16:21:08,971 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:21:11,186 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.215
+2024-12-04 16:21:11,186 evaluator INFO: Engine run complete. Time taken: 00:00:02.215
+                                                                         ITERATION - loss: 0.03: 100%|██████████| 235/235 [41:16<00:00,  8.09it/s]                                                                         ITERATION - loss: 0.03:   0%|          | 0/235 [41:16<00:29,  8.09it/s]2024-12-04 16:21:11,187 trainer INFO: Epoch[85] Complete. Time taken: 00:00:29.033
+ITERATION - loss: 0.15: 100%|██████████| 235/235 [41:29<00:00,  8.08it/s]ITERATION - loss: 0.15: 100%|██████████| 235/235 [41:29<00:00,  8.08it/s]2024-12-04 16:21:24,850 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:21:38,135 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.284
+2024-12-04 16:21:38,137 evaluator INFO: Engine run complete. Time taken: 00:00:13.286
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [41:43<00:00,  8.08it/s]2024-12-04 16:21:38,137 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:21:40,355 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.217
+2024-12-04 16:21:40,355 evaluator INFO: Engine run complete. Time taken: 00:00:02.218
+                                                                         ITERATION - loss: 0.15: 100%|██████████| 235/235 [41:45<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.15:   0%|          | 0/235 [41:45<00:29,  8.08it/s]2024-12-04 16:21:40,355 trainer INFO: Epoch[86] Complete. Time taken: 00:00:29.168
+ITERATION - loss: 0.09: 100%|██████████| 235/235 [41:58<00:00,  8.08it/s]ITERATION - loss: 0.09: 100%|██████████| 235/235 [41:58<00:00,  8.08it/s]2024-12-04 16:21:53,916 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:22:07,253 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.337
+2024-12-04 16:22:07,253 evaluator INFO: Engine run complete. Time taken: 00:00:13.337
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [42:12<00:00,  8.08it/s]2024-12-04 16:22:07,254 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:22:09,474 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 16:22:09,475 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [42:14<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.09:   0%|          | 0/235 [42:14<00:29,  8.08it/s]2024-12-04 16:22:09,475 trainer INFO: Epoch[87] Complete. Time taken: 00:00:29.120
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [42:27<00:00,  8.08it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [42:27<00:00,  8.08it/s]2024-12-04 16:22:23,037 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:22:36,317 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.279
+2024-12-04 16:22:36,317 evaluator INFO: Engine run complete. Time taken: 00:00:13.280
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [42:41<00:00,  8.08it/s]2024-12-04 16:22:36,317 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:22:38,519 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.202
+2024-12-04 16:22:38,520 evaluator INFO: Engine run complete. Time taken: 00:00:02.202
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [42:43<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [42:43<00:29,  8.08it/s]2024-12-04 16:22:38,520 trainer INFO: Epoch[88] Complete. Time taken: 00:00:29.045
+ITERATION - loss: 0.05: 100%|██████████| 235/235 [42:56<00:00,  8.08it/s]ITERATION - loss: 0.05: 100%|██████████| 235/235 [42:56<00:00,  8.08it/s]2024-12-04 16:22:52,048 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:23:05,379 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.330
+2024-12-04 16:23:05,379 evaluator INFO: Engine run complete. Time taken: 00:00:13.330
+                                                                         ITERATION - loss: 0.05: 100%|██████████| 235/235 [43:10<00:00,  8.08it/s]2024-12-04 16:23:05,379 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:23:07,593 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.213
+2024-12-04 16:23:07,593 evaluator INFO: Engine run complete. Time taken: 00:00:02.214
+                                                                         ITERATION - loss: 0.05: 100%|██████████| 235/235 [43:12<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.05:   0%|          | 0/235 [43:12<00:29,  8.08it/s]2024-12-04 16:23:07,594 trainer INFO: Epoch[89] Complete. Time taken: 00:00:29.074
+ITERATION - loss: 0.11: 100%|██████████| 235/235 [43:26<00:00,  8.08it/s]ITERATION - loss: 0.11: 100%|██████████| 235/235 [43:26<00:00,  8.08it/s]2024-12-04 16:23:21,123 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:23:34,407 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.284
+2024-12-04 16:23:34,407 evaluator INFO: Engine run complete. Time taken: 00:00:13.284
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [43:39<00:00,  8.08it/s]2024-12-04 16:23:34,407 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:23:36,618 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.210
+2024-12-04 16:23:36,618 evaluator INFO: Engine run complete. Time taken: 00:00:02.210
+                                                                         ITERATION - loss: 0.11: 100%|██████████| 235/235 [43:41<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.11:   0%|          | 0/235 [43:41<00:29,  8.08it/s]2024-12-04 16:23:36,618 trainer INFO: Epoch[90] Complete. Time taken: 00:00:29.024
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [43:55<00:00,  8.08it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [43:55<00:00,  8.08it/s]2024-12-04 16:23:50,203 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:24:03,536 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.333
+2024-12-04 16:24:03,536 evaluator INFO: Engine run complete. Time taken: 00:00:13.334
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [44:08<00:00,  8.08it/s]2024-12-04 16:24:03,537 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:24:05,759 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 16:24:05,759 evaluator INFO: Engine run complete. Time taken: 00:00:02.222
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [44:10<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [44:10<00:29,  8.08it/s]2024-12-04 16:24:05,759 trainer INFO: Epoch[91] Complete. Time taken: 00:00:29.141
+ITERATION - loss: 0.17: 100%|██████████| 235/235 [44:24<00:00,  8.08it/s]ITERATION - loss: 0.17: 100%|██████████| 235/235 [44:24<00:00,  8.08it/s]2024-12-04 16:24:19,330 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:24:32,598 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.268
+2024-12-04 16:24:32,599 evaluator INFO: Engine run complete. Time taken: 00:00:13.269
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [44:37<00:00,  8.08it/s]2024-12-04 16:24:32,599 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:24:34,807 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.208
+2024-12-04 16:24:34,807 evaluator INFO: Engine run complete. Time taken: 00:00:02.208
+                                                                         ITERATION - loss: 0.17: 100%|██████████| 235/235 [44:39<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.17:   0%|          | 0/235 [44:39<00:29,  8.08it/s]2024-12-04 16:24:34,807 trainer INFO: Epoch[92] Complete. Time taken: 00:00:29.048
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [44:53<00:00,  8.08it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [44:53<00:00,  8.08it/s]2024-12-04 16:24:48,441 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:25:01,726 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.284
+2024-12-04 16:25:01,726 evaluator INFO: Engine run complete. Time taken: 00:00:13.285
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [45:06<00:00,  8.08it/s]2024-12-04 16:25:01,726 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:25:03,950 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.223
+2024-12-04 16:25:03,952 evaluator INFO: Engine run complete. Time taken: 00:00:02.225
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [45:08<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [45:08<00:29,  8.08it/s]2024-12-04 16:25:03,952 trainer INFO: Epoch[93] Complete. Time taken: 00:00:29.145
+ITERATION - loss: 0.13: 100%|██████████| 235/235 [45:22<00:00,  8.08it/s]ITERATION - loss: 0.13: 100%|██████████| 235/235 [45:22<00:00,  8.08it/s]2024-12-04 16:25:17,517 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:25:30,800 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.283
+2024-12-04 16:25:30,800 evaluator INFO: Engine run complete. Time taken: 00:00:13.283
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [45:35<00:00,  8.08it/s]2024-12-04 16:25:30,800 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:25:33,014 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.213
+2024-12-04 16:25:33,015 evaluator INFO: Engine run complete. Time taken: 00:00:02.215
+                                                                         ITERATION - loss: 0.13: 100%|██████████| 235/235 [45:37<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.13:   0%|          | 0/235 [45:37<00:29,  8.08it/s]2024-12-04 16:25:33,016 trainer INFO: Epoch[94] Complete. Time taken: 00:00:29.064
+ITERATION - loss: 0.14: 100%|██████████| 235/235 [45:51<00:00,  8.07it/s]ITERATION - loss: 0.14: 100%|██████████| 235/235 [45:51<00:00,  8.07it/s]2024-12-04 16:25:46,662 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:25:59,949 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.287
+2024-12-04 16:25:59,950 evaluator INFO: Engine run complete. Time taken: 00:00:13.288
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:04<00:00,  8.07it/s]2024-12-04 16:25:59,950 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:26:02,173 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.223
+2024-12-04 16:26:02,173 evaluator INFO: Engine run complete. Time taken: 00:00:02.223
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:07<00:00,  8.07it/s]                                                                         ITERATION - loss: 0.14:   0%|          | 0/235 [46:07<00:29,  8.07it/s]2024-12-04 16:26:02,173 trainer INFO: Epoch[95] Complete. Time taken: 00:00:29.157
+ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:20<00:00,  8.08it/s]ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:20<00:00,  8.08it/s]2024-12-04 16:26:15,730 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:26:29,024 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.293
+2024-12-04 16:26:29,024 evaluator INFO: Engine run complete. Time taken: 00:00:13.294
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:33<00:00,  8.08it/s]2024-12-04 16:26:29,024 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:26:31,246 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.221
+2024-12-04 16:26:31,246 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.14: 100%|██████████| 235/235 [46:36<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.14:   0%|          | 0/235 [46:36<00:29,  8.08it/s]2024-12-04 16:26:31,246 trainer INFO: Epoch[96] Complete. Time taken: 00:00:29.073
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [46:49<00:00,  8.07it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [46:49<00:00,  8.07it/s]2024-12-04 16:26:44,875 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:26:58,164 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.288
+2024-12-04 16:26:58,164 evaluator INFO: Engine run complete. Time taken: 00:00:13.289
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:03<00:00,  8.07it/s]2024-12-04 16:26:58,164 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:27:00,370 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.205
+2024-12-04 16:27:00,370 evaluator INFO: Engine run complete. Time taken: 00:00:02.206
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:05<00:00,  8.07it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [47:05<00:29,  8.07it/s]2024-12-04 16:27:00,370 trainer INFO: Epoch[97] Complete. Time taken: 00:00:29.124
+ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:18<00:00,  8.08it/s]ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:18<00:00,  8.08it/s]2024-12-04 16:27:13,936 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:27:27,302 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.365
+2024-12-04 16:27:27,302 evaluator INFO: Engine run complete. Time taken: 00:00:13.366
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:32<00:00,  8.08it/s]2024-12-04 16:27:27,303 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:27:29,523 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.220
+2024-12-04 16:27:29,523 evaluator INFO: Engine run complete. Time taken: 00:00:02.221
+                                                                         ITERATION - loss: 0.07: 100%|██████████| 235/235 [47:34<00:00,  8.08it/s]                                                                         ITERATION - loss: 0.07:   0%|          | 0/235 [47:34<00:29,  8.08it/s]2024-12-04 16:27:29,524 trainer INFO: Epoch[98] Complete. Time taken: 00:00:29.153
+ITERATION - loss: 0.10: 100%|██████████| 235/235 [47:47<00:00,  8.07it/s]ITERATION - loss: 0.10: 100%|██████████| 235/235 [47:47<00:00,  8.07it/s]2024-12-04 16:27:43,107 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:27:56,379 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.272
+2024-12-04 16:27:56,380 evaluator INFO: Engine run complete. Time taken: 00:00:13.273
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [48:01<00:00,  8.07it/s]2024-12-04 16:27:56,380 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:27:58,585 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.205
+2024-12-04 16:27:58,585 evaluator INFO: Engine run complete. Time taken: 00:00:02.205
+                                                                         ITERATION - loss: 0.10: 100%|██████████| 235/235 [48:03<00:00,  8.07it/s]                                                                         ITERATION - loss: 0.10:   0%|          | 0/235 [48:03<00:29,  8.07it/s]2024-12-04 16:27:58,586 trainer INFO: Epoch[99] Complete. Time taken: 00:00:29.062
+ITERATION - loss: 0.09: 100%|██████████| 235/235 [48:17<00:00,  8.07it/s]ITERATION - loss: 0.09: 100%|██████████| 235/235 [48:17<00:00,  8.07it/s]2024-12-04 16:28:12,175 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:28:25,513 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:13.338
+2024-12-04 16:28:25,513 evaluator INFO: Engine run complete. Time taken: 00:00:13.339
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [48:30<00:00,  8.07it/s]2024-12-04 16:28:25,514 evaluator INFO: Engine run starting with max_epochs=1.
+2024-12-04 16:28:27,733 evaluator INFO: Epoch[1] Complete. Time taken: 00:00:02.218
+2024-12-04 16:28:27,733 evaluator INFO: Engine run complete. Time taken: 00:00:02.219
+                                                                         ITERATION - loss: 0.09: 100%|██████████| 235/235 [48:32<00:00,  8.07it/s]                                                                         ITERATION - loss: 0.09:   0%|          | 0/235 [48:32<00:29,  8.07it/s]2024-12-04 16:28:27,733 trainer INFO: Epoch[100] Complete. Time taken: 00:00:29.147
+                                                                       ITERATION - loss: 0.09:   0%|          | 0/235 [48:32<00:29,  8.07it/s]2024-12-04 16:28:27,734 trainer INFO: Engine run complete. Time taken: 00:48:32.623
+                                                                       Training Results - Epoch: 1 Avg accuracy: 0.81 Avg loss: 1.05
+Validation Results - Epoch: 1 Avg accuracy: 0.82 Avg loss: 1.03
+EPOCH_COMPLETED took 19.365362644195557 seconds
+Training Results - Epoch: 2 Avg accuracy: 0.90 Avg loss: 0.38
+Validation Results - Epoch: 2 Avg accuracy: 0.91 Avg loss: 0.36
+EPOCH_COMPLETED took 13.648738622665405 seconds
+Training Results - Epoch: 3 Avg accuracy: 0.92 Avg loss: 0.28
+Validation Results - Epoch: 3 Avg accuracy: 0.93 Avg loss: 0.26
+EPOCH_COMPLETED took 13.56648063659668 seconds
+Training Results - Epoch: 4 Avg accuracy: 0.94 Avg loss: 0.23
+Validation Results - Epoch: 4 Avg accuracy: 0.94 Avg loss: 0.21
+EPOCH_COMPLETED took 13.57378077507019 seconds
+Training Results - Epoch: 5 Avg accuracy: 0.94 Avg loss: 0.19
+Validation Results - Epoch: 5 Avg accuracy: 0.95 Avg loss: 0.18
+EPOCH_COMPLETED took 13.553237676620483 seconds
+Training Results - Epoch: 6 Avg accuracy: 0.95 Avg loss: 0.17
+Validation Results - Epoch: 6 Avg accuracy: 0.95 Avg loss: 0.16
+EPOCH_COMPLETED took 13.582923889160156 seconds
+Training Results - Epoch: 7 Avg accuracy: 0.95 Avg loss: 0.16
+Validation Results - Epoch: 7 Avg accuracy: 0.96 Avg loss: 0.14
+EPOCH_COMPLETED took 13.569419860839844 seconds
+Training Results - Epoch: 8 Avg accuracy: 0.96 Avg loss: 0.14
+Validation Results - Epoch: 8 Avg accuracy: 0.96 Avg loss: 0.13
+EPOCH_COMPLETED took 13.568233251571655 seconds
+Training Results - Epoch: 9 Avg accuracy: 0.96 Avg loss: 0.14
+Validation Results - Epoch: 9 Avg accuracy: 0.96 Avg loss: 0.12
+EPOCH_COMPLETED took 13.597925901412964 seconds
+Training Results - Epoch: 10 Avg accuracy: 0.96 Avg loss: 0.13
+Validation Results - Epoch: 10 Avg accuracy: 0.97 Avg loss: 0.11
+EPOCH_COMPLETED took 13.540806531906128 seconds
+Training Results - Epoch: 11 Avg accuracy: 0.96 Avg loss: 0.12
+Validation Results - Epoch: 11 Avg accuracy: 0.97 Avg loss: 0.11
+EPOCH_COMPLETED took 13.640112161636353 seconds
+Training Results - Epoch: 12 Avg accuracy: 0.97 Avg loss: 0.11
+Validation Results - Epoch: 12 Avg accuracy: 0.97 Avg loss: 0.10
+EPOCH_COMPLETED took 13.543553113937378 seconds
+Training Results - Epoch: 13 Avg accuracy: 0.97 Avg loss: 0.11
+Validation Results - Epoch: 13 Avg accuracy: 0.97 Avg loss: 0.10
+EPOCH_COMPLETED took 13.594831228256226 seconds
+Training Results - Epoch: 14 Avg accuracy: 0.97 Avg loss: 0.10
+Validation Results - Epoch: 14 Avg accuracy: 0.97 Avg loss: 0.09
+EPOCH_COMPLETED took 13.544042348861694 seconds
+Training Results - Epoch: 15 Avg accuracy: 0.97 Avg loss: 0.10
+Validation Results - Epoch: 15 Avg accuracy: 0.97 Avg loss: 0.09
+EPOCH_COMPLETED took 13.53460955619812 seconds
+Training Results - Epoch: 16 Avg accuracy: 0.97 Avg loss: 0.10
+Validation Results - Epoch: 16 Avg accuracy: 0.97 Avg loss: 0.09
+EPOCH_COMPLETED took 13.528477430343628 seconds
+Training Results - Epoch: 17 Avg accuracy: 0.97 Avg loss: 0.09
+Validation Results - Epoch: 17 Avg accuracy: 0.97 Avg loss: 0.09
+EPOCH_COMPLETED took 13.552363157272339 seconds
+Training Results - Epoch: 18 Avg accuracy: 0.97 Avg loss: 0.09
+Validation Results - Epoch: 18 Avg accuracy: 0.97 Avg loss: 0.08
+EPOCH_COMPLETED took 13.618477582931519 seconds
+Training Results - Epoch: 19 Avg accuracy: 0.97 Avg loss: 0.09
+Validation Results - Epoch: 19 Avg accuracy: 0.98 Avg loss: 0.08
+EPOCH_COMPLETED took 13.518648147583008 seconds
+Training Results - Epoch: 20 Avg accuracy: 0.97 Avg loss: 0.09
+Validation Results - Epoch: 20 Avg accuracy: 0.98 Avg loss: 0.08
+EPOCH_COMPLETED took 13.611865043640137 seconds
+Training Results - Epoch: 21 Avg accuracy: 0.97 Avg loss: 0.09
+Validation Results - Epoch: 21 Avg accuracy: 0.98 Avg loss: 0.08
+EPOCH_COMPLETED took 13.51812195777893 seconds
+Training Results - Epoch: 22 Avg accuracy: 0.98 Avg loss: 0.08
+Validation Results - Epoch: 22 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.534862041473389 seconds
+Training Results - Epoch: 23 Avg accuracy: 0.98 Avg loss: 0.08
+Validation Results - Epoch: 23 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.53218936920166 seconds
+Training Results - Epoch: 24 Avg accuracy: 0.98 Avg loss: 0.08
+Validation Results - Epoch: 24 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.536797523498535 seconds
+Training Results - Epoch: 25 Avg accuracy: 0.98 Avg loss: 0.08
+Validation Results - Epoch: 25 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.541691064834595 seconds
+Training Results - Epoch: 26 Avg accuracy: 0.98 Avg loss: 0.08
+Validation Results - Epoch: 26 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.537333965301514 seconds
+Training Results - Epoch: 27 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 27 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.552443742752075 seconds
+Training Results - Epoch: 28 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 28 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.510983228683472 seconds
+Training Results - Epoch: 29 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 29 Avg accuracy: 0.98 Avg loss: 0.07
+EPOCH_COMPLETED took 13.640321254730225 seconds
+Training Results - Epoch: 30 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 30 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.520745992660522 seconds
+Training Results - Epoch: 31 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 31 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.611620426177979 seconds
+Training Results - Epoch: 32 Avg accuracy: 0.98 Avg loss: 0.07
+Validation Results - Epoch: 32 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.543206453323364 seconds
+Training Results - Epoch: 33 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 33 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.624880313873291 seconds
+Training Results - Epoch: 34 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 34 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.538526058197021 seconds
+Training Results - Epoch: 35 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 35 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.576215505599976 seconds
+Training Results - Epoch: 36 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 36 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.566830158233643 seconds
+Training Results - Epoch: 37 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 37 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.559929132461548 seconds
+Training Results - Epoch: 38 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 38 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.58346700668335 seconds
+Training Results - Epoch: 39 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 39 Avg accuracy: 0.98 Avg loss: 0.06
+EPOCH_COMPLETED took 13.56765079498291 seconds
+Training Results - Epoch: 40 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 40 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.602991580963135 seconds
+Training Results - Epoch: 41 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 41 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.51965069770813 seconds
+Training Results - Epoch: 42 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 42 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.617998600006104 seconds
+Training Results - Epoch: 43 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 43 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.524484634399414 seconds
+Training Results - Epoch: 44 Avg accuracy: 0.98 Avg loss: 0.06
+Validation Results - Epoch: 44 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.569710969924927 seconds
+Training Results - Epoch: 45 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 45 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.557421684265137 seconds
+Training Results - Epoch: 46 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 46 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.552511930465698 seconds
+Training Results - Epoch: 47 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 47 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.560142040252686 seconds
+Training Results - Epoch: 48 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 48 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.546971797943115 seconds
+Training Results - Epoch: 49 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 49 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.551686763763428 seconds
+Training Results - Epoch: 50 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 50 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.541809558868408 seconds
+Training Results - Epoch: 51 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 51 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.596817016601562 seconds
+Training Results - Epoch: 52 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 52 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.554526090621948 seconds
+Training Results - Epoch: 53 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 53 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.590262413024902 seconds
+Training Results - Epoch: 54 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 54 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.539090394973755 seconds
+Training Results - Epoch: 55 Avg accuracy: 0.98 Avg loss: 0.05
+Validation Results - Epoch: 55 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.602137088775635 seconds
+Training Results - Epoch: 56 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 56 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.540738582611084 seconds
+Training Results - Epoch: 57 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 57 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.531800746917725 seconds
+Training Results - Epoch: 58 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 58 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.531857013702393 seconds
+Training Results - Epoch: 59 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 59 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.523669481277466 seconds
+Training Results - Epoch: 60 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 60 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.551577091217041 seconds
+Training Results - Epoch: 61 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 61 Avg accuracy: 0.98 Avg loss: 0.05
+EPOCH_COMPLETED took 13.53725814819336 seconds
+Training Results - Epoch: 62 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 62 Avg accuracy: 0.99 Avg loss: 0.05
+EPOCH_COMPLETED took 13.602319240570068 seconds
+Training Results - Epoch: 63 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 63 Avg accuracy: 0.98 Avg loss: 0.04
+EPOCH_COMPLETED took 13.532061576843262 seconds
+Training Results - Epoch: 64 Avg accuracy: 0.99 Avg loss: 0.05
+Validation Results - Epoch: 64 Avg accuracy: 0.99 Avg loss: 0.05
+EPOCH_COMPLETED took 13.591352701187134 seconds
+Training Results - Epoch: 65 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 65 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.510730981826782 seconds
+Training Results - Epoch: 66 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 66 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.643183469772339 seconds
+Training Results - Epoch: 67 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 67 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.526361227035522 seconds
+Training Results - Epoch: 68 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 68 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.52294397354126 seconds
+Training Results - Epoch: 69 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 69 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.53995966911316 seconds
+Training Results - Epoch: 70 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 70 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.535666465759277 seconds
+Training Results - Epoch: 71 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 71 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.61154842376709 seconds
+Training Results - Epoch: 72 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 72 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.520101547241211 seconds
+Training Results - Epoch: 73 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 73 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.605324506759644 seconds
+Training Results - Epoch: 74 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 74 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.526923656463623 seconds
+Training Results - Epoch: 75 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 75 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.616063833236694 seconds
+Training Results - Epoch: 76 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 76 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.549739122390747 seconds
+Training Results - Epoch: 77 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 77 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.523428678512573 seconds
+Training Results - Epoch: 78 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 78 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.565716028213501 seconds
+Training Results - Epoch: 79 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 79 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.535856008529663 seconds
+Training Results - Epoch: 80 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 80 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.552239179611206 seconds
+Training Results - Epoch: 81 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 81 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.545151233673096 seconds
+Training Results - Epoch: 82 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 82 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.586465120315552 seconds
+Training Results - Epoch: 83 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 83 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.54932188987732 seconds
+Training Results - Epoch: 84 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 84 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.614201784133911 seconds
+Training Results - Epoch: 85 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 85 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.542507886886597 seconds
+Training Results - Epoch: 86 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 86 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.663055419921875 seconds
+Training Results - Epoch: 87 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 87 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.56055474281311 seconds
+Training Results - Epoch: 88 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 88 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.561869144439697 seconds
+Training Results - Epoch: 89 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 89 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.528225421905518 seconds
+Training Results - Epoch: 90 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 90 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.529217958450317 seconds
+Training Results - Epoch: 91 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 91 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.584354877471924 seconds
+Training Results - Epoch: 92 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 92 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.570431232452393 seconds
+Training Results - Epoch: 93 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 93 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.633545398712158 seconds
+Training Results - Epoch: 94 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 94 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.564143657684326 seconds
+Training Results - Epoch: 95 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 95 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.645563840866089 seconds
+Training Results - Epoch: 96 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 96 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.556572914123535 seconds
+Training Results - Epoch: 97 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 97 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.628355979919434 seconds
+Training Results - Epoch: 98 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 98 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.565593004226685 seconds
+Training Results - Epoch: 99 Avg accuracy: 0.99 Avg loss: 0.03
+Validation Results - Epoch: 99 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.582878112792969 seconds
+Training Results - Epoch: 100 Avg accuracy: 0.99 Avg loss: 0.04
+Validation Results - Epoch: 100 Avg accuracy: 0.99 Avg loss: 0.04
+EPOCH_COMPLETED took 13.588765621185303 seconds
+COMPLETED took 2912.6224451065063 seconds
