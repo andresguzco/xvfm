@@ -1,0 +1,86 @@
+_wandb:
+    value:
+        cli_version: 0.19.4
+        m: []
+        python_version: 3.10.0
+        t:
+            "1":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 41
+                - 53
+                - 55
+                - 103
+            "2":
+                - 1
+                - 5
+                - 9
+                - 10
+                - 41
+                - 53
+                - 55
+                - 103
+            "3":
+                - 16
+                - 23
+                - 55
+            "4": 3.10.0
+            "5": 0.19.4
+            "8":
+                - 5
+            "12": 0.19.4
+            "13": darwin-arm64
+batch_size:
+    value: 4096
+checkpoint_dir:
+    value: checkpoints
+checkpoint_interval:
+    value: 100
+d_layers:
+    value:
+        - 256
+        - 1024
+        - 1024
+        - 1024
+        - 1024
+        - 512
+data_path:
+    value: data/adult
+dataset:
+    value: adult
+dim_t:
+    value: 128
+dropout:
+    value: 0.1
+int_method:
+    value: euler
+integration_steps:
+    value: 1000
+is_y_cond:
+    value: false
+learn_sigma:
+    value: true
+learned_structure:
+    value: scalar
+log_interval:
+    value: 10
+loss_fn:
+    value: GaussianMultinomial
+lr:
+    value: 1e-05
+num_classes:
+    value: 2
+num_epochs:
+    value: 1000
+results_dir:
+    value: results
+save_model:
+    value: false
+seed:
+    value: 42
+sigma:
+    value: 0.1
+transformation:
+    value: null

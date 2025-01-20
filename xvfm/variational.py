@@ -45,3 +45,32 @@ class GaussianVariationalDist(VariationalDist):
             return list(self.posterior_mu_model.parameters()) + list(self.posterior_logsigma_model.parameters())
         else:
             return list(self.posterior_mu_model.parameters())
+
+
+class GaussianMultinomialDist(VariationalDist):
+    def __init__(self, model, num_feat, cat_feat):
+        super(GaussianMultinomialDist, self).__init__()
+        self.model = model 
+        self.num_feat = num_feat
+        self.cat_feat = cat_feat
+
+    def forward(self, x_t, t, y=None):
+        res = self.model(x_t, t, y)
+
+        mu = res[:, :self.num_feat]
+        identity = torch.eye(mu.size(1)).to(mu.device).unsqueeze(0).expand(mu.size(0), -1, -1)
+        sigma = (1 - (1 - 0.01) * t.unsqueeze(1)**2) * identity
+        
+        normal_dist = torch.distributions.MultivariateNormal(mu, sigma)
+
+        cat_dists, cum_sum = [], self.num_feat
+        for i in range(len(self.cat_feat)):
+            cat_dists.append(torch.distributions.Categorical(res[:, cum_sum:cum_sum + self.cat_feat[i]]))
+            cum_sum += self.cat_feat[i]
+        return normal_dist, cat_dists
+
+    def get_parameters(self):
+        return list(self.model.parameters())
+
+
+    

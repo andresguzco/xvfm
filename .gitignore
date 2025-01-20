@@ -163,4 +163,19 @@ cython_debug/
 
 .DS_Store
 data/MNIST
+data/abalone
+data/adult
+data/buddy
+data/california
+data/cardio
+data/churn2
+data/diabetes
+data/fb-comments
+data/gesture
+data/higgs-small
+data/house
+data/insurance
+data/king
+data/miniboone
+data/wilt
 # ~/wandb/
