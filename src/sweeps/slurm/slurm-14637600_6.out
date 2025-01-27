@@ -1,0 +1,386 @@
+[DEBUG] Host name:  gpu162.cluster.local
+wandb: Starting wandb agent 🕵️
+2025-01-27 00:42:22,321 - wandb.wandb_agent - INFO - Running runs: []
+2025-01-27 00:42:22,481 - wandb.wandb_agent - INFO - Agent received command: run
+2025-01-27 00:42:22,481 - wandb.wandb_agent - INFO - Agent starting run with config:
+	batch_size: 1024
+	d_layers: 1024
+	data_path: ../../data/shoppers
+	dataset: shoppers
+	dim_t: 128
+	dropout: 0.5
+	log_interval: 50
+	lr: 0.01
+	n_layers: 5
+	num_epochs: 4000
+	seed: 42
+	task_type: binclass
+2025-01-27 00:42:22,493 - wandb.wandb_agent - INFO - About to run command: /usr/bin/env python ../../main.py --batch_size=1024 --d_layers=1024 --data_path=../../data/shoppers --dataset=shoppers --dim_t=128 --dropout=0.5 --log_interval=50 --lr=0.01 --n_layers=5 --num_epochs=4000 --seed=42 --task_type=binclass
+/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/xgboost/core.py:265: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc 2.28+) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+2025-01-27 00:42:27,507 - wandb.wandb_agent - INFO - Running runs: ['p8962sad']
+wandb: Currently logged in as: andresguzco. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in /fs01/home/aguzmanc/xvfm/src/sweeps/wandb/run-20250127_004231-p8962sad
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fancy-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/andresguzco/XVFM
+wandb: 🧹 View sweep at https://wandb.ai/andresguzco/XVFM/sweeps/aojvbd3l
+wandb: 🚀 View run at https://wandb.ai/andresguzco/XVFM/runs/p8962sad
+Number of parameters: 4435276
+Training parameters: {'num_epochs': 4000, 'batch_size': 1024, 'lr': 0.01, 'integration_steps': 100, 'sigma': 0.01, 'dataset': 'shoppers', 'log_interval': 50, 'seed': 42, 'results_dir': 'results', 'd_layers': 1024, 'n_layers': 5, 'dropout': 0.5, 'dim_t': 128, 'data_path': '../../data/shoppers', 'task_type': 'binclass', 'arch': [1024, 1024, 1024, 1024, 1024], 'num_feat': 10, 'classes': [10, 8, 13, 9, 20, 3, 2], 'd_in': 75}
+Epoch [1/4000]: Loss: [1549890.3492]
+Epoch [2/4000]: Loss: [204.9900]
+Epoch [3/4000]: Loss: [166.0584]
+Epoch [4/4000]: Loss: [152.8709]
+Epoch [5/4000]: Loss: [159.7944]
+Epoch [6/4000]: Loss: [151.7069]
+Epoch [7/4000]: Loss: [145.7498]
+Epoch [8/4000]: Loss: [146.5143]
+Epoch [9/4000]: Loss: [151.1870]
+Epoch [10/4000]: Loss: [142.4412]
+Epoch [11/4000]: Loss: [146.8309]
+Epoch [12/4000]: Loss: [147.3850]
+Epoch [13/4000]: Loss: [142.2824]
+Epoch [14/4000]: Loss: [141.8609]
+Epoch [15/4000]: Loss: [141.2875]
+Epoch [16/4000]: Loss: [140.0753]
+Epoch [17/4000]: Loss: [143.0765]
+Epoch [18/4000]: Loss: [138.7781]
+Epoch [19/4000]: Loss: [140.4596]
+Epoch [20/4000]: Loss: [142.2001]
+Epoch [21/4000]: Loss: [143.5529]
+Epoch [22/4000]: Loss: [140.9360]
+Epoch [23/4000]: Loss: [138.8224]
+Epoch [24/4000]: Loss: [140.0352]
+Epoch [25/4000]: Loss: [140.7108]
+Epoch [26/4000]: Loss: [139.6989]
+Epoch [27/4000]: Loss: [141.1950]
+Epoch [28/4000]: Loss: [134.9863]
+Epoch [29/4000]: Loss: [139.6297]
+Epoch [30/4000]: Loss: [143.1217]
+Epoch [31/4000]: Loss: [135.3817]
+Epoch [32/4000]: Loss: [140.0446]
+Epoch [33/4000]: Loss: [140.4726]
+Epoch [34/4000]: Loss: [134.1444]
+Epoch [35/4000]: Loss: [136.2737]
+Epoch [36/4000]: Loss: [138.6238]
+Epoch [37/4000]: Loss: [132.5506]
+Epoch [38/4000]: Loss: [135.2869]
+Epoch [39/4000]: Loss: [141.4684]
+Epoch [40/4000]: Loss: [138.5165]
+Epoch [41/4000]: Loss: [137.3275]
+Epoch [42/4000]: Loss: [138.7451]
+Epoch [43/4000]: Loss: [139.4902]
+Epoch [44/4000]: Loss: [136.7916]
+Epoch [45/4000]: Loss: [140.2125]
+Epoch [46/4000]: Loss: [137.7733]
+Epoch [47/4000]: Loss: [140.6203]
+Epoch [48/4000]: Loss: [132.7531]
+Epoch [49/4000]: Loss: [137.5982]
+Epoch [50/4000]: Loss: [138.1623]
+Epoch [51/4000]: Loss: [136.9758]
+Epoch [52/4000]: Loss: [139.1324]
+Epoch [53/4000]: Loss: [135.9328]
+Epoch [54/4000]: Loss: [137.5480]
+Epoch [55/4000]: Loss: [140.2617]
+Epoch [56/4000]: Loss: [135.0010]
+Epoch [57/4000]: Loss: [135.7998]
+Epoch [58/4000]: Loss: [136.4761]
+Epoch [59/4000]: Loss: [134.5870]
+Epoch [60/4000]: Loss: [136.3931]
+Epoch [61/4000]: Loss: [136.2341]
+Epoch [62/4000]: Loss: [132.5368]
+Epoch [63/4000]: Loss: [138.0521]
+Epoch [64/4000]: Loss: [139.3148]
+Epoch [65/4000]: Loss: [134.5723]
+Epoch [66/4000]: Loss: [137.6896]
+Epoch [67/4000]: Loss: [138.6644]
+Epoch [68/4000]: Loss: [133.1009]
+Epoch [69/4000]: Loss: [133.7229]
+Epoch [70/4000]: Loss: [136.4257]
+Epoch [71/4000]: Loss: [136.5015]
+Epoch [72/4000]: Loss: [138.4453]
+Epoch [73/4000]: Loss: [138.1610]
+Epoch [74/4000]: Loss: [136.6888]
+Epoch [75/4000]: Loss: [135.6646]
+Epoch [76/4000]: Loss: [134.7218]
+Epoch [77/4000]: Loss: [134.8444]
+Epoch [78/4000]: Loss: [132.2739]
+Epoch [79/4000]: Loss: [138.2669]
+Epoch [80/4000]: Loss: [140.4798]
+Epoch [81/4000]: Loss: [141.8421]
+Epoch [82/4000]: Loss: [135.1460]
+Epoch [83/4000]: Loss: [136.6018]
+Epoch [84/4000]: Loss: [133.1197]
+Epoch [85/4000]: Loss: [137.7078]
+Epoch [86/4000]: Loss: [137.3430]
+Epoch [87/4000]: Loss: [136.9605]
+Epoch [88/4000]: Loss: [138.5646]
+Epoch [89/4000]: Loss: [137.9218]
+Epoch [90/4000]: Loss: [137.9764]
+Epoch [91/4000]: Loss: [135.0179]
+Epoch [92/4000]: Loss: [140.8058]
+Epoch [93/4000]: Loss: [134.1127]
+Epoch [94/4000]: Loss: [137.7895]
+Epoch [95/4000]: Loss: [137.7517]
+Epoch [96/4000]: Loss: [136.6047]
+Epoch [97/4000]: Loss: [142.1663]
+Epoch [98/4000]: Loss: [135.8556]
+Epoch [99/4000]: Loss: [132.8888]
+Epoch [100/4000]: Loss: [136.1135]
+Epoch [101/4000]: Loss: [138.2644]
+Epoch [102/4000]: Loss: [135.6009]
+Epoch [103/4000]: Loss: [136.7862]
+Epoch [104/4000]: Loss: [128.4524]
+Epoch [105/4000]: Loss: [141.9752]
+Epoch [106/4000]: Loss: [138.0832]
+Epoch [107/4000]: Loss: [141.1763]
+Epoch [108/4000]: Loss: [134.1839]
+Epoch [109/4000]: Loss: [137.4065]
+Epoch [110/4000]: Loss: [132.9670]
+Epoch [111/4000]: Loss: [136.7369]
+Epoch [112/4000]: Loss: [138.4645]
+Epoch [113/4000]: Loss: [139.0466]
+Epoch [114/4000]: Loss: [134.4314]
+Epoch [115/4000]: Loss: [137.1265]
+Epoch [116/4000]: Loss: [138.2346]
+Epoch [117/4000]: Loss: [139.5728]
+Epoch [118/4000]: Loss: [137.3059]
+Epoch [119/4000]: Loss: [137.8716]
+Epoch [120/4000]: Loss: [136.3940]
+Epoch [121/4000]: Loss: [135.3815]
+Epoch [122/4000]: Loss: [134.8583]
+Epoch [123/4000]: Loss: [135.0419]
+Epoch [124/4000]: Loss: [133.8732]
+Epoch [125/4000]: Loss: [141.5315]
+Epoch [126/4000]: Loss: [139.1713]
+Epoch [127/4000]: Loss: [131.8896]
+Epoch [128/4000]: Loss: [134.0401]
+Epoch [129/4000]: Loss: [133.3749]
+Epoch [130/4000]: Loss: [138.7093]
+Epoch [131/4000]: Loss: [135.1617]
+Epoch [132/4000]: Loss: [137.3303]
+Epoch [133/4000]: Loss: [138.7722]
+Epoch [134/4000]: Loss: [133.3027]
+Epoch [135/4000]: Loss: [142.3591]
+Epoch [136/4000]: Loss: [135.0036]
+Epoch [137/4000]: Loss: [139.3041]
+Epoch [138/4000]: Loss: [137.2764]
+Epoch [139/4000]: Loss: [138.2967]
+Epoch [140/4000]: Loss: [140.2112]
+Epoch [141/4000]: Loss: [140.0191]
+Epoch [142/4000]: Loss: [133.9361]
+Epoch [143/4000]: Loss: [138.0961]
+Epoch [144/4000]: Loss: [136.0980]
+Epoch [145/4000]: Loss: [135.9464]
+Epoch [146/4000]: Loss: [139.9748]
+Epoch [147/4000]: Loss: [133.6896]
+Epoch [148/4000]: Loss: [136.1723]
+Epoch [149/4000]: Loss: [134.2373]
+Epoch [150/4000]: Loss: [136.2230]
+Epoch [151/4000]: Loss: [138.5061]
+Epoch [152/4000]: Loss: [135.1472]
+Epoch [153/4000]: Loss: [136.6416]
+Epoch [154/4000]: Loss: [143.7776]
+Epoch [155/4000]: Loss: [141.3419]
+Epoch [156/4000]: Loss: [136.1035]
+Epoch [157/4000]: Loss: [137.5771]
+Epoch [158/4000]: Loss: [142.4803]
+Epoch [159/4000]: Loss: [137.7837]
+Epoch [160/4000]: Loss: [140.8670]
+Epoch [161/4000]: Loss: [136.9217]
+Epoch [162/4000]: Loss: [137.6109]
+Epoch [163/4000]: Loss: [143.8271]
+Epoch [164/4000]: Loss: [137.2935]
+Epoch [165/4000]: Loss: [134.2844]
+Epoch [166/4000]: Loss: [140.4578]
+Epoch [167/4000]: Loss: [137.9829]
+Epoch [168/4000]: Loss: [134.1007]
+Epoch [169/4000]: Loss: [134.7582]
+Epoch [170/4000]: Loss: [138.2309]
+Epoch [171/4000]: Loss: [136.4665]
+Epoch [172/4000]: Loss: [138.8741]
+Epoch [173/4000]: Loss: [138.3722]
+Epoch [174/4000]: Loss: [135.8765]
+Epoch [175/4000]: Loss: [138.6660]
+Epoch [176/4000]: Loss: [138.7589]
+Epoch [177/4000]: Loss: [139.1476]
+Epoch [178/4000]: Loss: [140.9469]
+Epoch [179/4000]: Loss: [140.3082]
+Epoch [180/4000]: Loss: [136.7100]
+Epoch [181/4000]: Loss: [135.8729]
+Epoch [182/4000]: Loss: [135.9398]
+Epoch [183/4000]: Loss: [139.1668]
+Epoch [184/4000]: Loss: [139.1134]
+Epoch [185/4000]: Loss: [136.8694]
+Epoch [186/4000]: Loss: [140.3485]
+Epoch [187/4000]: Loss: [141.0233]
+Epoch [188/4000]: Loss: [132.8948]
+Epoch [189/4000]: Loss: [136.0107]
+Epoch [190/4000]: Loss: [135.1921]
+Epoch [191/4000]: Loss: [138.6207]
+Epoch [192/4000]: Loss: [135.2085]
+Epoch [193/4000]: Loss: [134.0454]
+Epoch [194/4000]: Loss: [136.5558]
+Epoch [195/4000]: Loss: [134.8320]
+Epoch [196/4000]: Loss: [138.3921]
+Epoch [197/4000]: Loss: [138.3544]
+Epoch [198/4000]: Loss: [138.9193]
+Epoch [199/4000]: Loss: [136.4794]
+Epoch [200/4000]: Loss: [137.5771]
+Epoch [201/4000]: Loss: [140.2052]
+Epoch [202/4000]: Loss: [138.4136]
+Epoch [203/4000]: Loss: [136.8931]
+Epoch [204/4000]: Loss: [133.1205]
+Epoch [205/4000]: Loss: [135.7133]
+Epoch [206/4000]: Loss: [133.8528]
+Epoch [207/4000]: Loss: [137.4903]
+Epoch [208/4000]: Loss: [135.4050]
+Epoch [209/4000]: Loss: [143.5365]
+Epoch [210/4000]: Loss: [139.5748]
+Epoch [211/4000]: Loss: [136.3052]
+Epoch [212/4000]: Loss: [136.0739]
+Epoch [213/4000]: Loss: [137.8008]
+Epoch [214/4000]: Loss: [135.7311]
+Epoch [215/4000]: Loss: [132.6078]
+Epoch [216/4000]: Loss: [133.6078]
+Epoch [217/4000]: Loss: [137.8537]
+Epoch [218/4000]: Loss: [137.0067]
+Epoch [219/4000]: Loss: [135.9509]
+Epoch [220/4000]: Loss: [131.6899]
+Epoch [221/4000]: Loss: [136.3794]
+Epoch [222/4000]: Loss: [132.6652]
+Epoch [223/4000]: Loss: [131.3734]
+Epoch [224/4000]: Loss: [140.6373]
+Epoch [225/4000]: Loss: [139.9848]
+Epoch [226/4000]: Loss: [139.7026]
+Epoch [227/4000]: Loss: [138.6689]
+Epoch [228/4000]: Loss: [139.4118]
+Epoch [229/4000]: Loss: [141.0504]
+Epoch [230/4000]: Loss: [135.7880]
+Epoch [231/4000]: Loss: [138.7226]
+Epoch [232/4000]: Loss: [134.2964]
+Epoch [233/4000]: Loss: [132.8600]
+Epoch [234/4000]: Loss: [134.0741]
+Epoch [235/4000]: Loss: [138.6041]
+Epoch [236/4000]: Loss: [139.4334]
+Epoch [237/4000]: Loss: [136.5087]
+Epoch [238/4000]: Loss: [135.7016]
+Epoch [239/4000]: Loss: [141.3484]
+Epoch [240/4000]: Loss: [135.1335]
+Epoch [241/4000]: Loss: [135.5194]
+Epoch [242/4000]: Loss: [134.0457]
+Epoch [243/4000]: Loss: [141.3496]
+Epoch [244/4000]: Loss: [135.5508]
+Epoch [245/4000]: Loss: [131.4277]
+Epoch [246/4000]: Loss: [133.1644]
+Epoch [247/4000]: Loss: [138.9876]
+Epoch [248/4000]: Loss: [133.9155]
+Epoch [249/4000]: Loss: [136.1504]
+Epoch [250/4000]: Loss: [133.3081]
+Epoch [251/4000]: Loss: [136.3989]
+Epoch [252/4000]: Loss: [135.3181]
+Epoch [253/4000]: Loss: [132.9442]
+Epoch [254/4000]: Loss: [138.9717]
+Epoch [255/4000]: Loss: [137.2008]
+Epoch [256/4000]: Loss: [140.9687]
+Epoch [257/4000]: Loss: [134.8778]
+Epoch [258/4000]: Loss: [134.5592]
+Epoch [259/4000]: Loss: [139.5075]
+Epoch [260/4000]: Loss: [140.5516]
+Epoch [261/4000]: Loss: [137.0713]
+Epoch [262/4000]: Loss: [142.5166]
+Epoch [263/4000]: Loss: [134.6933]
+Epoch [264/4000]: Loss: [138.3006]
+Epoch [265/4000]: Loss: [139.4893]
+Epoch [266/4000]: Loss: [136.4543]
+Epoch [267/4000]: Loss: [135.4223]
+Epoch [268/4000]: Loss: [136.3750]
+Epoch [269/4000]: Loss: [134.7302]
+Epoch [270/4000]: Loss: [133.8931]
+Epoch [271/4000]: Loss: [138.0234]
+Epoch [272/4000]: Loss: [136.4533]
+Epoch [273/4000]: Loss: [136.0930]
+Epoch [274/4000]: Loss: [135.9150]
+Epoch [275/4000]: Loss: [130.7051]
+Epoch [276/4000]: Loss: [136.3123]
+Epoch [277/4000]: Loss: [136.8534]
+Epoch [278/4000]: Loss: [139.3319]
+Traceback (most recent call last):
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 152, in <module>
+    main(args)
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 102, in main
+    train(dataloader, test_data, flow_model, criterion, optimizer, 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 143, in train
+    scores = evaluate(args, model, test_data, savedir, epoch + 1, flag, device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/utils.py", line 57, in evaluate
+    scores = get_performance(gen, test, args, plotting)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 85, in get_performance
+    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 165, in get_quality
+    qual_res = quality_evaluator.evaluate(rloader, sloader)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 60, in evaluate
+    results = self._evaluate(X_gt, X_syn)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 720, in _evaluate
+    oneclass_model = self._get_oneclass_model(X_)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/core/metric.py", line 119, in _get_oneclass_model
+    return load_from_file(cache_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/utils/serialization.py", line 159, in load_from_file
+    return cloudpickle.load(f)
+           ^^^^^^^^^^^^^^^^^^^
+EOFError: Ran out of input
+2025-01-27 00:59:27,335 - wandb.wandb_agent - INFO - Cleaning up finished run: p8962sad
+wandb: - 0.005 MB of 0.005 MB uploadedwandb: \ 0.036 MB of 0.036 MB uploadedwandb: 
+wandb: Run history:
+wandb:  accuracy ▁▁▁▁▁
+wandb:     alpha █▃▅▃▃▁▂▃▃▂▃▁▂▁▂▁▃▂▂▁▃▂▃▂▂▃▂▂▂▁▂▂▂▃▂▂▂▂▂▂
+wandb:      beta ▂▆▃▃▄▄▄▅▃▃▂▂▅▅▄▄▄▆▄▂▁▅▂▅▃▄▅▅▂█▂▆▃▄▂▅▄▅▄▄
+wandb: binary_f1 ▁▁▁▁▁
+wandb: detection ▄█▁▄▃▆▅▆▄▆▃▅▆▆▆▆▇▆▅▅▅▆▄▆▅▆▆▅▆▇▆▇▆▇▆▆▅▆▄▆
+wandb:      loss █▆▄▄▂▃▃▃▂▄▃▄▁▄▂▂▃▃▂▂▄▂▂▃▂▃▃▂▃▁▂▁▄▂▂▂▂▄▃▃
+wandb:   quality ▁▆▃▅▅▆▇▇▆▆▇▇█▇▇█▇▇▆▇▆▆▆▇▇▇▇▇▇▇▇▇▇███▇▆▇▇
+wandb:   roc_auc █▅▅▁▆
+wandb:     shape ▁█▁▄▄▅▅▅▄▅▄▅▆▅▆▅▅▅▅▅▄▅▄▅▄▅▅▅▅▆▅▅▅▆▆▆▅▅▅▅
+wandb:     trend ▁▁▅▅▅▆▇▇▆▆█▇▇▆▇█▇▇▆▇▇▅▇▇█▆▇█▇▇▇▇▇███▇▆▇▇
+wandb: 
+wandb: Run summary:
+wandb:  accuracy 0.85483
+wandb:     alpha 0.58767
+wandb:      beta 0.33193
+wandb: binary_f1 0.0
+wandb: detection 0.43663
+wandb:      loss 136.85344
+wandb:   quality 0.77476
+wandb:   roc_auc 0.52597
+wandb:     shape 0.62891
+wandb:     trend 0.9206
+wandb: 
+wandb: 🚀 View run fancy-sweep-7 at: https://wandb.ai/andresguzco/XVFM/runs/p8962sad
+wandb: ⭐️ View project at: https://wandb.ai/andresguzco/XVFM
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250127_004231-p8962sad/logs
+wandb: Terminating and syncing runs. Press ctrl-c to kill.

@@ -1,0 +1,224 @@
+[DEBUG] Host name:  gpu148.cluster.local
+wandb: Starting wandb agent 🕵️
+2025-01-27 00:35:01,058 - wandb.wandb_agent - INFO - Running runs: []
+2025-01-27 00:35:01,229 - wandb.wandb_agent - INFO - Agent received command: run
+2025-01-27 00:35:01,234 - wandb.wandb_agent - INFO - Agent starting run with config:
+	batch_size: 2048
+	d_layers: 512
+	data_path: ../../data/default
+	dataset: default
+	dim_t: 64
+	dropout: 0.3
+	log_interval: 50
+	lr: 0.01
+	n_layers: 4
+	num_epochs: 4000
+	seed: 42
+	task_type: binclass
+2025-01-27 00:35:01,239 - wandb.wandb_agent - INFO - About to run command: /usr/bin/env python ../../main.py --batch_size=2048 --d_layers=512 --data_path=../../data/default --dataset=default --dim_t=64 --dropout=0.3 --log_interval=50 --lr=0.01 --n_layers=4 --num_epochs=4000 --seed=42 --task_type=binclass
+/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/xgboost/core.py:265: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc 2.28+) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+2025-01-27 00:35:06,256 - wandb.wandb_agent - INFO - Running runs: ['4b2c9f3m']
+wandb: Currently logged in as: andresguzco. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in /fs01/home/aguzmanc/xvfm/src/sweeps/wandb/run-20250127_003509-4b2c9f3m
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run driven-sweep-7
+wandb: ⭐️ View project at https://wandb.ai/andresguzco/XVFM
+wandb: 🧹 View sweep at https://wandb.ai/andresguzco/XVFM/sweeps/aosd4c3j
+wandb: 🚀 View run at https://wandb.ai/andresguzco/XVFM/runs/4b2c9f3m
+Number of parameters: 878812
+Training parameters: {'num_epochs': 4000, 'batch_size': 2048, 'lr': 0.01, 'integration_steps': 100, 'sigma': 0.01, 'dataset': 'default', 'log_interval': 50, 'seed': 42, 'results_dir': 'results', 'd_layers': 512, 'n_layers': 4, 'dropout': 0.3, 'dim_t': 64, 'data_path': '../../data/default', 'task_type': 'binclass', 'arch': [512, 512, 512, 512], 'num_feat': 14, 'classes': [2, 7, 4, 11, 11, 11, 11, 10, 10], 'd_in': 91}
+Epoch [1/4000]: Loss: [1453.4180]
+Epoch [2/4000]: Loss: [85.5142]
+Epoch [3/4000]: Loss: [82.0989]
+Epoch [4/4000]: Loss: [82.8721]
+Epoch [5/4000]: Loss: [79.7236]
+Epoch [6/4000]: Loss: [79.1953]
+Epoch [7/4000]: Loss: [82.3065]
+Epoch [8/4000]: Loss: [79.1128]
+Epoch [9/4000]: Loss: [79.9550]
+Epoch [10/4000]: Loss: [77.0221]
+Epoch [11/4000]: Loss: [77.3186]
+Epoch [12/4000]: Loss: [77.1924]
+Epoch [13/4000]: Loss: [77.1472]
+Epoch [14/4000]: Loss: [75.7883]
+Epoch [15/4000]: Loss: [75.9948]
+Epoch [16/4000]: Loss: [76.1745]
+Epoch [17/4000]: Loss: [75.3539]
+Epoch [18/4000]: Loss: [76.6672]
+Epoch [19/4000]: Loss: [75.0334]
+Epoch [20/4000]: Loss: [75.8041]
+Epoch [21/4000]: Loss: [76.6899]
+Epoch [22/4000]: Loss: [75.2844]
+Epoch [23/4000]: Loss: [76.4307]
+Epoch [24/4000]: Loss: [78.0877]
+Epoch [25/4000]: Loss: [76.4153]
+Epoch [26/4000]: Loss: [75.4424]
+Epoch [27/4000]: Loss: [77.2646]
+Epoch [28/4000]: Loss: [74.9219]
+Epoch [29/4000]: Loss: [73.4667]
+Epoch [30/4000]: Loss: [76.2982]
+Epoch [31/4000]: Loss: [76.7092]
+Epoch [32/4000]: Loss: [75.6117]
+Epoch [33/4000]: Loss: [76.7922]
+Epoch [34/4000]: Loss: [75.7087]
+Epoch [35/4000]: Loss: [75.2433]
+Epoch [36/4000]: Loss: [75.7374]
+Epoch [37/4000]: Loss: [75.7181]
+Epoch [38/4000]: Loss: [75.3307]
+Epoch [39/4000]: Loss: [76.1482]
+Epoch [40/4000]: Loss: [75.5307]
+Epoch [41/4000]: Loss: [75.1605]
+Epoch [42/4000]: Loss: [74.8044]
+Epoch [43/4000]: Loss: [74.8412]
+Epoch [44/4000]: Loss: [74.9712]
+Epoch [45/4000]: Loss: [74.1279]
+Epoch [46/4000]: Loss: [74.3574]
+Epoch [47/4000]: Loss: [76.4137]
+Epoch [48/4000]: Loss: [76.1337]
+Epoch [49/4000]: Loss: [75.9867]
+Epoch [50/4000]: Loss: [75.9929]
+Epoch [51/4000]: Loss: [74.5018]
+Epoch [52/4000]: Loss: [76.2321]
+Epoch [53/4000]: Loss: [74.1600]
+Epoch [54/4000]: Loss: [73.4178]
+Epoch [55/4000]: Loss: [76.0467]
+Epoch [56/4000]: Loss: [73.3145]
+Epoch [57/4000]: Loss: [74.9890]
+Epoch [58/4000]: Loss: [72.6015]
+Epoch [59/4000]: Loss: [72.6229]
+Epoch [60/4000]: Loss: [72.4105]
+Epoch [61/4000]: Loss: [72.9650]
+Epoch [62/4000]: Loss: [71.6539]
+Epoch [63/4000]: Loss: [72.6440]
+Epoch [64/4000]: Loss: [72.7315]
+Epoch [65/4000]: Loss: [73.0563]
+Epoch [66/4000]: Loss: [72.0850]
+Epoch [67/4000]: Loss: [73.1735]
+Epoch [68/4000]: Loss: [72.4348]
+Epoch [69/4000]: Loss: [73.5267]
+Epoch [70/4000]: Loss: [72.2641]
+Epoch [71/4000]: Loss: [72.5241]
+Epoch [72/4000]: Loss: [72.3144]
+Epoch [73/4000]: Loss: [70.5237]
+Epoch [74/4000]: Loss: [72.5711]
+Epoch [75/4000]: Loss: [70.5072]
+Epoch [76/4000]: Loss: [73.0719]
+Epoch [77/4000]: Loss: [72.2558]
+Epoch [78/4000]: Loss: [71.5715]
+Epoch [79/4000]: Loss: [70.2388]
+Epoch [80/4000]: Loss: [69.4961]
+Epoch [81/4000]: Loss: [72.8914]
+Epoch [82/4000]: Loss: [70.8452]
+Epoch [83/4000]: Loss: [70.7212]
+Epoch [84/4000]: Loss: [69.8328]
+Epoch [85/4000]: Loss: [70.5164]
+Epoch [86/4000]: Loss: [69.4977]
+Epoch [87/4000]: Loss: [71.1648]
+Epoch [88/4000]: Loss: [72.9325]
+Epoch [89/4000]: Loss: [71.1969]
+Epoch [90/4000]: Loss: [69.9053]
+Epoch [91/4000]: Loss: [73.3010]
+Epoch [92/4000]: Loss: [70.5291]
+Epoch [93/4000]: Loss: [71.0439]
+Epoch [94/4000]: Loss: [71.2211]
+Epoch [95/4000]: Loss: [69.6175]
+Epoch [96/4000]: Loss: [72.1715]
+Epoch [97/4000]: Loss: [70.6590]
+Epoch [98/4000]: Loss: [70.7546]
+Epoch [99/4000]: Loss: [70.4111]
+Epoch [100/4000]: Loss: [70.6037]
+Epoch [101/4000]: Loss: [71.5981]
+Epoch [102/4000]: Loss: [70.8082]
+Epoch [103/4000]: Loss: [68.0919]
+Epoch [104/4000]: Loss: [70.9339]
+Epoch [105/4000]: Loss: [72.5584]
+Epoch [106/4000]: Loss: [70.4777]
+Epoch [107/4000]: Loss: [70.6723]
+Epoch [108/4000]: Loss: [69.5469]
+Epoch [109/4000]: Loss: [70.4594]
+Epoch [110/4000]: Loss: [71.0626]
+Epoch [111/4000]: Loss: [68.7843]
+Epoch [112/4000]: Loss: [71.1651]
+Epoch [113/4000]: Loss: [71.4289]
+Epoch [114/4000]: Loss: [70.3132]
+Epoch [115/4000]: Loss: [68.4350]
+Epoch [116/4000]: Loss: [70.1128]
+Traceback (most recent call last):
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 152, in <module>
+    main(args)
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 102, in main
+    train(dataloader, test_data, flow_model, criterion, optimizer, 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 143, in train
+    scores = evaluate(args, model, test_data, savedir, epoch + 1, flag, device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/utils.py", line 57, in evaluate
+    scores = get_performance(gen, test, args, plotting)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 85, in get_performance
+    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 165, in get_quality
+    qual_res = quality_evaluator.evaluate(rloader, sloader)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 60, in evaluate
+    results = self._evaluate(X_gt, X_syn)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 720, in _evaluate
+    oneclass_model = self._get_oneclass_model(X_)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/core/metric.py", line 119, in _get_oneclass_model
+    return load_from_file(cache_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/utils/serialization.py", line 159, in load_from_file
+    return cloudpickle.load(f)
+           ^^^^^^^^^^^^^^^^^^^
+EOFError: Ran out of input
+2025-01-27 00:44:51,828 - wandb.wandb_agent - INFO - Cleaning up finished run: 4b2c9f3m
+wandb: - 0.005 MB of 0.005 MB uploadedwandb: \ 0.005 MB of 0.024 MB uploadedwandb: | 0.005 MB of 0.024 MB uploadedwandb: / 0.031 MB of 0.031 MB uploadedwandb: 
+wandb: Run history:
+wandb:  accuracy ▁▁
+wandb:     alpha ▇▇▇▇█▇▇▆█▆▇▇▆▆▆▆▆▆▅▃▂▃▁▂▃▃▂▃▄▅▃▃▄▃▂▃▃▃▂▅
+wandb:      beta ▂▂▃▄▄▄▄▃▃▁▃▂▂▂▂▂▃▄▃▂▄▅▄▃▃▇▆▆▅▃▇▆▆█▇▇▇▇▇▅
+wandb: binary_f1 ▁▁
+wandb: detection ▄▆█▆▇▇█▇█▆▇▆▇▇▇▅▆▆▆▂▃▃▃▁▃▃▃▃▃▆▃▃▄▃▃▃▃▃▃▅
+wandb:      loss █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   quality ▆▇▇▇▇▇█▇█▆▇▇▇▆▆▆▇▇▆▂▁▂▁▁▂▃▁▂▃▅▂▃▄▄▃▃▄▄▂▄
+wandb:   roc_auc ▁█
+wandb:     shape ▇▇▇▇███▇█▅▇▇▆▆▆▅▇▆▆▂▂▂▁▁▂▃▂▂▃▄▃▄▄▄▄▄▄▄▂▄
+wandb:     trend ▃▁▁▁▁▂▃▆▄▇▄▅▆▇▆▇▅▆█▆▆▄▅▆▅▄▄▅▆▆▄▄▅▃▄▃▃▂▃▅
+wandb: 
+wandb: Run summary:
+wandb:  accuracy 0.77767
+wandb:     alpha 0.66069
+wandb:      beta 0.1058
+wandb: binary_f1 0.0
+wandb: detection 0.50896
+wandb:      loss 68.435
+wandb:   quality 0.75481
+wandb:   roc_auc 0.53965
+wandb:     shape 0.61843
+wandb:     trend 0.89119
+wandb: 
+wandb: 🚀 View run driven-sweep-7 at: https://wandb.ai/andresguzco/XVFM/runs/4b2c9f3m
+wandb: ⭐️ View project at: https://wandb.ai/andresguzco/XVFM
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250127_003509-4b2c9f3m/logs
+wandb: Terminating and syncing runs. Press ctrl-c to kill.

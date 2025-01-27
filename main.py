@@ -1,189 +1,150 @@
 import os
+import time
 import torch
-import argparse
 import wandb
+import argparse
 
-from torchvision import datasets, transforms
-
-from tqdm import tqdm
+from xvfm import (
+    VFM, 
+    GaussianMultinomialPrior, 
+    MultiMLP, 
+    GaussianMultinomialDist, 
+    OTInterpolator,
+    evaluate, 
+    clean_workspace
+)
 from pathlib import Path
-from xvfm.flow import VFM
-from xvfm.unet import UNetModel
-from data.utils import evaluate
-from xvfm.prior import StandardGaussianPrior, MultiGaussianPrior
-from xvfm.models import MLP
-from data.two_moons import generate_two_moons
-from xvfm.variational import GaussianVariationalDist
-from xvfm.interpolator import OTInterpolator
-from torchvision.transforms import Compose, Normalize, ToTensor, ToPILImage
-
-from xvfm.loss import SSMGaussian
+from data import prepare_fast_dataloader, make_dataset, prepare_test_data
 
 
-CRITERION_MAP = {
-    'MSE': lambda posterior, x_1: torch.mean((x_1 - posterior.mean) ** 2),
-    'SSM': lambda posterior, x_1: SSMGaussian(posterior, x_1),
-    'Gaussian': lambda posterior, x_1: -1 * posterior.log_prob(x_1).mean()
-}
+TABULAR = ['adult', 'beijing', 'default', 'magic', 'news', 'shoppers']
+
+
+def GaussianMultinomial(posterior, x_1, y):
+    k = posterior[0].mean.shape[1]
+    llk = lambda dist, x: -1. * dist.log_prob(x).mean()
+    a = llk(posterior[0], x_1[:, :k])
+    if posterior[1] != False:
+        b = sum([llk(posterior[1][i], x_1[:, k + i]) for i in range(len(posterior[1]))])
+    else:
+        b = 0
+    c = llk(posterior[2], y.float())
+    return a + b + c
 
 
 def get_args():
     """Parse and return command-line arguments."""
-    parser = argparse.ArgumentParser(description='Two Moon Experiment')
-    parser.add_argument('--num_epochs', default=10, type=int, help="Number of training epochs")
-    parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
-    parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
-    parser.add_argument('--loss_fn', default='Gaussian', type=str, help="Loss function for VFM: 'MSE', 'SSM', or 'Gaussian'")
-    parser.add_argument('--learn_sigma', type=bool, default=True, help="Flag to learn sigma in VFM")
-    parser.add_argument('--learned_structure', default='scalar', help="Flag to learn structure in VFM")
-    parser.add_argument('--int_method', default='euler', help="Integration method for trajectory plotting: 'euler', 'adaptive'")
-    parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration in trajectory plotting")
-    parser.add_argument('--sigma', default=0.1, type=float, help="Sigma parameter for flow model")
-    parser.add_argument('--save_model', action='store_true', help="Flag to save the trained model")
-    parser.add_argument('--dataset', default='mnist', type=str, help="Dataset to train the model on")
-    parser.add_argument('--log_interval', default=2, type=int, help="Logging interval for training")
+    parser = argparse.ArgumentParser(description='TabVFM: Experiment')
+    parser.add_argument('--num_epochs', default=100, type=int, help="Number of training epochs")
+    parser.add_argument('--batch_size', default=4096, type=int, help="Training batch size")
+    parser.add_argument('--lr', default=0.1, type=float, help="Learning rate for optimizer")
+    parser.add_argument('--integration_steps', default=100, type=int, help="Number of steps for integration")
+    parser.add_argument('--sigma', default=0.01, type=float, help="Sigma parameter for flow model")
+    parser.add_argument('--dataset', default='adult', type=str, help="Dataset to train the model on")
+    parser.add_argument('--log_interval', default=10, type=int, help="Logging interval for training")
     parser.add_argument('--seed', default=42, type=int, help="Random seed for reproducibility")
-    parser.add_argument('--checkpoint_interval', default=100, type=int, help="Interval to save checkpoints")
-    parser.add_argument('--checkpoint_dir', default='checkpoints', type=str, help="Directory to save checkpoints")
     parser.add_argument('--results_dir', default='results', type=str, help="Directory to save results")
+    parser.add_argument('--d_layers', default=128, type=int, help="Hidden layer dimension.")
+    parser.add_argument('--n_layers', default=3, type=int, help="Number of hidden layers for MLP")
+    parser.add_argument('--dropout', default=0.1, type=float, help="Dropout rate for MLP")
+    parser.add_argument('--dim_t', default=128, type=int, help="Dimension of time embedding")
+    parser.add_argument('--data_path', default=None, type=str, help="Path to tabular dataset")
+    parser.add_argument('--task_type', default=None, type=str, help="Downstream task to evaluate")
     return parser.parse_args()
 
 
-def get_model(args):
-    if args.dataset == 'two_moons':
-        if args.learn_sigma and args.learned_structure == "scalar":
-            return (MLP(dim=2), MLP(dim=0, out_dim=1))
-        elif args.learn_sigma and args.learned_structure == "vector":
-            return (MLP(dim=2), MLP(dim=0, out_dim=2))
-        elif args.learn_sigma and args.learned_structure == "matrix":
-            return (MLP(dim=2), MLP(dim=0, out_dim=2**2))
-        else:
-            return (MLP(dim=2), None)
-    elif args.dataset == 'mnist':
-        if args.learn_sigma and args.learned_structure == "scalar":
-            return (
-                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
-                MLP(dim=0, out_dim=1)
-            )
-        elif args.learn_sigma and args.learned_structure == "vector":
-            return (
-                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
-                MLP(dim=0, out_dim=28*28)
-            )
-        elif args.learn_sigma and args.learned_structure == "matrix":
-            return (
-                UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), 
-                MLP(dim=0, out_dim=(28*28)**2)
-            )
-        else:
-            return (UNetModel(dim=(1, 28, 28), num_channels=32, num_res_blocks=1, num_classes=10), None)
-    else:
-        raise ValueError("Invalid dataset argument")
-
-def get_directories(args):
-    if args.loss_fn == 'Gaussian' and args.learn_sigma:
-        suffix = f"{args.loss_fn}_learned_{args.learned_structure}"
-    elif args.loss_fn == 'Gaussian' and not args.learn_sigma:
-        suffix = f"{args.loss_fn}_fixed"
-    else:
-        suffix = f"{args.loss_fn}"
-    return os.path.join(os.getcwd(), f"{args.results_dir}/{args.dataset}/{suffix}")
-
 def main(args):
-
     torch.manual_seed(args.seed)
-    savedir = get_directories(args)
-    Path(savedir).mkdir(parents=True, exist_ok=True)
-    Path(args.checkpoint_dir).mkdir(parents=True, exist_ok=True)
-
-    log = wandb.init(project="XVFM", config=vars(args))
+    log = wandb.init(config=vars(args))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    flow_model = VFM(
-        prior=StandardGaussianPrior(28**2) if args.dataset == 'mnist' else MultiGaussianPrior(2),
-        variational_dist=GaussianVariationalDist(*get_model(args)),
-        interpolator=OTInterpolator(sigma_min=args.sigma),
-    ).to(device)
+    args.arch = [args.d_layers] * (args.n_layers)
+    savedir = os.path.join(os.getcwd(), f"{args.results_dir}/{args.dataset}")
+    # Path(savedir).mkdir(parents=True, exist_ok=True)
 
-    criterion = CRITERION_MAP[args.loss_fn]
+    if args.task_type == 'binclass':
+        num_classes = 2
+    else:
+        num_classes = 0
+
+    dataset = make_dataset(args.data_path, num_classes=num_classes)
+    dataloader = prepare_fast_dataloader(dataset, split='train', batch_size=args.batch_size)
+
+    test_data = prepare_test_data(dataset)
+    
+    args.num_feat = dataloader.num_feat
+    args.classes = dataloader.classes
+    args.d_in = sum(args.classes) + args.num_feat
+
+    model = MultiMLP(
+            args.d_in, 
+            args.classes, 
+            args.arch, 
+            args.dropout, 
+            args.dim_t, 
+            args.num_feat, 
+            args.task_type
+            )
+    prior = GaussianMultinomialPrior(args.num_feat, args.classes, args.task_type)
+    variational = GaussianMultinomialDist(model, args.num_feat, args.classes, args.task_type)
+    flow_model = VFM(prior, variational, OTInterpolator(args.sigma)).to(device)
+
+    criterion = GaussianMultinomial
     params = flow_model.variational_dist.get_parameters()
     optimizer = torch.optim.Adam(params, lr=args.lr)
+    scheduler = torch.optim.lr_scheduler.LinearLR(
+        optimizer, start_factor=1.0, end_factor=0.01, total_iters=(args.num_epochs//10)
+        )
     
     print(f"Number of parameters: {sum([p.numel() for p in params])}")
     print(f"Training parameters: {vars(args)}")
 
-    dataloader = get_dataloader(args)
-    train(dataloader, flow_model, criterion, optimizer, device, savedir, args, log)
+    train(dataloader, test_data, flow_model, criterion, optimizer, 
+          scheduler, device, savedir, args, log)
 
     wandb.finish()
 
-    if args.save_model:
-        torch.save(flow_model.state_dict(), f"{savedir}/model.pt")
+
+def train_step(model, optim, loss_fn, x1, y):
+    optim.zero_grad()
+    t, xt = model.sample_t_and_x_t(x1, y)
+    posterior = model.variational_dist(xt, t, y)
+    loss = loss_fn(posterior, x1, y)
+    loss.backward()
+    optim.step()
+    return loss.item()
 
 
-def get_dataloader(args):
-    if args.dataset == 'two_moons':
-        return generate_two_moons(256000, args.batch_size)
-    elif args.dataset == 'mnist':
-        data = datasets.MNIST(
-            "data",
-            train=True,
-            download=True,
-            transform=Compose([ToTensor(), Normalize((0.5,), (0.5,))])
-        )   
-        return torch.utils.data.DataLoader(data, batch_size=args.batch_size, shuffle=True)
+def train(train_loader, test, model, criterion, optimizer, 
+          scheduler, device, savedir, args, wandb=None):
+    
+    if test.shape[0] > 5000:
+        test_data = test[5000:, :].to(device)
     else:
-        raise ValueError("Invalid dataset argument")
+        test_data = test.to(device)
 
-
-def train(train_loader, model, criterion, optimizer, device, savedir, args, wandb):
-
-    pbar = tqdm(total=args.num_epochs)
-    plotting = True
-    if args.loss_fn == 'Gaussian' and args.learn_sigma:
-        suffix = f"{args.loss_fn}_learned_{args.learned_structure}"
-    elif args.loss_fn == 'Gaussian' and not args.learn_sigma:
-        suffix = f"{args.loss_fn}_fixed"
-    else:
-        suffix = f"{args.loss_fn}"
-
+    flag = False
     for epoch in range(args.num_epochs):
-        for x_1 in train_loader:
-            if isinstance(x_1, list):
-                x_1 = x_1[0]
+        start_time = time.time()
+        epoch_loss = []
+        
+        for x_1, y in train_loader:
+            x_1, y = x_1.to(device), y.view(-1, 1).to(device)
+            epoch_loss.append(train_step(model, optimizer, criterion, x_1, y))
 
-            optimizer.zero_grad()
+        scheduler.step()
 
-            t, x_t = model.sample_t_and_x_t(x_1)
-            t, x_t, x_1 = t.to(device), x_t.to(device), x_1.to(device)
-            posterior = model.variational_dist(x_t, t)
-
-            if args.dataset == 'mnist':
-                x_1 = x_1.view(-1, 28*28)
-
-            loss = criterion(posterior, x_1)
-            loss.backward()
-            optimizer.step()
+        avg_loss = sum(epoch_loss) / len(epoch_loss)
+        print(f"Epoch [{epoch+1}/{args.num_epochs}]: Loss: [{avg_loss:.4f}]", flush=True)
 
         if args.log_interval > 0 and (epoch + 1) % args.log_interval == 0:
-            plotting = True
-
-        if args.checkpoint_interval > 0 and (epoch + 1) % args.checkpoint_interval == 0:
-            torch.save({
-                "model": model.state_dict(),
-                "optimizer": optimizer.state_dict(),
-                "epoch": epoch,
-                "loss": loss.item()
-                }, 
-                f"{args.checkpoint_dir}/{suffix}.pt")
-
-        score = evaluate(args, model, savedir, plotting, device, epoch+1)
-        wandb.log({"loss": loss.item(), "fid": score})
-        plotting = False
-        pbar.update(1)
-
-    pbar.close()
-    evaluate(args, model, savedir, device)
+            flag = True
+        
+        scores = evaluate(args, model, test_data, savedir, epoch + 1, flag, device)
+        log_vals = scores | {'loss': avg_loss} 
+        wandb.log(log_vals)
+        clean_workspace(start_time)
+        flag = False
 
 
 if __name__ == "__main__":

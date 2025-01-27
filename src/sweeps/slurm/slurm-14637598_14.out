@@ -1,0 +1,136 @@
+[DEBUG] Host name:  gpu177.cluster.local
+wandb: Starting wandb agent 🕵️
+2025-01-27 00:47:00,245 - wandb.wandb_agent - INFO - Running runs: []
+2025-01-27 00:47:00,450 - wandb.wandb_agent - INFO - Agent received command: run
+2025-01-27 00:47:00,450 - wandb.wandb_agent - INFO - Agent starting run with config:
+	batch_size: 1024
+	d_layers: 512
+	data_path: ../../data/magic
+	dataset: magic
+	dim_t: 256
+	dropout: 0.1
+	log_interval: 50
+	lr: 0.01
+	n_layers: 5
+	num_epochs: 4000
+	seed: 42
+	task_type: binclass
+2025-01-27 00:47:00,461 - wandb.wandb_agent - INFO - About to run command: /usr/bin/env python ../../main.py --batch_size=1024 --d_layers=512 --data_path=../../data/magic --dataset=magic --dim_t=256 --dropout=0.1 --log_interval=50 --lr=0.01 --n_layers=5 --num_epochs=4000 --seed=42 --task_type=binclass
+/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/xgboost/core.py:265: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc 2.28+) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+2025-01-27 00:47:05,475 - wandb.wandb_agent - INFO - Running runs: ['n6i28h1l']
+wandb: Currently logged in as: andresguzco. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in /fs01/home/aguzmanc/xvfm/src/sweeps/wandb/run-20250127_004709-n6i28h1l
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run solar-sweep-14
+wandb: ⭐️ View project at https://wandb.ai/andresguzco/XVFM
+wandb: 🧹 View sweep at https://wandb.ai/andresguzco/XVFM/sweeps/ei563s7k
+wandb: 🚀 View run at https://wandb.ai/andresguzco/XVFM/runs/n6i28h1l
+Number of parameters: 1257739
+Training parameters: {'num_epochs': 4000, 'batch_size': 1024, 'lr': 0.01, 'integration_steps': 100, 'sigma': 0.01, 'dataset': 'magic', 'log_interval': 50, 'seed': 42, 'results_dir': 'results', 'd_layers': 512, 'n_layers': 5, 'dropout': 0.1, 'dim_t': 256, 'data_path': '../../data/magic', 'task_type': 'binclass', 'arch': [512, 512, 512, 512, 512], 'num_feat': 10, 'classes': [0], 'd_in': 10}
+Epoch [1/4000]: Loss: [87998.5474]
+Epoch [2/4000]: Loss: [46.1984]
+Epoch [3/4000]: Loss: [30.7322]
+Epoch [4/4000]: Loss: [26.5558]
+Epoch [5/4000]: Loss: [24.9831]
+Epoch [6/4000]: Loss: [24.5723]
+Epoch [7/4000]: Loss: [24.4561]
+Epoch [8/4000]: Loss: [24.9233]
+Epoch [9/4000]: Loss: [24.7762]
+Epoch [10/4000]: Loss: [24.4740]
+Epoch [11/4000]: Loss: [24.5315]
+Epoch [12/4000]: Loss: [24.6735]
+Epoch [13/4000]: Loss: [24.4621]
+Epoch [14/4000]: Loss: [25.1295]
+Epoch [15/4000]: Loss: [25.0236]
+Epoch [16/4000]: Loss: [24.7306]
+Epoch [17/4000]: Loss: [24.6675]
+Epoch [18/4000]: Loss: [24.8770]
+Epoch [19/4000]: Loss: [24.3655]
+Epoch [20/4000]: Loss: [25.2599]
+Epoch [21/4000]: Loss: [24.3339]
+Epoch [22/4000]: Loss: [24.5201]
+Epoch [23/4000]: Loss: [24.6499]
+Epoch [24/4000]: Loss: [24.7389]
+Epoch [25/4000]: Loss: [24.8557]
+Epoch [26/4000]: Loss: [24.5192]
+Epoch [27/4000]: Loss: [24.7471]
+Epoch [28/4000]: Loss: [24.8187]
+Epoch [29/4000]: Loss: [24.3185]
+Epoch [30/4000]: Loss: [24.3418]
+Epoch [31/4000]: Loss: [24.4882]
+Epoch [32/4000]: Loss: [24.5902]
+Epoch [33/4000]: Loss: [24.4592]
+Epoch [34/4000]: Loss: [24.5185]
+Traceback (most recent call last):
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 152, in <module>
+    main(args)
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 102, in main
+    train(dataloader, test_data, flow_model, criterion, optimizer, 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 143, in train
+    scores = evaluate(args, model, test_data, savedir, epoch + 1, flag, device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/utils.py", line 57, in evaluate
+    scores = get_performance(gen, test, args, plotting)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 85, in get_performance
+    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 165, in get_quality
+    qual_res = quality_evaluator.evaluate(rloader, sloader)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 60, in evaluate
+    results = self._evaluate(X_gt, X_syn)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 720, in _evaluate
+    oneclass_model = self._get_oneclass_model(X_)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/core/metric.py", line 119, in _get_oneclass_model
+    return load_from_file(cache_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/utils/serialization.py", line 159, in load_from_file
+    return cloudpickle.load(f)
+           ^^^^^^^^^^^^^^^^^^^
+EOFError: Ran out of input
+2025-01-27 00:48:42,231 - wandb.wandb_agent - INFO - Cleaning up finished run: n6i28h1l
+wandb: - 0.005 MB of 0.028 MB uploadedwandb: \ 0.028 MB of 0.028 MB uploadedwandb: 
+wandb: Run history:
+wandb:     alpha ▁▁▂▄█████████████████████████████
+wandb:      beta ▁▁▁▂▄▅█▅▅▄▄▇▅▅▄▅▃▄▃▄▄▃▅▇▅█▅▄▆▃▃▇▇
+wandb: detection ▁▁▁▁▃▄▇▅▅▄▃▅▄▄█▃▅▅▅▄▃▃▅▅▃▃▂▄▄▄▅▄▄
+wandb:      loss █▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   quality ▁▃▅▅▇▇▇▇█▇█▇▇▇▇▇▇█▇▆▇█▇██▇▇▇▇▇▇▇▇
+wandb:     shape ▁▂▂▃▇▆▇▆█▆▇▇▇▇▇▆▆▇▆▅▆▇▇▇█▇▆▇▇▆▇▆▇
+wandb:     trend ▁▃█▇█▇▇█▇▇█▇▇▇▇▇▇▇▇▇▇▇▇▇▇█▇▇▇▇▇▇▇
+wandb: 
+wandb: Run summary:
+wandb:     alpha 0.85177
+wandb:      beta 0.00361
+wandb: detection 0.0065
+wandb:      loss 24.45921
+wandb:   quality 0.70546
+wandb:     shape 0.52003
+wandb:     trend 0.8909
+wandb: 
+wandb: 🚀 View run solar-sweep-14 at: https://wandb.ai/andresguzco/XVFM/runs/n6i28h1l
+wandb: ⭐️ View project at: https://wandb.ai/andresguzco/XVFM
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250127_004709-n6i28h1l/logs
+wandb: Terminating and syncing runs. Press ctrl-c to kill.

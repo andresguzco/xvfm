@@ -1,0 +1,461 @@
+[DEBUG] Host name:  gpu177.cluster.local
+wandb: Starting wandb agent 🕵️
+2025-01-27 03:38:16,297 - wandb.wandb_agent - INFO - Running runs: []
+2025-01-27 03:38:16,472 - wandb.wandb_agent - INFO - Agent received command: run
+2025-01-27 03:38:16,473 - wandb.wandb_agent - INFO - Agent starting run with config:
+	batch_size: 4096
+	d_layers: 1024
+	data_path: ../../data/adult
+	dataset: adult
+	dim_t: 64
+	dropout: 0.3
+	log_interval: 50
+	lr: 0.01
+	n_layers: 4
+	num_epochs: 4000
+	seed: 42
+	task_type: binclass
+2025-01-27 03:38:16,480 - wandb.wandb_agent - INFO - About to run command: /usr/bin/env python ../../main.py --batch_size=4096 --d_layers=1024 --data_path=../../data/adult --dataset=adult --dim_t=64 --dropout=0.3 --log_interval=50 --lr=0.01 --n_layers=4 --num_epochs=4000 --seed=42 --task_type=binclass
+/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/xgboost/core.py:265: FutureWarning: Your system has an old version of glibc (< 2.28). We will stop supporting Linux distros with glibc older than 2.28 after **May 31, 2025**. Please upgrade to a recent Linux distro (with glibc 2.28+) to use future versions of XGBoost.
+Note: You have installed the 'manylinux2014' variant of XGBoost. Certain features such as GPU algorithms or federated learning are not available. To use these features, please upgrade to a recent Linux distro with glibc 2.28+, and install the 'manylinux_2_28' variant.
+  warnings.warn(
+2025-01-27 03:38:21,507 - wandb.wandb_agent - INFO - Running runs: ['j9omuxmr']
+wandb: Currently logged in as: andresguzco. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.19.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.6
+wandb: Run data is saved locally in /fs01/home/aguzmanc/xvfm/src/sweeps/wandb/run-20250127_033826-j9omuxmr
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run frosty-sweep-16
+wandb: ⭐️ View project at https://wandb.ai/andresguzco/XVFM
+wandb: 🧹 View sweep at https://wandb.ai/andresguzco/XVFM/sweeps/8n9o8ux4
+wandb: 🚀 View run at https://wandb.ai/andresguzco/XVFM/runs/j9omuxmr
+Number of parameters: 3334185
+Training parameters: {'num_epochs': 4000, 'batch_size': 4096, 'lr': 0.01, 'integration_steps': 100, 'sigma': 0.01, 'dataset': 'adult', 'log_interval': 50, 'seed': 42, 'results_dir': 'results', 'd_layers': 1024, 'n_layers': 4, 'dropout': 0.3, 'dim_t': 64, 'data_path': '../../data/adult', 'task_type': 'binclass', 'arch': [1024, 1024, 1024, 1024], 'num_feat': 6, 'classes': [7, 16, 7, 14, 6, 5, 2, 41], 'd_in': 104}
+Epoch [1/4000]: Loss: [1238845.9967]
+Epoch [2/4000]: Loss: [105.6079]
+Epoch [3/4000]: Loss: [104.4885]
+Epoch [4/4000]: Loss: [96.7320]
+Epoch [5/4000]: Loss: [78.9979]
+Epoch [6/4000]: Loss: [68.9744]
+Epoch [7/4000]: Loss: [60.9545]
+Epoch [8/4000]: Loss: [54.0945]
+Epoch [9/4000]: Loss: [43.3768]
+Epoch [10/4000]: Loss: [37.5232]
+Epoch [11/4000]: Loss: [36.9693]
+Epoch [12/4000]: Loss: [36.8660]
+Epoch [13/4000]: Loss: [35.9165]
+Epoch [14/4000]: Loss: [34.7675]
+Epoch [15/4000]: Loss: [34.4989]
+Epoch [16/4000]: Loss: [33.8257]
+Epoch [17/4000]: Loss: [34.3810]
+Epoch [18/4000]: Loss: [34.6891]
+Epoch [19/4000]: Loss: [33.1844]
+Epoch [20/4000]: Loss: [33.2988]
+Epoch [21/4000]: Loss: [33.3595]
+Epoch [22/4000]: Loss: [33.7210]
+Epoch [23/4000]: Loss: [33.3687]
+Epoch [24/4000]: Loss: [33.5834]
+Epoch [25/4000]: Loss: [32.1226]
+Epoch [26/4000]: Loss: [32.5736]
+Epoch [27/4000]: Loss: [32.7121]
+Epoch [28/4000]: Loss: [32.7815]
+Epoch [29/4000]: Loss: [32.7378]
+Epoch [30/4000]: Loss: [32.3063]
+Epoch [31/4000]: Loss: [33.4401]
+Epoch [32/4000]: Loss: [31.9312]
+Epoch [33/4000]: Loss: [32.2684]
+Epoch [34/4000]: Loss: [32.3957]
+Epoch [35/4000]: Loss: [31.8645]
+Epoch [36/4000]: Loss: [32.4675]
+Epoch [37/4000]: Loss: [32.6627]
+Epoch [38/4000]: Loss: [32.2007]
+Epoch [39/4000]: Loss: [32.5937]
+Epoch [40/4000]: Loss: [32.2363]
+Epoch [41/4000]: Loss: [32.3147]
+Epoch [42/4000]: Loss: [32.6599]
+Epoch [43/4000]: Loss: [32.2835]
+Epoch [44/4000]: Loss: [31.7297]
+Epoch [45/4000]: Loss: [32.8979]
+Epoch [46/4000]: Loss: [32.5068]
+Epoch [47/4000]: Loss: [32.1428]
+Epoch [48/4000]: Loss: [32.5492]
+Epoch [49/4000]: Loss: [32.7032]
+Epoch [50/4000]: Loss: [32.2812]
+Epoch [51/4000]: Loss: [32.2442]
+Epoch [52/4000]: Loss: [32.7437]
+Epoch [53/4000]: Loss: [32.4970]
+Epoch [54/4000]: Loss: [32.7609]
+Epoch [55/4000]: Loss: [32.8090]
+Epoch [56/4000]: Loss: [32.7608]
+Epoch [57/4000]: Loss: [32.6026]
+Epoch [58/4000]: Loss: [31.8687]
+Epoch [59/4000]: Loss: [32.4200]
+Epoch [60/4000]: Loss: [32.7380]
+Epoch [61/4000]: Loss: [32.9649]
+Epoch [62/4000]: Loss: [32.4647]
+Epoch [63/4000]: Loss: [32.1821]
+Epoch [64/4000]: Loss: [32.8117]
+Epoch [65/4000]: Loss: [32.4366]
+Epoch [66/4000]: Loss: [32.2430]
+Epoch [67/4000]: Loss: [31.7432]
+Epoch [68/4000]: Loss: [32.3311]
+Epoch [69/4000]: Loss: [31.9624]
+Epoch [70/4000]: Loss: [32.1808]
+Epoch [71/4000]: Loss: [32.7733]
+Epoch [72/4000]: Loss: [32.4234]
+Epoch [73/4000]: Loss: [32.3216]
+Epoch [74/4000]: Loss: [32.0047]
+Epoch [75/4000]: Loss: [32.8282]
+Epoch [76/4000]: Loss: [32.4950]
+Epoch [77/4000]: Loss: [32.8239]
+Epoch [78/4000]: Loss: [31.9711]
+Epoch [79/4000]: Loss: [32.8912]
+Epoch [80/4000]: Loss: [32.4913]
+Epoch [81/4000]: Loss: [32.9524]
+Epoch [82/4000]: Loss: [32.6445]
+Epoch [83/4000]: Loss: [32.8864]
+Epoch [84/4000]: Loss: [32.3704]
+Epoch [85/4000]: Loss: [32.1833]
+Epoch [86/4000]: Loss: [32.8330]
+Epoch [87/4000]: Loss: [32.6248]
+Epoch [88/4000]: Loss: [32.1203]
+Epoch [89/4000]: Loss: [31.9991]
+Epoch [90/4000]: Loss: [32.5686]
+Epoch [91/4000]: Loss: [32.2857]
+Epoch [92/4000]: Loss: [31.9486]
+Epoch [93/4000]: Loss: [32.1809]
+Epoch [94/4000]: Loss: [32.5957]
+Epoch [95/4000]: Loss: [32.3054]
+Epoch [96/4000]: Loss: [31.9137]
+Epoch [97/4000]: Loss: [32.9040]
+Epoch [98/4000]: Loss: [32.4900]
+Epoch [99/4000]: Loss: [32.6089]
+Epoch [100/4000]: Loss: [33.0033]
+Epoch [101/4000]: Loss: [32.1853]
+Epoch [102/4000]: Loss: [32.7043]
+Epoch [103/4000]: Loss: [32.2706]
+Epoch [104/4000]: Loss: [32.5146]
+Epoch [105/4000]: Loss: [33.0927]
+Epoch [106/4000]: Loss: [32.0290]
+Epoch [107/4000]: Loss: [32.5774]
+Epoch [108/4000]: Loss: [32.6056]
+Epoch [109/4000]: Loss: [32.4544]
+Epoch [110/4000]: Loss: [32.4214]
+Epoch [111/4000]: Loss: [33.2395]
+Epoch [112/4000]: Loss: [32.5842]
+Epoch [113/4000]: Loss: [32.6029]
+Epoch [114/4000]: Loss: [32.1083]
+Epoch [115/4000]: Loss: [32.5112]
+Epoch [116/4000]: Loss: [32.5040]
+Epoch [117/4000]: Loss: [32.3304]
+Epoch [118/4000]: Loss: [32.1023]
+Epoch [119/4000]: Loss: [32.5134]
+Epoch [120/4000]: Loss: [31.5897]
+Epoch [121/4000]: Loss: [31.8805]
+Epoch [122/4000]: Loss: [32.4999]
+Epoch [123/4000]: Loss: [32.5563]
+Epoch [124/4000]: Loss: [32.2553]
+Epoch [125/4000]: Loss: [31.9595]
+Epoch [126/4000]: Loss: [32.0653]
+Epoch [127/4000]: Loss: [32.4667]
+Epoch [128/4000]: Loss: [31.9790]
+Epoch [129/4000]: Loss: [32.9564]
+Epoch [130/4000]: Loss: [32.6359]
+Epoch [131/4000]: Loss: [32.9362]
+Epoch [132/4000]: Loss: [31.7409]
+Epoch [133/4000]: Loss: [33.1554]
+Epoch [134/4000]: Loss: [32.0282]
+Epoch [135/4000]: Loss: [32.3353]
+Epoch [136/4000]: Loss: [32.1816]
+Epoch [137/4000]: Loss: [32.1420]
+Epoch [138/4000]: Loss: [31.9262]
+Epoch [139/4000]: Loss: [32.6676]
+Epoch [140/4000]: Loss: [32.3030]
+Epoch [141/4000]: Loss: [32.5263]
+Epoch [142/4000]: Loss: [32.3756]
+Epoch [143/4000]: Loss: [32.0492]
+Epoch [144/4000]: Loss: [32.4844]
+Epoch [145/4000]: Loss: [32.5268]
+Epoch [146/4000]: Loss: [32.2054]
+Epoch [147/4000]: Loss: [31.9106]
+Epoch [148/4000]: Loss: [31.7407]
+Epoch [149/4000]: Loss: [32.1559]
+Epoch [150/4000]: Loss: [32.2598]
+Epoch [151/4000]: Loss: [32.4456]
+Epoch [152/4000]: Loss: [32.4506]
+Epoch [153/4000]: Loss: [32.3136]
+Epoch [154/4000]: Loss: [31.4770]
+Epoch [155/4000]: Loss: [32.5194]
+Epoch [156/4000]: Loss: [32.3371]
+Epoch [157/4000]: Loss: [32.0730]
+Epoch [158/4000]: Loss: [32.6367]
+Epoch [159/4000]: Loss: [32.6844]
+Epoch [160/4000]: Loss: [32.1841]
+Epoch [161/4000]: Loss: [32.3735]
+Epoch [162/4000]: Loss: [32.3117]
+Epoch [163/4000]: Loss: [32.2162]
+Epoch [164/4000]: Loss: [32.0887]
+Epoch [165/4000]: Loss: [32.1509]
+Epoch [166/4000]: Loss: [32.4056]
+Epoch [167/4000]: Loss: [32.4063]
+Epoch [168/4000]: Loss: [32.1369]
+Epoch [169/4000]: Loss: [32.2939]
+Epoch [170/4000]: Loss: [32.3028]
+Epoch [171/4000]: Loss: [32.6841]
+Epoch [172/4000]: Loss: [32.3007]
+Epoch [173/4000]: Loss: [32.2052]
+Epoch [174/4000]: Loss: [32.4180]
+Epoch [175/4000]: Loss: [32.2153]
+Epoch [176/4000]: Loss: [32.5025]
+Epoch [177/4000]: Loss: [31.9447]
+Epoch [178/4000]: Loss: [32.9239]
+Epoch [179/4000]: Loss: [32.3167]
+Epoch [180/4000]: Loss: [32.4060]
+Epoch [181/4000]: Loss: [32.8281]
+Epoch [182/4000]: Loss: [32.5680]
+Epoch [183/4000]: Loss: [32.3077]
+Epoch [184/4000]: Loss: [32.0292]
+Epoch [185/4000]: Loss: [31.8203]
+Epoch [186/4000]: Loss: [32.5391]
+Epoch [187/4000]: Loss: [32.7265]
+Epoch [188/4000]: Loss: [31.5235]
+Epoch [189/4000]: Loss: [32.2659]
+Epoch [190/4000]: Loss: [32.1281]
+Epoch [191/4000]: Loss: [32.1378]
+Epoch [192/4000]: Loss: [32.1110]
+Epoch [193/4000]: Loss: [32.7669]
+Epoch [194/4000]: Loss: [32.4140]
+Epoch [195/4000]: Loss: [32.2690]
+Epoch [196/4000]: Loss: [31.3183]
+Epoch [197/4000]: Loss: [32.4260]
+Epoch [198/4000]: Loss: [32.4719]
+Epoch [199/4000]: Loss: [31.6887]
+Epoch [200/4000]: Loss: [32.1301]
+Epoch [201/4000]: Loss: [31.6934]
+Epoch [202/4000]: Loss: [33.3725]
+Epoch [203/4000]: Loss: [32.5446]
+Epoch [204/4000]: Loss: [32.1060]
+Epoch [205/4000]: Loss: [33.2582]
+Epoch [206/4000]: Loss: [32.3679]
+Epoch [207/4000]: Loss: [31.6401]
+Epoch [208/4000]: Loss: [32.5999]
+Epoch [209/4000]: Loss: [32.0313]
+Epoch [210/4000]: Loss: [31.9253]
+Epoch [211/4000]: Loss: [33.0321]
+Epoch [212/4000]: Loss: [32.5754]
+Epoch [213/4000]: Loss: [32.7574]
+Epoch [214/4000]: Loss: [32.1096]
+Epoch [215/4000]: Loss: [32.3835]
+Epoch [216/4000]: Loss: [32.1430]
+Epoch [217/4000]: Loss: [31.3944]
+Epoch [218/4000]: Loss: [32.3160]
+Epoch [219/4000]: Loss: [32.0687]
+Epoch [220/4000]: Loss: [32.4257]
+Epoch [221/4000]: Loss: [32.1024]
+Epoch [222/4000]: Loss: [31.8752]
+Epoch [223/4000]: Loss: [32.6262]
+Epoch [224/4000]: Loss: [32.1141]
+Epoch [225/4000]: Loss: [31.2422]
+Epoch [226/4000]: Loss: [32.5891]
+Epoch [227/4000]: Loss: [32.6999]
+Epoch [228/4000]: Loss: [32.7358]
+Epoch [229/4000]: Loss: [31.7168]
+Epoch [230/4000]: Loss: [32.4760]
+Epoch [231/4000]: Loss: [32.3077]
+Epoch [232/4000]: Loss: [32.3551]
+Epoch [233/4000]: Loss: [32.2221]
+Epoch [234/4000]: Loss: [32.7543]
+Epoch [235/4000]: Loss: [31.9896]
+Epoch [236/4000]: Loss: [32.2578]
+Epoch [237/4000]: Loss: [32.1054]
+Epoch [238/4000]: Loss: [32.6289]
+Epoch [239/4000]: Loss: [32.3746]
+Epoch [240/4000]: Loss: [31.7979]
+Epoch [241/4000]: Loss: [31.2514]
+Epoch [242/4000]: Loss: [32.5351]
+Epoch [243/4000]: Loss: [31.7153]
+Epoch [244/4000]: Loss: [31.9830]
+Epoch [245/4000]: Loss: [32.1512]
+Epoch [246/4000]: Loss: [31.9329]
+Epoch [247/4000]: Loss: [32.1936]
+Epoch [248/4000]: Loss: [32.4387]
+Epoch [249/4000]: Loss: [32.5091]
+Epoch [250/4000]: Loss: [32.7254]
+Epoch [251/4000]: Loss: [32.7613]
+Epoch [252/4000]: Loss: [32.5185]
+Epoch [253/4000]: Loss: [32.4509]
+Epoch [254/4000]: Loss: [32.0396]
+Epoch [255/4000]: Loss: [33.1179]
+Epoch [256/4000]: Loss: [32.8145]
+Epoch [257/4000]: Loss: [31.9333]
+Epoch [258/4000]: Loss: [31.9200]
+Epoch [259/4000]: Loss: [32.0968]
+Epoch [260/4000]: Loss: [32.3957]
+Epoch [261/4000]: Loss: [31.8931]
+Epoch [262/4000]: Loss: [32.8727]
+Epoch [263/4000]: Loss: [32.5905]
+Epoch [264/4000]: Loss: [32.7701]
+Epoch [265/4000]: Loss: [32.2033]
+Epoch [266/4000]: Loss: [31.9866]
+Epoch [267/4000]: Loss: [32.0002]
+Epoch [268/4000]: Loss: [32.0313]
+Epoch [269/4000]: Loss: [32.5084]
+Epoch [270/4000]: Loss: [31.8732]
+Epoch [271/4000]: Loss: [32.7626]
+Epoch [272/4000]: Loss: [31.6015]
+Epoch [273/4000]: Loss: [32.3604]
+Epoch [274/4000]: Loss: [32.0889]
+Epoch [275/4000]: Loss: [32.1890]
+Epoch [276/4000]: Loss: [32.4215]
+Epoch [277/4000]: Loss: [32.5835]
+Epoch [278/4000]: Loss: [33.0352]
+Epoch [279/4000]: Loss: [32.1690]
+Epoch [280/4000]: Loss: [32.1068]
+Epoch [281/4000]: Loss: [32.2630]
+Epoch [282/4000]: Loss: [31.9309]
+Epoch [283/4000]: Loss: [32.5622]
+Epoch [284/4000]: Loss: [32.2204]
+Epoch [285/4000]: Loss: [32.8206]
+Epoch [286/4000]: Loss: [32.5580]
+Epoch [287/4000]: Loss: [32.2072]
+Epoch [288/4000]: Loss: [31.4780]
+Epoch [289/4000]: Loss: [31.9617]
+Epoch [290/4000]: Loss: [32.0396]
+Epoch [291/4000]: Loss: [31.8649]
+Epoch [292/4000]: Loss: [32.8330]
+Epoch [293/4000]: Loss: [32.0213]
+Epoch [294/4000]: Loss: [31.7701]
+Epoch [295/4000]: Loss: [31.7387]
+Epoch [296/4000]: Loss: [32.3433]
+Epoch [297/4000]: Loss: [32.1356]
+Epoch [298/4000]: Loss: [32.4070]
+Epoch [299/4000]: Loss: [31.7998]
+Epoch [300/4000]: Loss: [33.5377]
+Epoch [301/4000]: Loss: [32.5687]
+Epoch [302/4000]: Loss: [32.5000]
+Epoch [303/4000]: Loss: [32.3813]
+Epoch [304/4000]: Loss: [33.1390]
+Epoch [305/4000]: Loss: [32.2585]
+Epoch [306/4000]: Loss: [32.8927]
+Epoch [307/4000]: Loss: [32.0993]
+Epoch [308/4000]: Loss: [31.3332]
+Epoch [309/4000]: Loss: [32.5514]
+Epoch [310/4000]: Loss: [32.2729]
+Epoch [311/4000]: Loss: [32.4728]
+Epoch [312/4000]: Loss: [32.3120]
+Epoch [313/4000]: Loss: [32.3878]
+Epoch [314/4000]: Loss: [31.8736]
+Epoch [315/4000]: Loss: [32.8375]
+Epoch [316/4000]: Loss: [32.0070]
+Epoch [317/4000]: Loss: [32.0984]
+Epoch [318/4000]: Loss: [33.6503]
+Epoch [319/4000]: Loss: [32.4939]
+Epoch [320/4000]: Loss: [32.3132]
+Epoch [321/4000]: Loss: [32.4729]
+Epoch [322/4000]: Loss: [32.3316]
+Epoch [323/4000]: Loss: [31.6193]
+Epoch [324/4000]: Loss: [31.3473]
+Epoch [325/4000]: Loss: [32.1284]
+Epoch [326/4000]: Loss: [32.6857]
+Epoch [327/4000]: Loss: [32.2542]
+Epoch [328/4000]: Loss: [31.7745]
+Epoch [329/4000]: Loss: [32.6660]
+Epoch [330/4000]: Loss: [31.9098]
+Epoch [331/4000]: Loss: [32.0808]
+Epoch [332/4000]: Loss: [32.0965]
+Epoch [333/4000]: Loss: [32.3720]
+Epoch [334/4000]: Loss: [31.9678]
+Epoch [335/4000]: Loss: [32.2184]
+Epoch [336/4000]: Loss: [32.1318]
+Epoch [337/4000]: Loss: [31.4525]
+Epoch [338/4000]: Loss: [32.4180]
+Epoch [339/4000]: Loss: [32.5857]
+Epoch [340/4000]: Loss: [32.4471]
+Epoch [341/4000]: Loss: [32.1719]
+Epoch [342/4000]: Loss: [32.5654]
+Epoch [343/4000]: Loss: [32.2351]
+Epoch [344/4000]: Loss: [32.1605]
+Epoch [345/4000]: Loss: [32.4636]
+Epoch [346/4000]: Loss: [31.8083]
+Epoch [347/4000]: Loss: [32.8770]
+Epoch [348/4000]: Loss: [32.3050]
+Epoch [349/4000]: Loss: [32.9728]
+Epoch [350/4000]: Loss: [31.7116]
+Epoch [351/4000]: Loss: [32.2845]
+Epoch [352/4000]: Loss: [32.8558]
+Epoch [353/4000]: Loss: [31.8728]
+Traceback (most recent call last):
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 152, in <module>
+    main(args)
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 102, in main
+    train(dataloader, test_data, flow_model, criterion, optimizer, 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py", line 143, in train
+    scores = evaluate(args, model, test_data, savedir, epoch + 1, flag, device)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/utils.py", line 57, in evaluate
+    scores = get_performance(gen, test, args, plotting)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 85, in get_performance
+    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/fs01/home/aguzmanc/xvfm/xvfm/eval.py", line 165, in get_quality
+    qual_res = quality_evaluator.evaluate(rloader, sloader)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 60, in evaluate
+    results = self._evaluate(X_gt, X_syn)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pydantic/decorator.py", line 40, in pydantic.decorator.validate_arguments.validate.wrapper_function
+    from contextlib import _GeneratorContextManager
+  File "pydantic/decorator.py", line 134, in pydantic.decorator.ValidatedFunction.call
+    
+  File "pydantic/decorator.py", line 206, in pydantic.decorator.ValidatedFunction.execute
+    
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/eval_statistical.py", line 720, in _evaluate
+    oneclass_model = self._get_oneclass_model(X_)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/metrics/core/metric.py", line 119, in _get_oneclass_model
+    return load_from_file(cache_file)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/h/aguzmanc/miniforge3/envs/eval/lib/python3.11/site-packages/synthcity/utils/serialization.py", line 159, in load_from_file
+    return cloudpickle.load(f)
+           ^^^^^^^^^^^^^^^^^^^
+EOFError: Ran out of input
+2025-01-27 04:22:07,679 - wandb.wandb_agent - INFO - Cleaning up finished run: j9omuxmr
+wandb: - 0.005 MB of 0.005 MB uploadedwandb: \ 0.005 MB of 0.020 MB uploadedwandb: | 0.037 MB of 0.039 MB uploadedwandb: 
+wandb: Run history:
+wandb:  accuracy ▁▁▁▁▁▁▁
+wandb:     alpha ▁███████████████████████████████████████
+wandb:      beta ▁█▇▇▇▇█▇███▇███▇▇▇███▇▇▇▇▇▇██▇███▇▇▇█▇▇█
+wandb: binary_f1 ▁▁▁▁▁▁▁
+wandb: detection ▁█▅▄▄▄▅▅▅▇▆▄▆▆▆▄▆▆▆▆▅▅▅▄▅▅▄▆▅▅▅▆▆▅▄▅▆▅▅▅
+wandb:      loss █▂▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:   quality ▁█▇▇▇▇▇█▇██▇██▇▇▇██▇▇▇█▇▇▇▇█▇▇▇▇█▇▇▇█▇█▇
+wandb:   roc_auc █▄▆▄▃▅▁
+wandb:     shape ▁█▇▇▇▇▇▇▇██▇██▇▇▇▇█▇▇▇█▇▇▇▇█▇▇▇▇▇▇▇▇█▇█▇
+wandb:     trend █▁▃▃▂▂▅▃▃▄▃▃▃▃▃▅▂▂▄▂▄▃▄▃▃▄▃▃▄▄▃▃▄▂▄▅▄▃▄▃
+wandb: 
+wandb: Run summary:
+wandb:  accuracy 0.75437
+wandb:     alpha 0.95747
+wandb:      beta 0.08019
+wandb: binary_f1 0.0
+wandb: detection 0.25038
+wandb:      loss 32.85576
+wandb:   quality 0.85751
+wandb:   roc_auc 0.34579
+wandb:     shape 0.7586
+wandb:     trend 0.95642
+wandb: 
+wandb: 🚀 View run frosty-sweep-16 at: https://wandb.ai/andresguzco/XVFM/runs/j9omuxmr
+wandb: ⭐️ View project at: https://wandb.ai/andresguzco/XVFM
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20250127_033826-j9omuxmr/logs
+wandb: Terminating and syncing runs. Press ctrl-c to kill.

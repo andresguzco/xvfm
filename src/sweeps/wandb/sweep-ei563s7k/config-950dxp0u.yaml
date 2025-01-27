@@ -1,0 +1,26 @@
+wandb_version: 1
+
+batch_size:
+  value: 1024
+d_layers:
+  value: 1024
+data_path:
+  value: ../../data/magic
+dataset:
+  value: magic
+dim_t:
+  value: 64
+dropout:
+  value: 0.1
+log_interval:
+  value: 50
+lr:
+  value: 0.01
+n_layers:
+  value: 5
+num_epochs:
+  value: 4000
+seed:
+  value: 42
+task_type:
+  value: binclass

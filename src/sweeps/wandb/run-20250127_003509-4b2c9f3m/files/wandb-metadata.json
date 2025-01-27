@@ -1,0 +1,261 @@
+{
+    "os": "Linux-5.4.0-131-generic-x86_64-with-glibc2.27",
+    "python": "3.11.11",
+    "heartbeatAt": "2025-01-27T05:35:09.901940",
+    "startedAt": "2025-01-27T05:35:09.604869",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "--batch_size=2048",
+        "--d_layers=512",
+        "--data_path=../../data/default",
+        "--dataset=default",
+        "--dim_t=64",
+        "--dropout=0.3",
+        "--log_interval=50",
+        "--lr=0.01",
+        "--n_layers=4",
+        "--num_epochs=4000",
+        "--seed=42",
+        "--task_type=binclass"
+    ],
+    "state": "running",
+    "program": "/fs01/home/aguzmanc/xvfm/src/sweeps/../../main.py",
+    "codePathLocal": null,
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/andresguzco/xvfm/",
+        "commit": "9a3f3becedd0a9ee3e6a4b275fee025a2f336697"
+    },
+    "email": "andresguzco@gmail.com",
+    "root": "/fs01/home/aguzmanc/xvfm",
+    "host": "gpu148.cluster.local",
+    "username": "aguzmanc",
+    "executable": "/h/aguzmanc/miniforge3/envs/eval/bin/python3.11",
+    "cpu_count": 20,
+    "cpu_count_logical": 40,
+    "cpu_freq": {
+        "current": 1376.44965,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1190.355,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2836.709,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1102.288,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1031.608,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.008,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2822.851,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2853.998,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2821.284,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.136,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.361,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.319,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1001.456,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.186,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.295,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.324,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.028,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.189,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.186,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.028,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.292,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1013.835,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2792.217,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1001.043,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1055.945,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.424,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2830.18,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2808.173,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2821.749,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.038,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1067.672,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.376,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.224,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.309,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.109,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.133,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.447,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.322,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.272,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1001.272,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 1000.345,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 819.2013664245605,
+            "used": 53.15907287597656
+        }
+    },
+    "gpu": "Quadro RTX 6000",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "Quadro RTX 6000",
+            "memory_total": 24159191040
+        }
+    ],
+    "memory": {
+        "total": 188.5875473022461
+    }
+}

@@ -1,0 +1,94 @@
+wandb_version: 1
+
+num_epochs:
+  desc: null
+  value: 4000
+batch_size:
+  desc: null
+  value: 2048
+lr:
+  desc: null
+  value: 0.01
+integration_steps:
+  desc: null
+  value: 100
+sigma:
+  desc: null
+  value: 0.01
+dataset:
+  desc: null
+  value: default
+log_interval:
+  desc: null
+  value: 50
+seed:
+  desc: null
+  value: 42
+results_dir:
+  desc: null
+  value: results
+d_layers:
+  desc: null
+  value: 512
+n_layers:
+  desc: null
+  value: 4
+dropout:
+  desc: null
+  value: 0.5
+dim_t:
+  desc: null
+  value: 64
+data_path:
+  desc: null
+  value: ../../data/default
+task_type:
+  desc: null
+  value: binclass
+_wandb:
+  desc: null
+  value:
+    python_version: 3.11.11
+    cli_version: 0.16.6
+    framework: xgboost
+    huggingface_version: 4.48.1
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1737955968.0
+    t:
+      1:
+      - 1
+      - 4
+      - 5
+      - 6
+      - 11
+      - 35
+      - 41
+      - 48
+      - 49
+      - 53
+      - 55
+      - 71
+      2:
+      - 1
+      - 4
+      - 5
+      - 6
+      - 11
+      - 35
+      - 41
+      - 48
+      - 49
+      - 53
+      - 55
+      - 71
+      3:
+      - 16
+      - 23
+      - 37
+      4: 3.11.11
+      5: 0.16.6
+      6: 4.48.1
+      8:
+      - 5
+      13: linux-x86_64

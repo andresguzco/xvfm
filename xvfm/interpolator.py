@@ -15,9 +15,6 @@ class OTInterpolator(Interpolator):
         self.sigma_min = sigma_min
 
     def sample_x_t(self, x_0, x_1, t):
-        if x_1.dim() != t.dim():
-            t = t.view(-1, *([1] * (x_1.dim() - 1)))
-
         x_t = t * x_1 + (1 - t) * x_0
         x_t += torch.randn_like(x_t) * self.sigma_min
         return x_t

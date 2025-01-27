@@ -1,0 +1,38 @@
+entity: andresguzco
+project: XVFM
+name: magic
+program: ../../main.py
+command:
+    - ${env}
+    - python
+    - ${program}
+    - ${args}
+method: random
+metric:
+    goal: minimize
+    name: loss
+parameters:
+    log_interval:
+        value: 50
+    dataset:
+        value: "magic"
+    data_path:
+        value: "../../data/magic"
+    task_type:
+        value: "binclass"
+    num_epochs:
+        value: 4000
+    batch_size:
+        value: 1024
+    lr:
+        value: 0.01
+    seed:
+        value: 42
+    d_layers:
+        values: [512, 1024]
+    n_layers:
+        values: [4, 5]
+    dropout:
+        values: [0.1, 0.3, 0.5]
+    dim_t:
+        values: [64, 128, 256]
