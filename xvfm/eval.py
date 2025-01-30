@@ -80,9 +80,9 @@ def get_performance(syn_data, test_data, args, mle=False):
     test = pd.DataFrame(test_np)
     syn = pd.DataFrame(syn_np)
 
-    shapes, trends, shape, trend, quality = get_shape_trend_score(test, syn)
+    max_shape, max_trend, avg_shape, avg_trend, shape, trend, quality = get_shape_trend_score(test, syn)
     detection = get_detection(test, syn)
-    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+    alpha, beta, qual_score = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
     
     if mle:
         mle_scores = get_results(get_mle(syn_np, test_np, args.data_path))
@@ -91,11 +91,16 @@ def get_performance(syn_data, test_data, args, mle=False):
 
     scores = {
         "shape": shape,
+        "max_shape": max_shape,
+        "avg_shape": avg_shape,
         "trend": trend,
+        "max_trend": max_trend,
+        "avg_trend": avg_trend,
         "detection": detection,
         "quality": quality,
         "alpha": alpha,
-        "beta": beta
+        "beta": beta,
+        "qual_score": qual_score
     } | mle_scores
 
     return scores
@@ -115,8 +120,12 @@ def get_shape_trend_score(real, synthetic):
     Quality = (Shape + Trend) / 2
 
     shapes = qual_report.get_details(property_name='Column Shapes')
+    max_shape = np.max(shapes['Score'].values)
+    avg_shape = np.mean(shapes['Score'].values)
     trends = qual_report.get_details(property_name='Column Pair Trends')
-    return shapes, trends, Shape, Trend, Quality
+    max_trend = np.max(trends['Score'].values)
+    avg_trend = np.mean(trends['Score'].values)
+    return max_shape, max_trend, avg_shape, avg_trend, Shape, Trend, Quality
 
 
 def get_detection(real, synthetic):
@@ -168,33 +177,4 @@ def get_quality(real_x, syn_x):
 
     Alpha = qual_res['delta_precision_alpha_naive']
     Beta = qual_res['delta_coverage_beta_naive']
-    return Alpha, Beta
-
-
-if __name__ == "__main__":
-    args = get_args()
-    T = Transformations(normalization=args.transformation)
-    dataset = make_dataset(
-        args.data_path, 
-        T, 
-        num_classes=args.num_classes, 
-        is_y_cond=args.is_y_cond
-    )
-    realloader = prepare_fast_dataloader(dataset, split='train', batch_size=args.batch_size)
-    real_data = next(iter(realloader))[0]
-    print(f"Real data shape: {real_data.shape}")
-
-    testloader = prepare_fast_dataloader(dataset, split='test', batch_size=args.batch_size)
-    test_data = next(iter(testloader))[0]
-    print(f"Test data shape: {test_data.shape}")
-    
-    synthetic_data = torch.Tensor(pd.read_csv(args.data_path + '/synthetic.csv').to_numpy())
-    print(f"Synthetic data shape: {synthetic_data.shape}")
-
-    assert args.data_path is not None, "Data path must be provided for tabular datasets"
-    assert args.num_classes is not None, "Classes must be provided for tabular datasets"
-
-    args.num_feat = realloader.num_feat
-    args.classes = realloader.classes
-
-    get_performance(real_data, synthetic_data, test_data, args)
+    return Alpha, Beta, qual_score

@@ -24,7 +24,7 @@ class GaussianMultinomialPrior(Prior):
         super(GaussianMultinomialPrior, self).__init__()
         self.num_feat = num_feat
         self.cat_feat = cat_feat 
-        self.gaussian_dist = MultivariateNormal(torch.zeros(num_feat), torch.eye(num_feat) * 100)
+        self.gaussian_dist = MultivariateNormal(torch.zeros(num_feat), torch.eye(num_feat))
 
         if sum(cat_feat) != 0:
             self.multinomial_dists = [Categorical(torch.ones(val)/val) for val in cat_feat]
@@ -32,7 +32,7 @@ class GaussianMultinomialPrior(Prior):
             self.multinomial_dists = False
         
         if task == 'regression':
-            self.cond_dist = Normal(0, 100)
+            self.cond_dist = Normal(0, 1)
         else:
             self.cond_dist = Bernoulli(0.5)
 

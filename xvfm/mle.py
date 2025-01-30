@@ -59,7 +59,7 @@ _MODELS = {
 
 def get_results(data):
     max_metrics = {}
-    for key, value in data.items():
+    for _, value in data.items():
         model_data = next(iter(value.values()), {})
 
         for metric, metric_value in model_data.items():
@@ -72,6 +72,7 @@ def get_results(data):
 
 def feat_transform(data, info, cmax = None, cmin = None):
     num_feat = len(info['num_col_idx'])
+    cat_feat = len(info['cat_col_idx'])
 
     features = []
     
@@ -89,6 +90,11 @@ def feat_transform(data, info, cmax = None, cmin = None):
             feature = (col - cmin) / (cmax - cmin) * 5
 
         features.append(feature)
+
+    for idx in range(cat_feat):
+        col = data[:, num_feat + idx]
+        col = col.astype(np.int32)
+        features.append(col)
 
     features = np.column_stack(features)
     return features, data[:, -1], cmax, cmin

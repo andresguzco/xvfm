@@ -10,7 +10,7 @@ class Interpolator:
         return torch.rand((num_samples, 1))
 
 class OTInterpolator(Interpolator):
-    def __init__(self, sigma_min):
+    def __init__(self, sigma_min=0.1):
         super().__init__()
         self.sigma_min = sigma_min
 
@@ -20,4 +20,4 @@ class OTInterpolator(Interpolator):
         return x_t
 
     def compute_v_t(self, mu, x, t):
-        return (mu - (1 - self.sigma_min) * x) / (1 - (1 - self.sigma_min) * t)
+        return (mu - (1 - self.sigma_min) * x) # / (1 - (1 - self.sigma_min) * t)

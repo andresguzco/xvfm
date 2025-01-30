@@ -38,7 +38,7 @@ class FlowModel(torch.nn.Module, ABC):
                     x_1[:, self.prior.num_feat + i].to(torch.int64), num_classes=val
                     )
 
-        x[:, -1] = x_1[:, -1] 
+        x[:, -1] = y.view(-1, 1) 
         x_t = self.interpolator.sample_x_t(x_0, x, t).to(x_1.device)
         return t, x_t
 
@@ -65,7 +65,7 @@ class FlowModel(torch.nn.Module, ABC):
 
 class VFM(FlowModel):
     def __init__(self, prior: Prior, variational_dist: VariationalDist, interpolator: Interpolator):
-        super().__init__(prior, variational_dist, interpolator)
+        super(VFM, self).__init__(prior, variational_dist, interpolator)
 
     def velocity_field(self, x_t, t, y=None):
         posterior = self.variational_dist(x_t, t, y)
@@ -80,7 +80,15 @@ class VFM(FlowModel):
                 mu[:, idx:idx+val] = cat_list[i].probs
                 idx += val   
 
-        placeholder = target.mean if self.task == 'regression' else target.probs
         mu[:, -1] = target.mean if self.task == 'regression' else target.probs
 
+        return self.interpolator.compute_v_t(mu, x_t, t)
+    
+
+class AlternativeFlow(FlowModel):
+    def __init__(self, prior: Prior, variational_dist: VariationalDist, interpolator: Interpolator):
+        super(AlternativeFlow, self).__init__(prior, variational_dist, interpolator)
+
+    def velocity_field(self, x_t, t, y=None):
+        mu = self.variational_dist(x_t, t, y)
         return self.interpolator.compute_v_t(mu, x_t, t)

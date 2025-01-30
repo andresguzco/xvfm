@@ -12,7 +12,7 @@ metric:
     goal: minimize
     name: loss
 parameters:
-    log_interval:
+    logging:
         value: 50
     dataset:
         value: "beijing"
@@ -20,19 +20,13 @@ parameters:
         value: "../../data/beijing"
     task_type:
         value: "regression"
-    num_epochs:
-        value: 4000
+    epochs:
+        value: 8000
     batch_size:
-        value: 4096
+        value: 1024
     lr:
-        value: 0.01
-    seed:
-        value: 42
-    d_layers:
-        values: [512, 1024]
-    n_layers:
-        values: [4, 5]
-    dropout:
-        values: [0.1, 0.3, 0.5]
-    dim_t:
-        values: [64, 128, 256]
+        distribution: log_uniform_values
+        min: 1e-5
+        max: 1e-2
+    loss:
+        values: ['llk', 'classic']

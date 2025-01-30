@@ -48,9 +48,10 @@ class GaussianMultinomialDist(VariationalDist):
         
         if sum(self.cat_feat) != 0:
             cat_dists, cum_sum = [], self.num_feat
-            for i in range(len(self.cat_feat)):
-                cat_dists.append(torch.distributions.Categorical(res[:, cum_sum:cum_sum + self.cat_feat[i]]))
-                cum_sum += self.cat_feat[i]
+            for val in self.cat_feat:
+                slice = res[:, cum_sum:cum_sum + val]
+                cat_dists.append(torch.distributions.Categorical(slice))
+                cum_sum += val
         else:
             cat_dists = False
         
@@ -65,4 +66,16 @@ class GaussianMultinomialDist(VariationalDist):
         return list(self.model.parameters())
 
 
-    
+class Alternative(VariationalDist):
+    def __init__(self, model, num_feat, cat_feat, task):
+        super(Alternative, self).__init__()
+        self.model = model 
+        self.num_feat = num_feat
+        self.cat_feat = cat_feat
+        self.task = task
+
+    def forward(self, x_t, t, y=None):
+        return self.model(x_t, t, y)
+
+    def get_parameters(self):
+        return list(self.model.parameters())

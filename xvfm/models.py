@@ -1,7 +1,7 @@
 import torch.nn as nn
-from torch.nn.functional import log_softmax, silu
+from torch.nn.functional import log_softmax
 
-from torch import Tensor, exp, zeros
+from torch import Tensor, exp, zeros, zeros_like
 from typing import List, Union, Type
 
 
@@ -91,10 +91,11 @@ class MLP(nn.Module):
         res = zeros(x.shape, device=x.device)
         cum_sum = self.num_feat
         res[:, :cum_sum] = x[:, :cum_sum]
-
-        for val in self.classes:
-            res[:, cum_sum:cum_sum + val] = exp(log_softmax(x[:, cum_sum:cum_sum + val], dim=1))
-            cum_sum += val
+        
+        if sum(self.classes) > 0:
+            for val in self.classes:
+                res[:, cum_sum:cum_sum + val] = exp(log_softmax(x[:, cum_sum:cum_sum + val], dim=1))
+                cum_sum += val
 
         if self.task == 'regression':
             res[:, -1] = x[:, -1]
@@ -105,105 +106,94 @@ class MLP(nn.Module):
 
 
 class MultiMLP(nn.Module):
-    def __init__(self, d_in, classes, d_layers, n_layers, dropout, dim_t, num_feat, task):
+    def __init__(self, d_in, classes, num_feat, task):
         super().__init__()
-        # self.mlp = MLP.make_baseline(
-        #     d_in=dim_t, 
-        #     d_layers=d_layers, 
-        #     dropout=dropout, 
-        #     d_out=d_in + 1, 
-        #     num_feat=num_feat,
-        #     classes=classes,
-        #     task=task
-        # )
+        self.num_feat = num_feat
+        self.classes = classes
+        d_layers = [512, 512, 512, 512]
+        dim_t = 128
+        
+        self.mlp = MLP.make_baseline(
+            d_in=dim_t, 
+            d_layers=d_layers, 
+            dropout=0.1, 
+            d_out=d_in, 
+            num_feat=num_feat,
+            classes=classes,
+            task=task
+        )
 
-        self.label_emb = nn.Linear(1, dim_t)
-        self.proj = nn.Linear(d_in + 1, dim_t)
+        self.proj = nn.Linear(d_in, dim_t)
         self.time_embed = nn.Sequential(
             nn.Linear(1, dim_t),
             nn.SiLU(),
             nn.Linear(dim_t, dim_t)
         )
 
-    def forward(self, x, t, y=None):
+    def parameters(self):        
+        return list(self.mlp.parameters()) + list(self.proj.parameters()) + list(self.time_embed.parameters())
+
+    def forward(self, x, t):
         emb = self.time_embed(t)
-
-        if y is not None:
-            y_emb = self.label_emb(y.float())
-            emb += silu(y_emb)
-
         x_emb = self.proj(x) + emb
-        return self.mlp(x_emb, x)
+        return self.mlp(x_emb)
 
 
 class Tabformer(nn.Module):
-    def __init__(self, d_in, classes, d_layers, n_layers, dropout, dim_t, num_feat, task):
+    def __init__(self, d_in, classes, num_feat, task, d_layer=4, n_layer=4, dropout=0.1, dim_t=128):
         super().__init__()
-        """
-        d_in: number of input columns (features).
-        classes, num_feat, task: not used here, but left in for consistency.
-        d_layers: dimension for the Transformer feedforward layers.
-        n_layers: number of Transformer encoder layers.
-        dropout: dropout rate for Transformer.
-        dim_t: embedding dimension (d_model) for Transformer.
-        """
+        self.num_feat = num_feat
+        self.classes = classes
+        self.task = task
 
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=dim_t,
-            nhead=4,
-            dim_feedforward=d_layers,
+            nhead=d_layer,
             dropout=dropout,
-            batch_first=False
+            batch_first=True 
         )
-        self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=n_layers)
-
-        self.out_proj = nn.Linear(dim_t, 1)
+        self.encoder = nn.TransformerEncoder(
+            encoder_layer, 
+            num_layers=n_layer
+        )
+        self.input_proj = nn.Linear(d_in, dim_t)
         self.time_embed = nn.Sequential(
             nn.Linear(1, dim_t),
             nn.SiLU(),
-            nn.Linear(dim_t, dim_t),
+            nn.Linear(dim_t, dim_t)
         )
-        self.label_emb = nn.Linear(1, dim_t)  
-        self.column_proj = nn.Linear(1, dim_t)
+        self.out_proj = nn.Linear(dim_t, d_in)
 
-    def forward(self, x, t, y=None):
-        """
-        x: [batch_size, d_in]   (each row has d_in columns)
-        t: [batch_size, 1]      (time or some scalar you want to embed)
-        y: [batch_size, 1] or None (optional label/condition)
-        Returns: [batch_size, d_in] (one scalar prediction per column)
-        """
+    def parameters(self):
 
-        # 1) Expand x so each column is a "token"
-        #    x.shape => [batch_size, d_in, 1]
-        x = x.unsqueeze(-1)
+        return list(self.encoder.parameters()) + list(self.input_proj.parameters()) + list(self.time_embed.parameters()) + list(self.out_proj.parameters())
 
-        # 2) Project each scalar column into a dim_t embedding => [batch_size, d_in, dim_t]
-        x_emb = self.column_proj(x)
+    def forward(self, x, t):
+        x = x.float()
 
-        # 3) Add time embedding (broadcast to all columns/tokens)
-        t_emb = self.time_embed(t)                             # [batch_size, dim_t]
-        t_emb = t_emb.unsqueeze(1).expand(-1, x.shape[1], -1)  # => [batch_size, d_in, dim_t]
-        x_emb = x_emb + t_emb
+        emb = self.input_proj(x).unsqueeze(1)
+        t_emb = self.time_embed(t.float())
+        emb += t_emb.unsqueeze(1)
 
-        # 4) If label y is provided, embed it and add to all tokens
-        if y is not None:
-            y_emb = self.label_emb(y.float())                       # [batch_size, dim_t]
-            y_emb = y_emb.unsqueeze(1).expand(-1, x.shape[1], -1)   # => [batch_size, d_in, dim_t]
-            x_emb = x_emb + y_emb
+        hidden = self.encoder(emb)
+        hidden = hidden.squeeze(1)
 
-        # 5) Transformer expects shape [seq_len, batch_size, d_model] (if batch_first=False)
-        #    So transpose: [batch_size, d_in, dim_t] => [d_in, batch_size, dim_t]
-        x_emb = x_emb.transpose(0, 1)
+        logits = self.out_proj(hidden)
+        res = zeros_like(logits)
+        
+        cum_sum = self.num_feat
+        res[:, :cum_sum] = logits[:, :cum_sum]
+        
+        if sum(self.classes) != 0:
+            for val in self.classes:
+                slice_logits = logits[:, cum_sum : cum_sum + val]
+                cat_probs = exp(log_softmax(slice_logits, dim=1))
+                res[:, cum_sum : cum_sum + val] = cat_probs 
+                cum_sum += val
 
-        # 6) Encode the sequence of columns
-        hidden = self.encoder(x_emb)  # => [d_in, batch_size, dim_t]
+        if self.task == 'regression':
+            res[:, -1] = logits[:, -1]
+        else:
+            res[:, -1] = exp(log_softmax(logits[:, -1], dim=0))
 
-        # 7) Map each token’s final embedding to a single scalar
-        out = self.out_proj(hidden)   # => [d_in, batch_size, 1]
-
-        # 8) Transpose back to [batch_size, d_in]
-        out = out.transpose(0, 1)     # => [batch_size, d_in, 1]
-        out = out.squeeze(-1)         # => [batch_size, d_in]
-
-        return out
+        return res
