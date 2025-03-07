@@ -2,81 +2,10 @@ import time
 import torch
 import wandb
 import argparse
-from xvfm import Tabformer, evaluate, clean_workspace
+from tqdm import tqdm
+from xvfm import Tabby, evaluate, clean_workspace, GuassianMultinomial
 from data import prepare_fast_dataloader, make_dataset, prepare_test_data
 from torch.nn.functional import one_hot
-
-
-class CustomLoss(torch.nn.Module):
-    def __init__(self, num_feat, classes, task_type):
-        super(CustomLoss, self).__init__()
-        self.num_feat = num_feat
-        self.classes = classes
-        self.task_type = task_type
-        self.mse = torch.nn.MSELoss(reduction='sum')
-        self.ce = torch.nn.CrossEntropyLoss()
-
-    def forward(self, res, x1, _):
-        a = 0
-        for i in range(self.num_feat):
-            a += self.mse(res[:, i], x1[:, i])
-
-        b = 0
-        idx = self.num_feat
-        for val in self.classes:
-            b += self.ce(res[:, idx:idx+val].float(), x1[:, idx:idx+val].float())
-            idx += val
-
-        if self.task_type == 'regression':
-            c = self.mse(res[:, -1], x1[:, -1])
-        else:
-            c = self.ce(res[:, -1].float(), x1[:, -1].float())
-
-        return a, b, c
-
-
-class GuassianMultinomial(torch.nn.Module):
-    def __init__(self, num_feat, classes, task_type):
-        super(GuassianMultinomial, self).__init__()
-        self.num_feat = num_feat
-        self.classes = classes
-        self.task_type = task_type
-
-    def forward(self, res, x, t):
-        llk = lambda dist, x: -1. * dist.log_prob(x).mean()
-
-        # sigma2 = (torch.ones_like(t) - t).pow(2).view(-1, 1)
-
-        mu = res[:, :self.num_feat]
-        identity = torch.eye(mu.size(1)).to(mu.device).unsqueeze(0).expand(mu.size(0), -1, -1)
-        scale = (1 - (1 - 0.01)* t.unsqueeze(1)**2) 
-        sigma = scale * identity
-        
-        normal = torch.distributions.MultivariateNormal(mu, sigma)
-        a = llk(normal, x[:, :self.num_feat])
-
-        # a = 0
-        # for i in range(self.num_feat):
-        #     gauss = torch.distributions.Normal(res[:, i], 0.01)
-        #     a += llk(gauss, x[:, i])
-
-        b = 0
-        if sum(self.classes) > 0:
-            idx = self.num_feat
-            for i, val in enumerate(self.classes):
-                logits_pred = res[:, idx:idx+val]
-                cat = torch.distributions.Categorical(logits_pred)
-                b += llk(cat, x[:, self.num_feat + i].to(torch.int64))
-                idx += val
-
-        if self.task_type == 'regression':
-            target = torch.distributions.Normal(res[:, -1], 0.01)
-        else:
-            target = torch.distributions.Bernoulli(res[:, -1].view(-1, 1))
-
-        c = llk(target, x[:, -1].view(-1, 1))
-
-        return a, b, c
 
 
 def get_args():
@@ -84,8 +13,8 @@ def get_args():
     parser.add_argument('--dataset', default=None, type=str, help="Dataset to train the model on")
     parser.add_argument('--data_path', default=None, type=str, help="Path to tabular dataset")
     parser.add_argument('--task_type', default=None, type=str, help="Downstream task to evaluate")
-    parser.add_argument('--epochs', default=1000, type=int, help="Number of training epochs")
-    parser.add_argument('--batch_size', default=256, type=int, help="Training batch size")
+    parser.add_argument('--epochs', default=8000, type=int, help="Number of training epochs")
+    parser.add_argument('--batch_size', default=4096, type=int, help="Training batch size")
     parser.add_argument('--lr', default=1e-3, type=float, help="Learning rate for optimizer")
     parser.add_argument('--logging', default=100, type=int, help="Logging interval for training")
     parser.add_argument('--loss', default='llk', type=str, help="Loss function to use for training")
@@ -103,67 +32,76 @@ def main(args):
     
     args.num_feat = dataloader.num_feat
     args.classes = dataloader.classes
-    args.d_in = sum(args.classes) + args.num_feat + 1
+    args.d_in = sum(args.classes) + args.num_feat
 
-    model = Tabformer(args.d_in, args.classes, args.num_feat, args.task_type).to(device)
+    if args.task_type == 'regression':
+        args.d_in += 1
+    else:
+        args.d_in += 2
+
+    model = Tabby(
+        d_in=args.d_in, 
+        num_feat=args.num_feat, 
+        classes=args.classes, 
+        task=args.task_type
+        ).to(device)
     params = model.parameters()
     optimizer = torch.optim.Adam(params, lr=args.lr)
+    criterion = GuassianMultinomial(
+        num_feat=args.num_feat, classes=args.classes, task=args.task_type
+        )
     
-    print(f"Number of parameters: {sum([p.numel() for p in params])}")
-    print(f"Training parameters: {vars(args)}")
-    
-    if args.loss == 'llk':
-        criterion = GuassianMultinomial(args.num_feat, args.classes, args.task_type)
-    else:
-        criterion = CustomLoss(args.num_feat, args.classes, args.task_type)
-
-    k = args.num_feat + sum(args.classes) + 1
+    print(f'Number of parameters: {sum([p.numel() for p in params])}')
+    print(f'Training parameters: {vars(args)}')
 
     test_data = prepare_test_data(dataset)[:args.num_eval, :]
-    
-    for epoch in range(args.epochs):
+
+    for epoch in tqdm(range(args.epochs)):
         start_time = time.time()
-        epoch_loss = []
+        epoch_loss = 0.0
+        num_batches = 0
         
         for x_1, y in dataloader:
-
             optimizer.zero_grad()
-
             x_1, y = x_1.to(device), y.view(-1, 1).to(device)
 
-            x0 = torch.randn((x_1.shape[0], k), device=device)
-            t = torch.rand(x_1.shape[0], device=device).view(-1, 1)
-            x_oh = torch.zeros((x_1.shape[0], k), device=device)
-            x_oh[:, :args.num_feat] = x_1[:, :args.num_feat]
+            x = torch.zeros((x_1.shape[0], args.d_in), device=device)
+            x[:, :args.num_feat] = x_1[:, :args.num_feat]
             
             if sum(args.classes) != 0:
                 idx = num = args.num_feat
                 for i, val in enumerate(args.classes):
-                    x_oh[:, idx:idx+val] = one_hot(x_1[:, num+i].to(torch.int64), num_classes=val)
+                    x[:, idx:idx+val] = one_hot(x_1[:, num+i].to(torch.int64), num_classes=val)
                     idx += val
 
-            x_oh[:, -1] = y.squeeze()
-            xt = x_oh * t + (1 - t) * x0 + torch.randn_like(x0) * 0.01
+            x0 = torch.randn((x_1.shape[0], args.d_in), device=device)
+            t = torch.rand(x_1.shape[0], device=device).view(-1, 1)
+            
+            if args.task_type == 'regression':
+                x[:, -1] = y.squeeze()
+            else:
+                x[:, -2:] = one_hot(y, num_classes=2).squeeze()
+
+            xt = x * t + (1 - t) * x0 + torch.randn_like(x0) * 0.01
+
             res = model(xt, t)
-
-            x_in = torch.cat([x_1, y], dim=1) if args.loss == 'llk' else torch.cat([x_oh, y], dim=1)
                 
-            loss_gauss, loss_cat, loss_target = criterion(res, x_in, t)
-            loss = loss_gauss + loss_cat + loss_target
-
+            loss = criterion(res, torch.cat([x_1, y], dim=1), t)
             loss.backward()
             optimizer.step()
-            epoch_loss.append(loss)
 
-        avg_loss = sum(epoch_loss) / len(epoch_loss)
-        print(f"Epoch [{epoch+1}/{args.epochs}]: Loss: [{avg_loss:.4f}]", flush=True)
+            epoch_loss  += loss
+            num_batches += 1
+
+        avg_loss = epoch_loss / num_batches
+        # print(f'Epoch [{epoch+1}/{args.epochs}]: Loss: [{avg_loss:.4f}]', flush=True)
 
         if args.logging > 0 and ((epoch + 1) % args.logging == 0 or epoch == 0):
             scores = evaluate(args, model, test_data, device, epoch + 1)
         else:
             scores = {}
         
-        log.log(scores | {'loss': avg_loss} )
+        log.log(scores | {'loss': avg_loss})
         clean_workspace(start_time)
 
     log.finish()

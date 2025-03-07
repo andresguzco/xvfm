@@ -57,19 +57,6 @@ _MODELS = {
 }
 
 
-def get_results(data):
-    max_metrics = {}
-    for _, value in data.items():
-        model_data = next(iter(value.values()), {})
-
-        for metric, metric_value in model_data.items():
-            if metric not in max_metrics:
-                max_metrics[metric] = metric_value
-            else:
-                max_metrics[metric] = max(max_metrics[metric], metric_value)
-    return max_metrics
-
-
 def feat_transform(data, info, cmax = None, cmin = None):
     num_feat = len(info['num_col_idx'])
     cat_feat = len(info['cat_col_idx'])
@@ -153,11 +140,10 @@ def _evaluate_binary_classification(train, test, info):
                 pred = model.predict(x_valid)
                 pred_prob = model.predict_proba(x_valid)
 
-            binary_f1 = f1_score(y_valid, pred, average='binary')
+            f1 = f1_score(y_valid, pred, average='weighted')
             acc = accuracy_score(y_valid, pred)
-            precision = precision_score(y_valid, pred, average='binary')
-            recall = recall_score(y_valid, pred, average='binary')
-            macro_f1 = f1_score(y_valid, pred, average='macro')
+            precision = precision_score(y_valid, pred, average='weighted')
+            recall = recall_score(y_valid, pred, average='weighted')
 
             # auroc
             size = 2
@@ -180,21 +166,20 @@ def _evaluate_binary_classification(train, test, info):
                 {   
                     "name": model_repr,
                     "param": param,
-                    "binary_f1": binary_f1,
+                    "f1": f1,
                     "roc_auc": roc_auc, 
                     "accuracy": acc, 
                     "precision": precision, 
-                    "recall": recall, 
-                    "macro_f1": macro_f1
+                    "recall": recall
                 }
             )
 
 
         # test the best model
         results = pd.DataFrame(results)
-        results['avg'] = results.loc[:, ['binary_f1', 'roc_auc']].mean(axis=1)  
+        results['avg'] = results.loc[:, ['f1', 'roc_auc']].mean(axis=1)  
         try:      
-            best_f1_param = results.param[results.binary_f1.idxmax()]
+            best_f1_param = results.param[results.f1.idxmax()]
         except: 
             best_f1_param = {
                  'n_estimators': 50,
@@ -265,11 +250,10 @@ def _evaluate_binary_classification(train, test, info):
                 pred = best_model.predict(x_test)
                 pred_prob = best_model.predict_proba(x_test)
 
-            binary_f1 = f1_score(y_test, pred, average='binary')
+            f1 = f1_score(y_test, pred, average='weighted')
             acc = accuracy_score(y_test, pred)
-            precision = precision_score(y_test, pred, average='binary')
-            recall = recall_score(y_test, pred, average='binary')
-            macro_f1 = f1_score(y_test, pred, average='macro')
+            precision = precision_score(y_test, pred, average='weighted')
+            recall = recall_score(y_test, pred, average='weighted')
 
             # auroc
             size = 2
@@ -295,12 +279,11 @@ def _evaluate_binary_classification(train, test, info):
                 {   
                     "name": model_repr,
                     # "param": param,
-                    "binary_f1": binary_f1,
+                    "f1": f1,
                     "roc_auc": roc_auc, 
                     "accuracy": acc, 
                     "precision": precision, 
                     "recall": recall, 
-                    "macro_f1": macro_f1
                 }
             )
 
@@ -308,7 +291,7 @@ def _evaluate_binary_classification(train, test, info):
         def _df(dataframe):
             return {
                 "name": model_repr,
-                "binary_f1": dataframe.binary_f1.values[0],
+                "f1": dataframe.f1.values[0],
                 "roc_auc": dataframe.roc_auc.values[0],
                 "accuracy": dataframe.accuracy.values[0],
             }

@@ -1,12 +1,9 @@
 import os
 import json
 import torch
-import argparse
 import pandas as pd
-import numpy as np
 
-from xvfm.mle import get_evaluator, get_results
-from data.utils import Transformations, make_dataset, prepare_fast_dataloader
+from xvfm.mle import get_evaluator
 from torch.nn.functional import one_hot
 from sdmetrics.reports.single_table import QualityReport
 from sdmetrics.single_table import LogisticDetection
@@ -30,59 +27,76 @@ def get_mle(train, test, data_path):
     evaluator = get_evaluator(task_type)
 
     if task_type == 'regression':
-        best_r2_scores, best_rmse_scores = evaluator(train, test, info)
+        r2, rmse = evaluator(train, test, info)
         overall_scores = {}
-        for score_name in ['best_r2_scores', 'best_rmse_scores']:
+        for score_name in ['r2', 'rmse']:
             overall_scores[score_name] = {}
             scores = eval(score_name)
             for method in scores:
                 name = method['name']  
                 method.pop('name')
                 overall_scores[score_name][name] = method 
-
     else:
-        best_f1_scores, best_auroc_scores, best_acc_scores, best_avg_scores = evaluator(train, test, info)
+        f1, auroc, acc, avg = evaluator(train, test, info)
         overall_scores = {}
-        for score_name in ['best_f1_scores', 'best_auroc_scores', 'best_acc_scores', 'best_avg_scores']:
+        for score_name in ['f1', 'auroc', 'acc', 'avg']:
             overall_scores[score_name] = {}
-            
             scores = eval(score_name)
             for method in scores:
                 name = method['name']  
                 method.pop('name')
-                overall_scores[score_name][name] = method 
-
+                overall_scores[score_name][name] = method
     return overall_scores
+
+
+def get_results(data):
+    max_metrics = {}
+    for _, value in data.items():
+        model_data = next(iter(value.values()), {})
+
+        for metric, metric_value in model_data.items():
+            if metric not in max_metrics:
+                max_metrics[metric] = metric_value
+            else:
+                max_metrics[metric] = max(max_metrics[metric], metric_value)
+
+    return max_metrics
 
 
 def get_performance(syn_data, test_data, args, mle=False):
     num = cum_sum = args.num_feat
     k = sum(args.classes)
 
-    syn_oh = torch.zeros(syn_data.shape[0], num + k)
-    test_oh = torch.zeros(syn_data.shape[0], num + k)
+    syn_oh = torch.zeros(syn_data.shape[0], num + k + 1)
+    test_oh = torch.zeros(syn_data.shape[0], num + k + 1)
 
     syn_oh[:, :num] = syn_data[:, :num]
     test_oh[:, :num] = test_data[:, :num]
 
     if sum(args.classes):
         for i, val in enumerate(args.classes):
-            syn_oh[:, cum_sum:cum_sum + val] = one_hot(syn_data[:, num+i].to(torch.int64), num_classes=val)
-            test_oh[:, cum_sum:cum_sum + val] = one_hot(test_data[:, num+i].to(torch.int64), num_classes=val)
+            syn_oh[:, cum_sum:cum_sum + val] = one_hot(
+                syn_data[:, num+i].to(torch.int64), 
+                num_classes=val
+                )
+            test_oh[:, cum_sum:cum_sum + val] = one_hot(
+                test_data[:, num+i].to(torch.int64), 
+                num_classes=val
+                )
             cum_sum += val 
 
     syn_oh[:, -1] = syn_data[:, -1]
     test_oh[:, -1] = test_data[:, -1]
 
-    test_np = test_data.cpu().numpy()
     syn_np = syn_data.cpu().numpy()
+    test_np = test_data.cpu().numpy()
 
-    test = pd.DataFrame(test_np)
     syn = pd.DataFrame(syn_np)
+    test = pd.DataFrame(test_np)
 
-    max_shape, max_trend, avg_shape, avg_trend, shape, trend, quality = get_shape_trend_score(test, syn)
+    shape, trend, quality = get_shape_trend_score(test, syn)
     detection = get_detection(test, syn)
-    alpha, beta, qual_score = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
+    alpha, beta = get_quality(test_oh.cpu().numpy(), syn_oh.cpu().numpy())
     
     if mle:
         mle_scores = get_results(get_mle(syn_np, test_np, args.data_path))
@@ -91,16 +105,11 @@ def get_performance(syn_data, test_data, args, mle=False):
 
     scores = {
         "shape": shape,
-        "max_shape": max_shape,
-        "avg_shape": avg_shape,
         "trend": trend,
-        "max_trend": max_trend,
-        "avg_trend": avg_trend,
         "detection": detection,
         "quality": quality,
         "alpha": alpha,
-        "beta": beta,
-        "qual_score": qual_score
+        "beta": beta
     } | mle_scores
 
     return scores
@@ -119,13 +128,10 @@ def get_shape_trend_score(real, synthetic):
     Trend = quality['Score'][1]
     Quality = (Shape + Trend) / 2
 
-    shapes = qual_report.get_details(property_name='Column Shapes')
-    max_shape = np.max(shapes['Score'].values)
-    avg_shape = np.mean(shapes['Score'].values)
-    trends = qual_report.get_details(property_name='Column Pair Trends')
-    max_trend = np.max(trends['Score'].values)
-    avg_trend = np.mean(trends['Score'].values)
-    return max_shape, max_trend, avg_shape, avg_trend, Shape, Trend, Quality
+    # shapes = qual_report.get_details(property_name='Column Shapes')
+    # trends = qual_report.get_details(property_name='Column Pair Trends')
+
+    return Shape, Trend, Quality
 
 
 def get_detection(real, synthetic):
@@ -152,20 +158,6 @@ def get_detection(real, synthetic):
     return score
 
 
-def get_args():
-    """Parse and return command-line arguments."""
-    parser = argparse.ArgumentParser(description='TabVFM: Experiment')
-    parser.add_argument('--batch_size', default=4096, type=int, help="Training batch size")
-    parser.add_argument('--dataset', default='adult', type=str, help="Dataset to train the model on")
-    parser.add_argument('--seed', default=42, type=int, help="Random seed for reproducibility")
-    parser.add_argument('--results_dir', default='results', type=str, help="Directory to save results")
-    parser.add_argument('--data_path', default=None, type=str, help="Path to tabular dataset")
-    parser.add_argument('--num_classes', default=None, type=int, help="List of classes for tabular dataset")
-    parser.add_argument('--transformation', default=None, type=str, help="Transformation to apply to tabular dataset")
-    parser.add_argument('--is_y_cond', default=0, type=int, help="Flag to condition on y in tabular dataset")
-    return parser.parse_args()
-
-
 def get_quality(real_x, syn_x):
     sloader = GenericDataLoader(syn_x)
     rloader = GenericDataLoader(real_x)
@@ -173,8 +165,7 @@ def get_quality(real_x, syn_x):
     quality_evaluator = eval_statistical.AlphaPrecision()
     qual_res = quality_evaluator.evaluate(rloader, sloader)
     qual_res = {k: v for (k, v) in qual_res.items() if "naive" in k}
-    qual_score = np.mean(list(qual_res.values()))
 
     Alpha = qual_res['delta_precision_alpha_naive']
     Beta = qual_res['delta_coverage_beta_naive']
-    return Alpha, Beta, qual_score
+    return Alpha, Beta
