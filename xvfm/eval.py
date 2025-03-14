@@ -128,9 +128,6 @@ def get_shape_trend_score(real, synthetic):
     Trend = quality['Score'][1]
     Quality = (Shape + Trend) / 2
 
-    # shapes = qual_report.get_details(property_name='Column Shapes')
-    # trends = qual_report.get_details(property_name='Column Pair Trends')
-
     return Shape, Trend, Quality
 
 

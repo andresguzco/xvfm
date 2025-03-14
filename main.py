@@ -94,7 +94,7 @@ def main(args):
             num_batches += 1
 
         avg_loss = epoch_loss / num_batches
-        # print(f'Epoch [{epoch+1}/{args.epochs}]: Loss: [{avg_loss:.4f}]', flush=True)
+        print(f'Epoch [{epoch+1}/{args.epochs}]: Loss: [{avg_loss:.4f}]', flush=True)
 
         if args.logging > 0 and ((epoch + 1) % args.logging == 0 or epoch == 0):
             scores = evaluate(args, model, test_data, device, epoch + 1)
