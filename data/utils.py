@@ -3,7 +3,7 @@ import enum
 import json
 import torch
 import numpy as np
-import pandas as pd 
+import pandas as pd
 import pickle
 import sklearn
 import scipy.special
@@ -11,7 +11,7 @@ import sklearn.metrics as skm
 
 from typing import Any, Literal, Optional, Union, cast, Tuple, Dict, List
 from pathlib import Path
-from collections import Counter 
+from collections import Counter
 from dataclasses import dataclass, replace
 from sklearn.pipeline import make_pipeline
 from category_encoders import LeaveOneOutEncoder
@@ -21,16 +21,16 @@ ArrayDict = Dict[str, np.ndarray]
 TensorDict = Dict[str, torch.Tensor]
 
 
-CAT_RARE_VALUE = '__rare__'
-Normalization = Literal['standard', 'quantile', 'minmax']
-CatEncoding = Literal['one-hot', 'counter']
-YPolicy = Literal['default']
+CAT_RARE_VALUE = "__rare__"
+Normalization = Literal["standard", "quantile", "minmax"]
+CatEncoding = Literal["one-hot", "counter"]
+YPolicy = Literal["default"]
 
 
 class TaskType(enum.Enum):
-    BINCLASS = 'binclass'
-    MULTICLASS = 'multiclass'
-    REGRESSION = 'regression'
+    BINCLASS = "binclass"
+    MULTICLASS = "multiclass"
+    REGRESSION = "regression"
 
     def __str__(self) -> str:
         return self.value
@@ -40,14 +40,14 @@ def load_json(path: Union[Path, str], **kwargs) -> Any:
     return json.loads(Path(path).read_text(), **kwargs)
 
 
-def read_pure_data(path, split='train'):
-    y = np.load(os.path.join(path, f'y_{split}.npy'), allow_pickle=True)
+def read_pure_data(path, split="train"):
+    y = np.load(os.path.join(path, f"y_{split}.npy"), allow_pickle=True)
     X_num = None
     X_cat = None
-    if os.path.exists(os.path.join(path, f'X_num_{split}.npy')):
-        X_num = np.load(os.path.join(path, f'X_num_{split}.npy'), allow_pickle=True)
-    if os.path.exists(os.path.join(path, f'X_cat_{split}.npy')):
-        X_cat = np.load(os.path.join(path, f'X_cat_{split}.npy'), allow_pickle=True)
+    if os.path.exists(os.path.join(path, f"X_num_{split}.npy")):
+        X_num = np.load(os.path.join(path, f"X_num_{split}.npy"), allow_pickle=True)
+    if os.path.exists(os.path.join(path, f"X_cat_{split}.npy")):
+        X_cat = np.load(os.path.join(path, f"X_cat_{split}.npy"), allow_pickle=True)
 
     return X_num, X_cat, y
 
@@ -62,27 +62,29 @@ class Dataset:
     n_classes: Optional[int]
 
     @classmethod
-    def from_dir(cls, dir_: Union[Path, str]) -> 'Dataset':
+    def from_dir(cls, dir_: Union[Path, str]) -> "Dataset":
         dir_ = Path(dir_)
-        splits = [k for k in ['train', 'val', 'test'] if dir_.joinpath(f'y_{k}.npy').exists()]
+        splits = [
+            k for k in ["train", "val", "test"] if dir_.joinpath(f"y_{k}.npy").exists()
+        ]
 
         def load(item) -> ArrayDict:
             return {
-                x: cast(np.ndarray, np.load(dir_ / f'{item}_{x}.npy', allow_pickle=True))  # type: ignore[code]
+                x: cast(np.ndarray, np.load(dir_ / f"{item}_{x}.npy", allow_pickle=True))  # type: ignore[code]
                 for x in splits
             }
 
-        if Path(dir_ / 'info.json').exists():
-            info = load_json(dir_ / 'info.json')
+        if Path(dir_ / "info.json").exists():
+            info = load_json(dir_ / "info.json")
         else:
             info = None
         return Dataset(
-            load('X_num') if dir_.joinpath('X_num_train.npy').exists() else None,
-            load('X_cat') if dir_.joinpath('X_cat_train.npy').exists() else None,
-            load('y'),
+            load("X_num") if dir_.joinpath("X_num_train.npy").exists() else None,
+            load("X_cat") if dir_.joinpath("X_cat_train.npy").exists() else None,
+            load("y"),
             {},
-            TaskType(info['task_type']),
-            info.get('n_classes'),
+            TaskType(info["task_type"]),
+            info.get("n_classes"),
         )
 
     @property
@@ -99,11 +101,11 @@ class Dataset:
 
     @property
     def n_num_features(self) -> int:
-        return 0 if self.X_num is None else self.X_num['train'].shape[1]
+        return 0 if self.X_num is None else self.X_num["train"].shape[1]
 
     @property
     def n_cat_features(self) -> int:
-        return 0 if self.X_cat is None else self.X_cat['train'].shape[1]
+        return 0 if self.X_cat is None else self.X_cat["train"].shape[1]
 
     @property
     def n_features(self) -> int:
@@ -135,19 +137,20 @@ class Dataset:
             for x in predictions
         }
         if self.task_type == TaskType.REGRESSION:
-            score_key = 'rmse'
+            score_key = "rmse"
             score_sign = -1
         else:
-            score_key = 'accuracy'
+            score_key = "accuracy"
             score_sign = 1
         for part_metrics in metrics.values():
-            part_metrics['score'] = score_sign * part_metrics[score_key]
+            part_metrics["score"] = score_sign * part_metrics[score_key]
         return metrics
 
 
 class PredictionType(enum.Enum):
-    LOGITS = 'logits'
-    PROBS = 'probs'
+    LOGITS = "logits"
+    PROBS = "probs"
+
 
 class MetricsReport:
     def __init__(self, report: dict, task_type: TaskType):
@@ -179,18 +182,26 @@ class MetricsReport:
         return self._res[split][metric]
 
     def get_val_score(self) -> float:
-        return self._res["val"]["r2"] if "r2" in self._res["val"] else self._res["val"]["f1"]
-    
+        return (
+            self._res["val"]["r2"]
+            if "r2" in self._res["val"]
+            else self._res["val"]["f1"]
+        )
+
     def get_test_score(self) -> float:
-        return self._res["test"]["r2"] if "r2" in self._res["test"] else self._res["test"]["f1"]
-    
+        return (
+            self._res["test"]["r2"]
+            if "r2" in self._res["test"]
+            else self._res["test"]["f1"]
+        )
+
     def print_metrics(self) -> None:
         res = {
             "val": {k: np.around(self._res["val"][k], 4) for k in self._res["val"]},
-            "test": {k: np.around(self._res["test"][k], 4) for k in self._res["test"]}
+            "test": {k: np.around(self._res["test"][k], 4) for k in self._res["test"]},
         }
-    
-        print("*"*100)
+
+        print("*" * 100)
         print("[val]")
         print(res["val"])
         print("[test]")
@@ -198,18 +209,21 @@ class MetricsReport:
 
         return res
 
+
 class SeedsMetricsReport:
     def __init__(self):
         self._reports = []
 
     def add_report(self, report: MetricsReport) -> None:
         self._reports.append(report)
-    
+
     def get_mean_std(self) -> dict:
         res = {k: {} for k in ["train", "val", "test"]}
         for split in self._reports[0].get_splits_names():
             for metric in self._reports[0].get_metrics_names():
-                res[split][metric] = [x.get_metric(split, metric) for x in self._reports]
+                res[split][metric] = [
+                    x.get_metric(split, metric) for x in self._reports
+                ]
 
         agg_res = {k: {} for k in ["train", "val", "test"]}
         for split in self._reports[0].get_splits_names():
@@ -222,14 +236,20 @@ class SeedsMetricsReport:
         return agg_res
 
     def print_result(self) -> dict:
-        res = {split: {k: float(np.around(self._agg_res[split][k], 4)) for k in self._agg_res[split]} for split in ["val", "test"]}
-        print("="*100)
+        res = {
+            split: {
+                k: float(np.around(self._agg_res[split][k], 4))
+                for k in self._agg_res[split]
+            }
+            for split in ["val", "test"]
+        }
+        print("=" * 100)
         print("EVAL RESULTS:")
         print("[val]")
         print(res["val"])
         print("[test]")
         print(res["test"])
-        print("="*100)
+        print("=" * 100)
         return res
 
 
@@ -239,7 +259,7 @@ class Transformations:
     normalization: Optional[Normalization] = None
     cat_min_frequency: Optional[float] = None
     cat_encoding: Optional[CatEncoding] = None
-    y_policy: Optional[YPolicy] = 'default'
+    y_policy: Optional[YPolicy] = "default"
 
 
 def get_category_sizes(X: Union[torch.Tensor, np.ndarray]) -> List[int]:
@@ -252,19 +272,21 @@ def concat_y_to_X(X, y):
         return y.reshape(-1, 1)
     return np.concatenate([y.reshape(-1, 1), X], axis=1)
 
-def make_dataset(
-    data_path: str,
-    num_classes: int
-):
-    T = Transformations(normalization='quantile')
-    
+
+def make_dataset(data_path: str, num_classes: int):
+    T = Transformations(normalization="quantile")
+
     # classification
     if num_classes > 0:
-        X_cat = {} if os.path.exists(os.path.join(data_path, 'X_cat_train.npy')) else None
-        X_num = {} if os.path.exists(os.path.join(data_path, 'X_num_train.npy')) else None
-        y = {} 
+        X_cat = (
+            {} if os.path.exists(os.path.join(data_path, "X_cat_train.npy")) else None
+        )
+        X_num = (
+            {} if os.path.exists(os.path.join(data_path, "X_num_train.npy")) else None
+        )
+        y = {}
 
-        for split in ['train', 'test']:
+        for split in ["train", "test"]:
             X_num_t, X_cat_t, y_t = read_pure_data(data_path, split)
             if X_num is not None:
                 X_num[split] = X_num_t
@@ -272,11 +294,15 @@ def make_dataset(
                 X_cat[split] = X_cat_t
             y[split] = y_t
     else:
-        X_cat = {} if os.path.exists(os.path.join(data_path, 'X_cat_train.npy')) else None
-        X_num = {} if os.path.exists(os.path.join(data_path, 'X_num_train.npy')) else None
+        X_cat = (
+            {} if os.path.exists(os.path.join(data_path, "X_cat_train.npy")) else None
+        )
+        X_num = (
+            {} if os.path.exists(os.path.join(data_path, "X_num_train.npy")) else None
+        )
         y = {}
 
-        for split in ['train', 'test']:
+        for split in ["train", "test"]:
             X_num_t, X_cat_t, y_t = read_pure_data(data_path, split)
             if X_num is not None:
                 X_num[split] = X_num_t
@@ -284,22 +310,22 @@ def make_dataset(
                 X_cat[split] = X_cat_t
             y[split] = y_t
 
-    info = load_json(os.path.join(data_path, 'info.json'))
+    info = load_json(os.path.join(data_path, "info.json"))
 
     D = Dataset(
         X_num,
         X_cat,
         y,
         y_info={},
-        task_type=TaskType(info['task_type']),
-        n_classes=info.get('n_classes')
+        task_type=TaskType(info["task_type"]),
+        n_classes=info.get("n_classes"),
     )
-    
+
     return transform_dataset(D, T)
 
 
 def raise_unknown(unknown_what: str, unknown_value: Any):
-    raise ValueError(f'Unknown {unknown_what}: {unknown_value}')
+    raise ValueError(f"Unknown {unknown_what}: {unknown_value}")
 
 
 def load_pickle(path: Union[Path, str], **kwargs) -> Any:
@@ -307,22 +333,25 @@ def load_pickle(path: Union[Path, str], **kwargs) -> Any:
 
 
 def normalize(
-    X, normalization: Normalization, seed: Optional[int], return_normalizer : bool = False
+    X,
+    normalization: Normalization,
+    seed: Optional[int],
+    return_normalizer: bool = False,
 ):
-    X_train = X['train'].astype('int64')
-    if normalization == 'standard':
+    X_train = X["train"].astype("int64")
+    if normalization == "standard":
         normalizer = sklearn.preprocessing.StandardScaler()
-    elif normalization == 'minmax':
+    elif normalization == "minmax":
         normalizer = sklearn.preprocessing.MinMaxScaler()
-    elif normalization == 'quantile':
+    elif normalization == "quantile":
         normalizer = sklearn.preprocessing.QuantileTransformer(
-            output_distribution='normal',
-            n_quantiles=max(min(X['train'].shape[0] // 30, 1000), 10),
+            output_distribution="normal",
+            n_quantiles=max(min(X["train"].shape[0] // 30, 1000), 10),
             subsample=int(1e9),
             random_state=seed,
         )
     else:
-        raise_unknown('normalization', normalization)
+        raise_unknown("normalization", normalization)
     normalizer.fit(X_train)
     if return_normalizer:
         return {k: normalizer.transform(v) for k, v in X.items()}, normalizer
@@ -334,26 +363,27 @@ def cat_encode(
     encoding: Optional[CatEncoding],
     y_train: Optional[np.ndarray],
     seed: Optional[int],
-    return_encoder : bool = False
+    return_encoder: bool = False,
 ) -> Tuple[ArrayDict, bool, Optional[Any]]:  # (X, is_converted_to_numerical)
-    if encoding != 'counter':
+    if encoding != "counter":
         y_train = None
 
     # Step 1. Map strings to 0-based ranges
 
     if encoding is None:
-        unknown_value = np.iinfo('int64').max - 3
+        unknown_value = np.iinfo("int64").max - 3
         oe = sklearn.preprocessing.OrdinalEncoder(
-            handle_unknown='use_encoded_value',  # type: ignore[code]
+            handle_unknown="use_encoded_value",  # type: ignore[code]
             unknown_value=unknown_value,  # type: ignore[code]
-            dtype='int64',  # type: ignore[code]
-        ).fit(X['train'])
+            dtype="int64",  # type: ignore[code]
+        ).fit(X["train"])
         encoder = make_pipeline(oe)
-        encoder.fit(X['train'])
+        encoder.fit(X["train"])
         X = {k: encoder.transform(v) for k, v in X.items()}
-        max_values = X['train'].max(axis=0)
+        max_values = X["train"].max(axis=0)
         for part in X.keys():
-            if part == 'train': continue
+            if part == "train":
+                continue
             for column_idx in range(X[part].shape[1]):
                 X[part][X[part][:, column_idx] == unknown_value, column_idx] = (
                     max_values[column_idx] + 1
@@ -364,36 +394,33 @@ def cat_encode(
 
     # Step 2. Encode.
 
-    elif encoding == 'one-hot':
+    elif encoding == "one-hot":
         ohe = sklearn.preprocessing.OneHotEncoder(
-            handle_unknown='ignore', sparse=False, dtype=np.float32 # type: ignore[code]
+            handle_unknown="ignore", sparse=False, dtype=np.float32  # type: ignore[code]
         )
         encoder = make_pipeline(ohe)
 
         # encoder.steps.append(('ohe', ohe))
-        encoder.fit(X['train'])
+        encoder.fit(X["train"])
         X = {k: encoder.transform(v) for k, v in X.items()}
-    elif encoding == 'counter':
+    elif encoding == "counter":
         assert y_train is not None
         assert seed is not None
         loe = LeaveOneOutEncoder(sigma=0.1, random_state=seed, return_df=False)
-        encoder.steps.append(('loe', loe))
-        encoder.fit(X['train'], y_train)
-        X = {k: encoder.transform(v).astype('float32') for k, v in X.items()}  # type: ignore[code]
-        if not isinstance(X['train'], pd.DataFrame):
+        encoder.steps.append(("loe", loe))
+        encoder.fit(X["train"], y_train)
+        X = {k: encoder.transform(v).astype("float32") for k, v in X.items()}  # type: ignore[code]
+        if not isinstance(X["train"], pd.DataFrame):
             X = {k: v.values for k, v in X.items()}  # type: ignore[code]
     else:
-        util.raise_unknown('encoding', encoding)
-    
+        util.raise_unknown("encoding", encoding)
+
     if return_encoder:
-        return X, True, encoder # type: ignore[code]
+        return X, True, encoder  # type: ignore[code]
     return (X, True)
 
 
-def transform_dataset(
-    dataset: Dataset,
-    transformations: Transformations
-) -> Dataset:
+def transform_dataset(dataset: Dataset, transformations: Transformations) -> Dataset:
     # WARNING: the order of transformations matters. Moreover, the current
     # implementation is not ideal in that sense.
 
@@ -406,11 +433,11 @@ def transform_dataset(
             X_num,
             transformations.normalization,
             transformations.seed,
-            return_normalizer=True
+            return_normalizer=True,
         )
         num_transform = num_transform
-    
-    if dataset.X_cat is None or dataset.X_cat['train'].size == 0:
+
+    if dataset.X_cat is None or dataset.X_cat["train"].size == 0:
         assert transformations.cat_min_frequency is None
         X_cat = None
     else:
@@ -420,9 +447,9 @@ def transform_dataset(
         X_cat, is_num, cat_transform = cat_encode(
             X_cat,
             transformations.cat_encoding,
-            dataset.y['train'],
+            dataset.y["train"],
             transformations.seed,
-            return_encoder=True
+            return_encoder=True,
         )
         if is_num:
             X_num = (
@@ -442,10 +469,10 @@ def transform_dataset(
 
 def cat_drop_rare(X: ArrayDict, min_frequency: float) -> ArrayDict:
     assert 0.0 < min_frequency < 1.0
-    min_count = round(len(X['train']) * min_frequency)
+    min_count = round(len(X["train"]) * min_frequency)
     X_new = {x: [] for x in X}
-    for column_idx in range(X['train'].shape[1]):
-        counter = Counter(X['train'][:, column_idx].tolist())
+    for column_idx in range(X["train"].shape[1]):
+        counter = Counter(X["train"][:, column_idx].tolist())
         popular_categories = {k for k, v in counter.items() if v >= min_count}
         for part in X_new:
             X_new[part].append(
@@ -464,17 +491,17 @@ def dump_pickle(x: Any, path: Union[Path, str], **kwargs) -> None:
 def build_target(
     y: ArrayDict, policy: Optional[YPolicy], task_type: TaskType
 ) -> Tuple[ArrayDict, Dict[str, Any]]:
-    info: Dict[str, Any] = {'policy': policy}
+    info: Dict[str, Any] = {"policy": policy}
     if policy is None:
         pass
-    elif policy == 'default':
+    elif policy == "default":
         if task_type == TaskType.REGRESSION:
-            mean, std = float(y['train'].mean()), float(y['train'].std())
+            mean, std = float(y["train"].mean()), float(y["train"].std())
             y = {k: (v - mean) / std for k, v in y.items()}
-            info['mean'] = mean
-            info['std'] = std
+            info["mean"] = mean
+            info["std"] = std
     else:
-        raise_unknown('policy', policy)
+        raise_unknown("policy", policy)
     return y, info
 
 
@@ -504,11 +531,11 @@ def _get_labels_and_probs(
     elif prediction_type == PredictionType.PROBS:
         probs = y_pred
     else:
-        util.raise_unknown('prediction_type', prediction_type)
+        util.raise_unknown("prediction_type", prediction_type)
 
     assert probs is not None
     labels = np.round(probs) if task_type == TaskType.BINCLASS else probs.argmax(axis=1)
-    return labels.astype('int64'), probs
+    return labels.astype("int64"), probs
 
 
 def calculate_metrics(
@@ -524,18 +551,19 @@ def calculate_metrics(
 
     if task_type == TaskType.REGRESSION:
         assert prediction_type is None
-        assert 'std' in y_info
-        rmse = calculate_rmse(y_true, y_pred, y_info['std'])
+        assert "std" in y_info
+        rmse = calculate_rmse(y_true, y_pred, y_info["std"])
         r2 = skm.r2_score(y_true, y_pred)
-        result = {'rmse': rmse, 'r2': r2}
+        result = {"rmse": rmse, "r2": r2}
     else:
         labels, probs = _get_labels_and_probs(y_pred, task_type, prediction_type)
         result = cast(
             Dict[str, Any], skm.classification_report(y_true, labels, output_dict=True)
         )
         if task_type == TaskType.BINCLASS:
-            result['roc_auc'] = skm.roc_auc_score(y_true, probs)
+            result["roc_auc"] = skm.roc_auc_score(y_true, probs)
     return result
+
 
 class FastTensorDataLoader:
     def __init__(self, X, y, batch_size=32, shuffle=False, classes=None, num_feat=None):
@@ -565,7 +593,10 @@ class FastTensorDataLoader:
     def __next__(self):
         if self.i >= self.dataset_len:
             raise StopIteration
-        batch = [self.X[self.i:self.i+self.batch_size], self.y[self.i:self.i+self.batch_size]]
+        batch = [
+            self.X[self.i : self.i + self.batch_size],
+            self.y[self.i : self.i + self.batch_size],
+        ]
         self.i += self.batch_size
         return batch
 
@@ -576,18 +607,20 @@ class FastTensorDataLoader:
 def prepare_test_data(D):
     if D.X_cat is not None:
         if D.X_num is not None:
-            X = torch.from_numpy(np.concatenate([D.X_num['test'], D.X_cat['test']], axis=1)).float()
+            X = torch.from_numpy(
+                np.concatenate([D.X_num["test"], D.X_cat["test"]], axis=1)
+            ).float()
         else:
-            X = torch.from_numpy(D.X_cat['test']).float()
+            X = torch.from_numpy(D.X_cat["test"]).float()
     else:
-        X = torch.from_numpy(D.X_num['test']).float()
+        X = torch.from_numpy(D.X_num["test"]).float()
 
     try:
-        y = torch.from_numpy(D.y['test'])
+        y = torch.from_numpy(D.y["test"])
     except:
-        y = torch.from_numpy(np.where(D.y['test'], 1, 0))
+        y = torch.from_numpy(np.where(D.y["test"], 1, 0))
 
-    K = D.get_category_sizes('test')
+    K = D.get_category_sizes("test")
     if len(K) == 0:
         K = [0]
 
@@ -595,14 +628,12 @@ def prepare_test_data(D):
     return data
 
 
-def prepare_fast_dataloader(
-    D : Dataset,
-    split : str,
-    batch_size: int
-):
+def prepare_fast_dataloader(D: Dataset, split: str, batch_size: int):
     if D.X_cat is not None:
         if D.X_num is not None:
-            X = torch.from_numpy(np.concatenate([D.X_num[split], D.X_cat[split]], axis=1)).float()
+            X = torch.from_numpy(
+                np.concatenate([D.X_num[split], D.X_cat[split]], axis=1)
+            ).float()
         else:
             X = torch.from_numpy(D.X_cat[split]).float()
     else:
@@ -617,13 +648,9 @@ def prepare_fast_dataloader(
     if len(K) == 0:
         K = [0]
 
-    nf = D.X_num['train'].shape[1] if D.X_num['train'] is not None else 0
+    nf = D.X_num["train"].shape[1] if D.X_num["train"] is not None else 0
     dataloader = FastTensorDataLoader(
-        X, y, 
-        batch_size=batch_size, 
-        shuffle=(split=='train'),
-        classes=K, 
-        num_feat=nf
+        X, y, batch_size=batch_size, shuffle=(split == "train"), classes=K, num_feat=nf
     )
 
     return dataloader

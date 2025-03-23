@@ -22,22 +22,22 @@ class PeriodicOptions:
     n: int  # the output size is 2 * n
     sigma: float
     trainable: bool
-    initialization: Literal['log-linear', 'normal']
+    initialization: Literal["log-linear", "normal"]
 
 
 class Periodic(nn.Module):
     def __init__(self, n_features: int, options: PeriodicOptions) -> None:
         super().__init__()
-        if options.initialization == 'log-linear':
+        if options.initialization == "log-linear":
             coefficients = options.sigma ** (torch.arange(options.n) / options.n)
             coefficients = coefficients[None].repeat(n_features, 1)
         else:
-            assert options.initialization == 'normal'
+            assert options.initialization == "normal"
             coefficients = torch.normal(0.0, options.sigma, (n_features, options.n))
         if options.trainable:
             self.coefficients = nn.Parameter(coefficients)  # type: ignore[code]
         else:
-            self.register_buffer('coefficients', coefficients)
+            self.register_buffer("coefficients", coefficients)
 
     def forward(self, x: Tensor) -> Tensor:
         assert x.ndim == 2
@@ -52,15 +52,13 @@ def get_loss_fn(task_type: TaskType) -> Callable[..., Tensor]:
     return (
         F.binary_cross_entropy_with_logits
         if task_type == TaskType.BINCLASS
-        else F.cross_entropy
-        if task_type == TaskType.MULTICLASS
-        else F.mse_loss
+        else F.cross_entropy if task_type == TaskType.MULTICLASS else F.mse_loss
     )
 
 
 def default_zero_weight_decay_condition(module_name, module, parameter_name, parameter):
     del module_name, parameter
-    return parameter_name.endswith('bias') or isinstance(
+    return parameter_name.endswith("bias") or isinstance(
         module,
         (
             nn.BatchNorm1d,
@@ -81,17 +79,17 @@ def split_parameters_by_weight_decay(
     for module_name, module in model.named_modules():
         for parameter_name, parameter in module.named_parameters():
             full_parameter_name = (
-                f'{module_name}.{parameter_name}' if module_name else parameter_name
+                f"{module_name}.{parameter_name}" if module_name else parameter_name
             )
             parameters_info.setdefault(full_parameter_name, ([], parameter))[0].append(
                 zero_weight_decay_condition(
                     module_name, module, parameter_name, parameter
                 )
             )
-    params_with_wd = {'params': []}
-    params_without_wd = {'params': [], 'weight_decay': 0.0}
+    params_with_wd = {"params": []}
+    params_without_wd = {"params": [], "weight_decay": 0.0}
     for full_parameter_name, (results, parameter) in parameters_info.items():
-        (params_without_wd if any(results) else params_with_wd)['params'].append(
+        (params_without_wd if any(results) else params_with_wd)["params"].append(
             parameter
         )
     return [params_with_wd, params_without_wd]
@@ -101,25 +99,25 @@ def make_optimizer(
     config: dict[str, Any],
     parameter_groups,
 ) -> optim.Optimizer:
-    if config['optimizer'] == 'FT-Transformer-default':
+    if config["optimizer"] == "FT-Transformer-default":
         return optim.AdamW(parameter_groups, lr=1e-4, weight_decay=1e-5)
-    return getattr(optim, config['optimizer'])(
+    return getattr(optim, config["optimizer"])(
         parameter_groups,
-        **{x: config[x] for x in ['lr', 'weight_decay', 'momentum'] if x in config},
+        **{x: config[x] for x in ["lr", "weight_decay", "momentum"] if x in config},
     )
 
 
 def get_lr(optimizer: optim.Optimizer) -> float:
-    return next(iter(optimizer.param_groups))['lr']
+    return next(iter(optimizer.param_groups))["lr"]
 
 
 def is_oom_exception(err: RuntimeError) -> bool:
     return any(
         x in str(err)
         for x in [
-            'CUDA out of memory',
-            'CUBLAS_STATUS_ALLOC_FAILED',
-            'CUDA error: out of memory',
+            "CUDA out of memory",
+            "CUBLAS_STATUS_ALLOC_FAILED",
+            "CUDA error: out of memory",
         ]
     )
 
@@ -158,7 +156,7 @@ def train_with_auto_virtual_batch(
         else:
             break
     if not chunk_size:
-        raise RuntimeError('Not enough memory even for batch_size=1')
+        raise RuntimeError("Not enough memory even for batch_size=1")
     optimizer.step()
     return cast(Tensor, loss), chunk_size
 

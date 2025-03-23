@@ -26,11 +26,11 @@ class Velocity(torch.nn.Module):
 
 
 def generate(model, num_samples, dev):
-    x0= torch.randn(num_samples, model.d_in, device=dev)
+    x0 = torch.randn(num_samples, model.d_in, device=dev)
     t = torch.tensor([0.0, 1.0]).to(dev)
     vf = Velocity(model)
     with torch.no_grad():
-        trajectory = odeint_adjoint(vf, x0, t, method='dopri5', rtol=1e-5, atol=1e-5)
+        trajectory = odeint_adjoint(vf, x0, t, method="dopri5", rtol=1e-5, atol=1e-5)
 
     return trajectory[1]
 
@@ -45,9 +45,9 @@ def evaluate(args, model, test, dev, suffix):
 
     if sum(args.classes) != 0:
         for i, val in enumerate(args.classes):
-            gen[:, num+i] = torch.argmax(traj[:, idx:idx+val], dim=1)
+            gen[:, num + i] = torch.argmax(traj[:, idx : idx + val], dim=1)
             idx += val
-    
+
     if args.task_type == "regression":
         gen[:, -1] = traj[:, -1].to(torch.float)
     else:
@@ -60,12 +60,12 @@ def evaluate(args, model, test, dev, suffix):
 
     if suffix % 100 == 0 or suffix == 1:
         plot_performance(test, gen, args, suffix)
-        
+
     return scores
 
 
 def plot_performance(test, gen, args, suffix):
-    savedir = f'results/' + args.dataset
+    savedir = f"results/" + args.dataset
     num = args.num_feat
     k = num + len(args.classes) + 1 if sum(args.classes) != 0 else num + 1
 
@@ -75,7 +75,7 @@ def plot_performance(test, gen, args, suffix):
     synth = gen.cpu().numpy()
     grid_size = int(k**0.5) + (0 if (k**0.5).is_integer() else 1)
 
-    with PdfPages(Path(savedir + f'/results_{suffix}.pdf')) as pdf:
+    with PdfPages(Path(savedir + f"/results_{suffix}.pdf")) as pdf:
         fig, axes = plt.subplots(grid_size, grid_size, figsize=(10, 10))
         axes = axes.flatten()
 
@@ -85,23 +85,37 @@ def plot_performance(test, gen, args, suffix):
             sns.kdeplot(data=df, x=f"col_{i}_synth", ax=axes[i])
 
         for i in range(len(args.classes)):
-            min_val, max_val = synth[:, num+i].min(), synth[:, num+i].max()
+            min_val, max_val = synth[:, num + i].min(), synth[:, num + i].max()
             bins = np.arange(min_val - 0.5, max_val + 1.5, 1)
-            sns.histplot(data[:, num+i], ax=axes[num+i], bins=bins, color="skyblue", edgecolor="black")
-            sns.histplot(synth[:, num+i], ax=axes[num+i], bins=bins, color="purple", edgecolor="red")
+            sns.histplot(
+                data[:, num + i],
+                ax=axes[num + i],
+                bins=bins,
+                color="skyblue",
+                edgecolor="black",
+            )
+            sns.histplot(
+                synth[:, num + i],
+                ax=axes[num + i],
+                bins=bins,
+                color="purple",
+                edgecolor="red",
+            )
 
         if args.task_type == "regression":
-            sns.displot(data=data[:, -1], ax=axes[k-1])
-            sns.displot(data=synth[:, -1], ax=axes[k-1])
+            sns.displot(data=data[:, -1], ax=axes[k - 1])
+            sns.displot(data=synth[:, -1], ax=axes[k - 1])
         else:
             min_val, max_val = synth[:, -1].min(), synth[:, -1].max()
             bins = np.arange(min_val - 0.5, max_val + 1.5, 1)
-            sns.histplot(data[:, -1], ax=axes[k-1], color="skyblue", edgecolor="black")
-            sns.histplot(synth[:, -1], ax=axes[k-1], color="purple", edgecolor="red")
+            sns.histplot(
+                data[:, -1], ax=axes[k - 1], color="skyblue", edgecolor="black"
+            )
+            sns.histplot(synth[:, -1], ax=axes[k - 1], color="purple", edgecolor="red")
 
-        axes[k-1].set_title(f"Column {k}")
-        axes[k-1].set_xlabel("Value")
-        axes[k-1].set_ylabel("Density")
+        axes[k - 1].set_title(f"Column {k}")
+        axes[k - 1].set_xlabel("Value")
+        axes[k - 1].set_ylabel("Density")
 
         for j in range(k, len(axes)):
             axes[j].axis("off")
@@ -112,15 +126,15 @@ def plot_performance(test, gen, args, suffix):
 
 
 def clean_workspace(start_time):
-    for root, dirs, files in os.walk(os.path.join(os.getcwd(), 'workspace')):
+    for root, dirs, files in os.walk(os.path.join(os.getcwd(), "workspace")):
         for name in files:
             file_path = os.path.join(root, name)
             try:
-                if name.endswith('.bkp') and os.path.getctime(file_path) > start_time:
+                if name.endswith(".bkp") and os.path.getctime(file_path) > start_time:
                     os.remove(file_path)
             except:
                 pass
-        
+
         for name in dirs:
             dir_path = os.path.join(root, name)
             try:

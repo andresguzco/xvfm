@@ -170,10 +170,7 @@ class GoggleModel:
                 best_loss = train_loss
 
                 torch.save(self.model.state_dict(), model_save_path)
-            print(
-                f"[Epoch {(epoch+1):3}/{self.epochs},] train: {train_loss:.3f}"
-                )
-
+            print(f"[Epoch {(epoch+1):3}/{self.epochs},] train: {train_loss:.3f}")
 
             # val_loss = self.evaluate(data_loaders["val"], epoch)
 
