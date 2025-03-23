@@ -25,10 +25,10 @@ _MODELS = {
         {
             'class': XGBClassifier,
             'kwargs': {
-                 'n_estimators': [10, 50, 100],
-                 'min_child_weight': [1, 5, 10], 
-                 'max_depth': [5, 10, 20],
-                 'gamma': [0.0, 0.5, 1.0],
+                 'n_estimators': [10, 100],
+                 'min_child_weight': [1, 10], 
+                 'max_depth': [5, 20],
+                 'gamma': [0.0, 1.0],
                  'objective': ['binary:logistic'],
                  'nthread': [-1],
                  'device': ['cpu'],
@@ -42,10 +42,10 @@ _MODELS = {
         {
             'class': XGBRegressor,
             'kwargs': {
-                 'n_estimators': [10, 50, 100],
-                 'min_child_weight': [1, 5, 10], 
-                 'max_depth': [5, 10, 20],
-                 'gamma': [0.0, 0.5, 1.0],
+                 'n_estimators': [10, 100],
+                 'min_child_weight': [1, 10], 
+                 'max_depth': [5, 20],
+                 'gamma': [0.0, 1.0],
                  'objective': ['reg:linear'],
                  'nthread': [-1],
                  'device': ['cpu'],

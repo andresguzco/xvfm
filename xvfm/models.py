@@ -257,11 +257,11 @@ class Tabby(nn.Module):
     def __init__(self, 
                  d_in, num_feat, classes, 
                  task="regression", 
-                 n_layers=1, 
-                 d_model=2, 
-                 n_heads=2, 
+                 n_layers=8, 
+                 d_model=4, 
+                 n_heads=4, 
                  dropout=0.1, 
-                 ff_factor=1,
+                 ff_factor=2,
                  d_t=512
                 ):
         super().__init__()
