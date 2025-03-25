@@ -269,12 +269,12 @@ class Tabby(nn.Module):
         num_feat,
         classes,
         task="regression",
-        n_layers=8,
-        d_model=4,
-        n_heads=4,
+        n_layers=1,
+        d_model=1,
+        n_heads=1,
         dropout=0.1,
-        ff_factor=2,
-        d_t=512,
+        ff_factor=1,
+        d_t=128,
     ):
         super().__init__()
         self.task = task
@@ -300,8 +300,8 @@ class Tabby(nn.Module):
         self.proj = nn.Linear(d_model * d_in, d_t)
         self.mlp = nn.Sequential(
             nn.Linear(d_t, 2 * d_t),
-            nn.SiLU(),
-            nn.Linear(2 * d_t, 2 * d_t),
+            # nn.SiLU(),
+            # nn.Linear(2 * d_t, 2 * d_t),
             nn.SiLU(),
             nn.Linear(2 * d_t, d_in * d_model),
         )

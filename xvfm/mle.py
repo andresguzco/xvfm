@@ -21,38 +21,34 @@ from sklearn.utils._testing import ignore_warnings
 CATEGORICAL = "categorical"
 CONTINUOUS = "continuous"
 _MODELS = {
-    "binclass": [
-        {
-            "class": XGBClassifier,
-            "kwargs": {
-                "n_estimators": [10, 100],
-                "min_child_weight": [1, 10],
-                "max_depth": [5, 20],
-                "gamma": [0.0, 1.0],
-                "objective": ["binary:logistic"],
-                "nthread": [-1],
-                "device": ["cpu"],
-                "tree_method": ["hist"],
-                "verbose": [0],
-            },
-        }
-    ],
-    "regression": [
-        {
-            "class": XGBRegressor,
-            "kwargs": {
-                "n_estimators": [10, 100],
-                "min_child_weight": [1, 10],
-                "max_depth": [5, 20],
-                "gamma": [0.0, 1.0],
-                "objective": ["reg:linear"],
-                "nthread": [-1],
-                "device": ["cpu"],
-                "tree_method": ["hist"],
-                "verbose": [0],
-            },
+    "binclass": {
+        "class": XGBClassifier,
+        "kwargs": {
+            "n_estimators": [10, 100],
+            "min_child_weight": [1, 10],
+            "max_depth": [5, 10],
+            "gamma": [0.0, 1.0],
+            "objective": ["binary:logistic"],
+            "nthread": [-1],
+            "device": ["cpu"],
+            "tree_method": ["hist"],
+            "verbose": [0],
         },
-    ],
+    },
+    "regression":{
+        "class": XGBRegressor,
+        "kwargs": {
+            "n_estimators": [10, 100],
+            "min_child_weight": [1, 10],
+            "max_depth": [5, 10],
+            "gamma": [0.0, 1.0],
+            "objective": ["reg:linear"],
+            "nthread": [-1],
+            "device": ["cpu"],
+            "tree_method": ["hist"],
+            "verbose": [0],
+        },
+    },
 }
 
 
@@ -108,7 +104,7 @@ def prepare_ml_problem(train, test, info):
 
 @ignore_warnings(category=ConvergenceWarning)
 def _evaluate_binary_classification(train, test, info):
-    x_trains, y_trains, x_valid, y_valid, x_test, y_test, classifiers = (
+    x_trains, y_trains, x_valid, y_valid, x_test, y_test, model_spec = (
         prepare_ml_problem(train, test, info)
     )
 
@@ -118,193 +114,136 @@ def _evaluate_binary_classification(train, test, info):
     best_auroc_scores = []
     best_acc_scores = []
     best_avg_scores = []
+    
+    model_class = model_spec["class"]
+    model_kwargs = model_spec.get("kwargs", dict())
+    model_repr = model_class.__name__
 
-    for model_spec in classifiers:
+    unique_labels = np.unique(y_trains)
 
-        model_class = model_spec["class"]
-        model_kwargs = model_spec.get("kwargs", dict())
-        model_repr = model_class.__name__
+    param_set = list(ParameterGrid(model_kwargs))
 
-        unique_labels = np.unique(y_trains)
+    results = []
+    for param in param_set:
+        model = model_class(**param)
+        model.fit(x_trains, y_trains)
 
-        param_set = list(ParameterGrid(model_kwargs))
+        if len(unique_labels) == 1:
+            pred = [unique_labels[0]] * len(x_valid)
+            pred_prob = np.array([1.0] * len(x_valid))
+        else:
+            pred = model.predict(x_valid)
+            pred_prob = model.predict_proba(x_valid)
 
-        results = []
-        for param in param_set:
-            model = model_class(**param)
-            model.fit(x_trains, y_trains)
+        f1 = f1_score(y_valid, pred, average="weighted")
+        acc = accuracy_score(y_valid, pred)
+        precision = precision_score(y_valid, pred, average="weighted")
+        recall = recall_score(y_valid, pred, average="weighted")
 
-            if len(unique_labels) == 1:
-                pred = [unique_labels[0]] * len(x_valid)
-                pred_prob = np.array([1.0] * len(x_valid))
+        # auroc
+        size = 2
+        rest_label = set(range(size)) - set(unique_labels)
+        tmp = []
+        j = 0
+        for i in range(size):
+            if i in rest_label:
+                tmp.append(np.array([0] * y_valid.shape[0])[:, np.newaxis])
             else:
-                pred = model.predict(x_valid)
-                pred_prob = model.predict_proba(x_valid)
+                try:
+                    tmp.append(pred_prob[:, [j]])
+                except:
+                    tmp.append(pred_prob[:, np.newaxis])
+                j += 1
 
-            f1 = f1_score(y_valid, pred, average="weighted")
-            acc = accuracy_score(y_valid, pred)
-            precision = precision_score(y_valid, pred, average="weighted")
-            recall = recall_score(y_valid, pred, average="weighted")
+        roc_auc = roc_auc_score(np.eye(size)[y_valid.astype(int)], np.hstack(tmp))
 
-            # auroc
-            size = 2
-            rest_label = set(range(size)) - set(unique_labels)
-            tmp = []
-            j = 0
-            for i in range(size):
-                if i in rest_label:
-                    tmp.append(np.array([0] * y_valid.shape[0])[:, np.newaxis])
-                else:
-                    try:
-                        tmp.append(pred_prob[:, [j]])
-                    except:
-                        tmp.append(pred_prob[:, np.newaxis])
-                    j += 1
-
-            roc_auc = roc_auc_score(np.eye(size)[y_valid.astype(int)], np.hstack(tmp))
-
-            results.append(
-                {
-                    "name": model_repr,
-                    "param": param,
-                    "f1": f1,
-                    "roc_auc": roc_auc,
-                    "accuracy": acc,
-                    "precision": precision,
-                    "recall": recall,
-                }
-            )
-
-        # test the best model
-        results = pd.DataFrame(results)
-        results["avg"] = results.loc[:, ["f1", "roc_auc"]].mean(axis=1)
-        try:
-            best_f1_param = results.param[results.f1.idxmax()]
-        except:
-            best_f1_param = {
-                "n_estimators": 50,
-                "min_child_weight": 3,
-                "max_depth": 5,
-                "gamma": 0.5,
-                "objective": "binary:logistic",
-                "nthread": -1,
-                "device": "cpu",
-                "tree_method": "hist",
-                "verbose": 0,
-            }
-
-        try:
-            best_auroc_param = results.param[results.roc_auc.idxmax()]
-        except:
-            best_auroc_param = {
-                "n_estimators": 50,
-                "min_child_weight": 3,
-                "max_depth": 5,
-                "gamma": 0.5,
-                "objective": "binary:logistic",
-                "nthread": -1,
-                "device": "cpu",
-                "tree_method": "hist",
-                "verbose": 0,
-            }
-
-        try:
-            best_acc_param = results.param[results.accuracy.idxmax()]
-        except:
-            best_acc_param = {
-                "n_estimators": 50,
-                "min_child_weight": 3,
-                "max_depth": 5,
-                "gamma": 0.5,
-                "objective": "binary:logistic",
-                "nthread": -1,
-                "device": "cpu",
-                "tree_method": "hist",
-                "verbose": 0,
-            }
-
-        try:
-            best_avg_param = results.param[results.avg.idxmax()]
-        except:
-            best_avg_param = {
-                "n_estimators": 50,
-                "min_child_weight": 3,
-                "max_depth": 5,
-                "gamma": 0.5,
-                "objective": "binary:logistic",
-                "nthread": -1,
-                "device": "cpu",
-                "tree_method": "hist",
-                "verbose": 0,
-            }
-
-        def _calc(best_model):
-            best_scores = []
-
-            best_model.fit(x_trains, y_trains)
-
-            if len(unique_labels) == 1:
-                pred = [unique_labels[0]] * len(x_test)
-                pred_prob = np.array([1.0] * len(x_test))
-            else:
-                pred = best_model.predict(x_test)
-                pred_prob = best_model.predict_proba(x_test)
-
-            f1 = f1_score(y_test, pred, average="weighted")
-            acc = accuracy_score(y_test, pred)
-            precision = precision_score(y_test, pred, average="weighted")
-            recall = recall_score(y_test, pred, average="weighted")
-
-            # auroc
-            size = 2
-            rest_label = set(range(size)) - set(unique_labels)
-            tmp = []
-            j = 0
-            for i in range(size):
-                if i in rest_label:
-                    tmp.append(np.array([0] * y_test.shape[0])[:, np.newaxis])
-                else:
-                    try:
-                        tmp.append(pred_prob[:, [j]])
-                    except:
-                        tmp.append(pred_prob[:, np.newaxis])
-                    j += 1
-            try:
-                roc_auc = roc_auc_score(
-                    np.eye(size)[y_test.astype(int)], np.hstack(tmp)
-                )
-            except ValueError:
-                tmp[1] = tmp[1].reshape(20000, 1)
-                roc_auc = roc_auc_score(
-                    np.eye(size)[y_test.astype(int)], np.hstack(tmp)
-                )
-
-            best_scores.append(
-                {
-                    "name": model_repr,
-                    # "param": param,
-                    "f1": f1,
-                    "roc_auc": roc_auc,
-                    "accuracy": acc,
-                    "precision": precision,
-                    "recall": recall,
-                }
-            )
-
-            return pd.DataFrame(best_scores)
-
-        def _df(dataframe):
-            return {
+        results.append(
+            {
                 "name": model_repr,
-                "f1": dataframe.f1.values[0],
-                "roc_auc": dataframe.roc_auc.values[0],
-                "accuracy": dataframe.accuracy.values[0],
+                "param": param,
+                "f1": f1,
+                "roc_auc": roc_auc,
+                "accuracy": acc,
+                "precision": precision,
+                "recall": recall,
             }
+        )
 
-        best_f1_scores.append(_df(_calc(model_class(**best_f1_param))))
-        best_auroc_scores.append(_df(_calc(model_class(**best_auroc_param))))
-        best_acc_scores.append(_df(_calc(model_class(**best_acc_param))))
-        best_avg_scores.append(_df(_calc(model_class(**best_avg_param))))
+    # test the best model
+    results = pd.DataFrame(results)
+    results["avg"] = results.loc[:, ["f1", "roc_auc"]].mean(axis=1)
+    best_f1_param = results.param[results.f1.idxmax()]
+    best_auroc_param = results.param[results.roc_auc.idxmax()]
+    best_acc_param = results.param[results.accuracy.idxmax()]
+    best_avg_param = results.param[results.avg.idxmax()]
+
+    def _calc(best_model):
+        best_scores = []
+
+        best_model.fit(x_trains, y_trains)
+
+        if len(unique_labels) == 1:
+            pred = [unique_labels[0]] * len(x_test)
+            pred_prob = np.array([1.0] * len(x_test))
+        else:
+            pred = best_model.predict(x_test)
+            pred_prob = best_model.predict_proba(x_test)
+
+        f1 = f1_score(y_test, pred, average="weighted")
+        acc = accuracy_score(y_test, pred)
+        precision = precision_score(y_test, pred, average="weighted")
+        recall = recall_score(y_test, pred, average="weighted")
+
+        # auroc
+        size = 2
+        rest_label = set(range(size)) - set(unique_labels)
+        tmp = []
+        j = 0
+        for i in range(size):
+            if i in rest_label:
+                tmp.append(np.array([0] * y_test.shape[0])[:, np.newaxis])
+            else:
+                try:
+                    tmp.append(pred_prob[:, [j]])
+                except:
+                    tmp.append(pred_prob[:, np.newaxis])
+                j += 1
+        try:
+            roc_auc = roc_auc_score(
+                np.eye(size)[y_test.astype(int)], np.hstack(tmp)
+            )
+        except ValueError:
+            tmp[1] = tmp[1].reshape(20000, 1)
+            roc_auc = roc_auc_score(
+                np.eye(size)[y_test.astype(int)], np.hstack(tmp)
+            )
+
+        best_scores.append(
+            {
+                "name": model_repr,
+                # "param": param,
+                "f1": f1,
+                "roc_auc": roc_auc,
+                "accuracy": acc,
+                "precision": precision,
+                "recall": recall,
+            }
+        )
+
+        return pd.DataFrame(best_scores)
+
+    def _df(dataframe):
+        return {
+            "name": model_repr,
+            "f1": dataframe.f1.values[0],
+            "roc_auc": dataframe.roc_auc.values[0],
+            "accuracy": dataframe.accuracy.values[0],
+        }
+
+    best_f1_scores.append(_df(_calc(model_class(**best_f1_param))))
+    best_auroc_scores.append(_df(_calc(model_class(**best_auroc_param))))
+    best_acc_scores.append(_df(_calc(model_class(**best_acc_param))))
+    best_avg_scores.append(_df(_calc(model_class(**best_avg_param))))
 
     return best_f1_scores, best_auroc_scores, best_acc_scores, best_avg_scores
 
@@ -312,7 +251,7 @@ def _evaluate_binary_classification(train, test, info):
 @ignore_warnings(category=ConvergenceWarning)
 def _evaluate_regression(train, test, info):
 
-    x_trains, y_trains, x_valid, y_valid, x_test, y_test, regressors = (
+    x_trains, y_trains, x_valid, y_valid, x_test, y_test, model_spec = (
         prepare_ml_problem(train, test, info)
     )
 
@@ -324,85 +263,84 @@ def _evaluate_regression(train, test, info):
     y_trains = np.log(np.clip(y_trains, 1, 20000))
     y_test = np.log(np.clip(y_test, 1, 20000))
 
-    for model_spec in regressors:
-        model_class = model_spec["class"]
-        model_kwargs = model_spec.get("kwargs", dict())
-        model_repr = model_class.__name__
+    model_class = model_spec["class"]
+    model_kwargs = model_spec.get("kwargs", dict())
+    model_repr = model_class.__name__
 
-        param_set = list(ParameterGrid(model_kwargs))
+    param_set = list(ParameterGrid(model_kwargs))
 
-        results = []
-        for param in param_set:
-            model = model_class(**param)
-            model.fit(x_trains, y_trains)
-            pred = model.predict(x_valid)
+    results = []
+    for param in param_set:
+        model = model_class(**param)
+        model.fit(x_trains, y_trains)
+        pred = model.predict(x_valid)
 
-            r2 = r2_score(y_valid, pred)
-            explained_variance = explained_variance_score(y_valid, pred)
-            mean_squared = mean_squared_error(y_valid, pred)
-            root_mean_squared = np.sqrt(mean_squared)
-            mean_absolute = mean_absolute_error(y_valid, pred)
+        r2 = r2_score(y_valid, pred)
+        explained_variance = explained_variance_score(y_valid, pred)
+        mean_squared = mean_squared_error(y_valid, pred)
+        root_mean_squared = np.sqrt(mean_squared)
+        mean_absolute = mean_absolute_error(y_valid, pred)
 
-            results.append(
-                {
-                    "name": model_repr,
-                    "param": param,
-                    "r2": r2,
-                    "explained_variance": explained_variance,
-                    "mean_squared": mean_squared,
-                    "mean_absolute": mean_absolute,
-                    "rmse": root_mean_squared,
-                }
-            )
-
-        results = pd.DataFrame(results)
-        best_r2_param = results.param[results.r2.idxmax()]
-        best_ev_param = results.param[results.explained_variance.idxmax()]
-        best_mae_param = results.param[results.mean_absolute.idxmin()]
-        best_rmse_param = results.param[results.rmse.idxmin()]
-
-        def _calc(best_model):
-            best_scores = []
-            x_train, y_train = x_trains, y_trains
-
-            best_model.fit(x_train, y_train)
-            pred = best_model.predict(x_test)
-
-            r2 = r2_score(y_test, pred)
-            explained_variance = explained_variance_score(y_test, pred)
-            mean_squared = mean_squared_error(y_test, pred)
-            root_mean_squared = np.sqrt(mean_squared)
-            mean_absolute = mean_absolute_error(y_test, pred)
-
-            best_scores.append(
-                {
-                    "name": model_repr,
-                    "param": param,
-                    "r2": r2,
-                    "explained_variance": explained_variance,
-                    "mean_squared": mean_squared,
-                    "mean_absolute": mean_absolute,
-                    "rmse": root_mean_squared,
-                }
-            )
-
-            return pd.DataFrame(best_scores)
-
-        def _df(dataframe):
-            return {
+        results.append(
+            {
                 "name": model_repr,
-                "r2": dataframe.r2.values[0].astype(float),
-                "explained_variance": dataframe.explained_variance.values[0].astype(
-                    float
-                ),
-                "MAE": dataframe.mean_absolute.values[0].astype(float),
-                "RMSE": dataframe.rmse.values[0].astype(float),
+                "param": param,
+                "r2": r2,
+                "explained_variance": explained_variance,
+                "mean_squared": mean_squared,
+                "mean_absolute": mean_absolute,
+                "rmse": root_mean_squared,
             }
+        )
 
-        best_r2_scores.append(_df(_calc(model_class(**best_r2_param))))
-        best_ev_scores.append(_df(_calc(model_class(**best_ev_param))))
-        best_mae_scores.append(_df(_calc(model_class(**best_mae_param))))
-        best_rmse_scores.append(_df(_calc(model_class(**best_rmse_param))))
+    results = pd.DataFrame(results)
+    best_r2_param = results.param[results.r2.idxmax()]
+    best_ev_param = results.param[results.explained_variance.idxmax()]
+    best_mae_param = results.param[results.mean_absolute.idxmin()]
+    best_rmse_param = results.param[results.rmse.idxmin()]
+
+    def _calc(best_model):
+        best_scores = []
+        x_train, y_train = x_trains, y_trains
+
+        best_model.fit(x_train, y_train)
+        pred = best_model.predict(x_test)
+
+        r2 = r2_score(y_test, pred)
+        explained_variance = explained_variance_score(y_test, pred)
+        mean_squared = mean_squared_error(y_test, pred)
+        root_mean_squared = np.sqrt(mean_squared)
+        mean_absolute = mean_absolute_error(y_test, pred)
+
+        best_scores.append(
+            {
+                "name": model_repr,
+                "param": param,
+                "r2": r2,
+                "explained_variance": explained_variance,
+                "mean_squared": mean_squared,
+                "mean_absolute": mean_absolute,
+                "rmse": root_mean_squared,
+            }
+        )
+
+        return pd.DataFrame(best_scores)
+
+    def _df(dataframe):
+        return {
+            "name": model_repr,
+            "r2": dataframe.r2.values[0].astype(float),
+            "explained_variance": dataframe.explained_variance.values[0].astype(
+                float
+            ),
+            "MAE": dataframe.mean_absolute.values[0].astype(float),
+            "RMSE": dataframe.rmse.values[0].astype(float),
+        }
+
+    best_r2_scores.append(_df(_calc(model_class(**best_r2_param))))
+    best_ev_scores.append(_df(_calc(model_class(**best_ev_param))))
+    best_mae_scores.append(_df(_calc(model_class(**best_mae_param))))
+    best_rmse_scores.append(_df(_calc(model_class(**best_rmse_param))))
 
     return best_r2_scores, best_rmse_scores
 

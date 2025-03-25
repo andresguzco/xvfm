@@ -37,7 +37,9 @@ def get_mle(train, test, data_path):
                 method.pop("name")
                 overall_scores[score_name][name] = method
     else:
+        print(f"Preparing MLE results")
         f1, auroc, acc, avg = evaluator(train, test, info)
+        print(f"f1: {f1}, auroc: {auroc}, acc: {acc}, avg: {avg}")
         overall_scores = {}
         for score_name in ["f1", "auroc", "acc", "avg"]:
             overall_scores[score_name] = {}
@@ -50,11 +52,14 @@ def get_mle(train, test, data_path):
 
 
 def get_results(data):
+    print(f"Data: {data}")
     max_metrics = {}
-    for _, value in data.items():
-        model_data = next(iter(value.values()), {})
+    for i, value in data.items():
+        print(f"i: {i}, value: {value}")
+        model_data = data[i]
 
         for metric, metric_value in model_data.items():
+            print(f"metric: {metric}, metric_value: {metric_value}")
             if metric not in max_metrics:
                 max_metrics[metric] = metric_value
             else:

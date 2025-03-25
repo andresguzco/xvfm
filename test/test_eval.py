@@ -78,6 +78,7 @@ def test_get_results():
     # For "scoreA" we have two models => model1 => m1=10,m2=7; model2 => m1=12,m2=5
     # So the max for 'm1' is 12, max for 'm2' is 7
     # For "scoreB" we only have model1 => m1=3, m2=20 => so max => m1=3, m2=20
+    print(out["m1"], out["m2"])
     assert out["m1"] == 12
     assert out["m2"] == 20
 

@@ -1,0 +1,43 @@
+{
+  "os":  "macOS-15.3.2-arm64-arm-64bit",
+  "python":  "3.9.16",
+  "startedAt":  "2025-03-25T17:48:18.149479Z",
+  "args":  [
+    "--data_path=data/adult",
+    "--dataset=adult",
+    "--task_type=binclass",
+    "--epochs=500"
+  ],
+  "program":  "/Users/main/Vault/xvfm/main.py",
+  "codePath":  "main.py",
+  "git":  {
+    "remote":  "https://github.com/andresguzco/xvfm",
+    "commit":  "7dd773fde8be899f5e6974bb4c8b8ecc77a4f9e3"
+  },
+  "email":  "andresguzco@gmail.com",
+  "root":  "/Users/main/Vault/xvfm",
+  "host":  "G-Book-Pro.local",
+  "username":  "main",
+  "executable":  "/opt/homebrew/Caskroom/miniforge/base/envs/xvfm/bin/python",
+  "codePathLocal":  "main.py",
+  "cpu_count":  11,
+  "cpu_count_logical":  11,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "148756951040"
+    }
+  },
+  "memory":  {
+    "total":  "19327352832"
+  },
+  "cpu":  {
+    "count":  11,
+    "countLogical":  11
+  },
+  "gpuapple":  {
+    "gpuType":  "Apple M3 Pro",
+    "vendor":  "sppci_vendor_Apple",
+    "cores":  14
+  }
+}

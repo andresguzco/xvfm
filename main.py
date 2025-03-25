@@ -77,56 +77,57 @@ def main(args):
     print(f"Training parameters: {vars(args)}")
 
     test_data = prepare_test_data(dataset)[: args.num_eval, :]
+    with tqdm(total=args.epochs) as pbar:
+        for epoch in range(args.epochs):
+            start_time = time.time()
+            epoch_loss = 0.0
+            num_batches = 0
 
-    for epoch in tqdm(range(args.epochs)):
-        start_time = time.time()
-        epoch_loss = 0.0
-        num_batches = 0
+            for x_1, y in dataloader:
+                optimizer.zero_grad()
+                x_1, y = x_1.to(device), y.view(-1, 1).to(device)
 
-        for x_1, y in dataloader:
-            optimizer.zero_grad()
-            x_1, y = x_1.to(device), y.view(-1, 1).to(device)
+                x = torch.zeros((x_1.shape[0], args.d_in), device=device)
+                x[:, : args.num_feat] = x_1[:, : args.num_feat]
 
-            x = torch.zeros((x_1.shape[0], args.d_in), device=device)
-            x[:, : args.num_feat] = x_1[:, : args.num_feat]
+                if sum(args.classes) != 0:
+                    idx = num = args.num_feat
+                    for i, val in enumerate(args.classes):
+                        x[:, idx : idx + val] = one_hot(
+                            x_1[:, num + i].to(torch.int64), num_classes=val
+                        )
+                        idx += val
 
-            if sum(args.classes) != 0:
-                idx = num = args.num_feat
-                for i, val in enumerate(args.classes):
-                    x[:, idx : idx + val] = one_hot(
-                        x_1[:, num + i].to(torch.int64), num_classes=val
-                    )
-                    idx += val
+                x0 = torch.randn((x_1.shape[0], args.d_in), device=device)
+                t = torch.rand(x_1.shape[0], device=device).view(-1, 1)
 
-            x0 = torch.randn((x_1.shape[0], args.d_in), device=device)
-            t = torch.rand(x_1.shape[0], device=device).view(-1, 1)
+                if args.task_type == "regression":
+                    x[:, -1] = y.squeeze()
+                else:
+                    x[:, -2:] = one_hot(y, num_classes=2).squeeze()
 
-            if args.task_type == "regression":
-                x[:, -1] = y.squeeze()
+                xt = x * t + (1 - t) * x0 + torch.randn_like(x0) * 0.01
+
+                res = model(xt, t)
+
+                loss = criterion(res, torch.cat([x_1, y], dim=1), t)
+                loss.backward()
+                optimizer.step()
+
+                epoch_loss += loss
+                num_batches += 1
+
+            avg_loss = epoch_loss / num_batches
+
+            if args.logging > 0 and ((epoch + 1) % args.logging == 0 or epoch == 0):
+                scores = evaluate(args, model, test_data, device, epoch + 1)
             else:
-                x[:, -2:] = one_hot(y, num_classes=2).squeeze()
+                scores = {}
 
-            xt = x * t + (1 - t) * x0 + torch.randn_like(x0) * 0.01
-
-            res = model(xt, t)
-
-            loss = criterion(res, torch.cat([x_1, y], dim=1), t)
-            loss.backward()
-            optimizer.step()
-
-            epoch_loss += loss
-            num_batches += 1
-
-        avg_loss = epoch_loss / num_batches
-        print(f"Epoch [{epoch+1}/{args.epochs}]: Loss: [{avg_loss:.4f}]", flush=True)
-
-        if args.logging > 0 and ((epoch + 1) % args.logging == 0 or epoch == 0):
-            scores = evaluate(args, model, test_data, device, epoch + 1)
-        else:
-            scores = {}
-
-        log.log(scores | {"loss": avg_loss})
-        clean_workspace(start_time)
+            log.log(scores | {"loss": avg_loss})
+            clean_workspace(start_time)
+            pbar.update(1)
+            pbar.set_description(f"Epoch [{epoch+1}/{args.epochs}]. Loss: [{avg_loss:.4f}]")
 
     log.finish()
 
